@@ -1,3 +1,4 @@
 {
-	"flightSaver": "http://localhost:4200/remoteEntry.json"
+  "flightSaver": "http://localhost:4201/remoteEntry.json",
+  "community": "http://localhost:4202/remoteEntry.json"
 }
