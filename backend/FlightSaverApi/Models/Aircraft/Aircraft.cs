@@ -1,4 +1,4 @@
-﻿namespace FlightSaverApi.Models.Plane
+﻿namespace FlightSaverApi.Models.Aircraft
 {
     public class Aircraft
     {

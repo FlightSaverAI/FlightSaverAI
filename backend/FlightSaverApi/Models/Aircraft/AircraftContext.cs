@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace FlightSaverApi.Models.Plane
+namespace FlightSaverApi.Models.Aircraft
 {
     public class AircraftContext : DbContext
     {

@@ -1,4 +1,4 @@
-using FlightSaverApi.Models.Plane;
+using FlightSaverApi.Models.Aircraft;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
