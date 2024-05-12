@@ -4,7 +4,7 @@ using FlightSaverApi.Models.Aircraft;
 
 namespace FlightSaverApi.Controllers
 {
-    [Route("/")]
+    [Route("/Aircrafts")]
     [ApiController]
     public class AircraftsController : ControllerBase
     {
