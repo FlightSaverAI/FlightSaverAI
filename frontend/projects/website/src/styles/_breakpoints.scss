@@ -1,0 +1,37 @@
+:root {
+  --breakpoint-sm: 480px; /* Small devices */
+  --breakpoint-md: 768px; /* Medium devices */
+  --breakpoint-lg: 1024px; /* Large devices */
+  --breakpoint-xl: 1200px; /* Extra large devices */
+  --breakpoint-xxl: 1600px; /* Extra extra large devices */
+}
+
+@mixin mobile-devices {
+  @media (min-width: var(--breakpoint-sm)) {
+    @content;
+  }
+}
+
+@mixin tablet-devices {
+  @media (min-width: var(--breakpoint-md)) {
+    @content;
+  }
+}
+
+@mixin laptop-devices {
+  @media (min-width: var(--breakpoint-lg)) {
+    @content;
+  }
+}
+
+@mixin desktop-devices {
+  @media (min-width: var(--breakpoint-xl)) {
+    @content;
+  }
+}
+
+@mixin tv-devices {
+  @media (min-width: var(--breakpoint-xxl)) {
+    @content;
+  }
+}
