@@ -1,0 +1,93 @@
+.main {
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.baner {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.earth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+}
+
+.shadow {
+  position: absolute;
+  top: -8px;
+  left: -10px;
+}
+
+span {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  font-size: 1.2rem;
+  color: var(--color-secondary);
+}
+
+.line1 {
+  position: absolute;
+  top: -95px;
+  left: 65px;
+  z-index: -1;
+}
+
+.line2 {
+  position: absolute;
+  top: 140px;
+  left: -140px;
+  z-index: -1;
+}
+
+.line3 {
+  position: absolute;
+  top: -200px;
+  left: 0;
+  z-index: -1;
+}
+
+.login-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 10px 20px;
+
+  button {
+    color: black;
+    margin: 0 40px;
+    background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+    font-size: 1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    font-family: "Poppins";
+    font-weight: 500;
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+    cursor: pointer;
+  }
+}
