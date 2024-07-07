@@ -1,1 +1,63 @@
-<p>streamlined-soaring-section works!</p>
+<section class="section-streamlined">
+  <div class="title-container">
+    <h1>STREAMLINED SOARING</h1>
+  </div>
+  <div class="cards-container">
+    <div class="slider-container">
+      <div class="slider">
+        <div #cards class="steps">
+          <div class="step">
+            <div class="step-number-container">
+              <div class="step-number-shadow">
+                <div class="step-number">
+                  <img src="assets/icons/step_01.svg" alt="Step One" />
+                </div>
+              </div>
+            </div>
+            <div class="step-text-container">LOG IN</div>
+          </div>
+          <div class="step">
+            <div class="step-number-container">
+              <div class="step-number-shadow">
+                <div class="step-number">
+                  <img src="assets/icons/step_02.svg" alt="Step Two" />
+                </div>
+              </div>
+            </div>
+            <div class="step-text-container">ADD TRAVELS</div>
+          </div>
+          <div class="step">
+            <div class="step-number-container">
+              <div class="step-number-shadow">
+                <div class="step-number">
+                  <img src="assets/icons/step_03.svg" alt="Step Three" />
+                </div>
+              </div>
+            </div>
+            <div class="step-text-container">CHECK STATISTICS</div>
+          </div>
+          <div class="step">
+            <div class="step-number-container">
+              <div class="step-number-shadow">
+                <div class="step-number">
+                  <img src="assets/icons/step_04.svg" alt="Step Four" />
+                </div>
+              </div>
+            </div>
+            <div class="step-text-container">SHARE WITH FRINDS</div>
+          </div>
+        </div>
+      </div>
+      <div class="previous-btn-container">
+        <button class="previous-btn" (click)="previousCard()">
+          <img class="arrow-left" src="assets/icons/shape.svg" alt="" />
+        </button>
+      </div>
+      <div class="next-btn-container">
+        <button class="next-btn" (click)="nextCard()">
+          <img class="arrow-right" src="assets/icons/shape.svg" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
