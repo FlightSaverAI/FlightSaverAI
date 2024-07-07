@@ -5,6 +5,7 @@ import { MainComponent } from './components/main/main.component';
 import { OfferSectionComponent } from './components/offer-section/offer-section.component';
 import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
 import { StreamlinedSoaringSectionComponent } from './components/streamlined-soaring-section/streamlined-soaring-section.component';
+import { NewsletterComponent } from './components/newsletter/newsletter.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { StreamlinedSoaringSectionComponent } from './components/streamlined-soa
     OfferSectionComponent,
     WhyUsSectionComponent,
     StreamlinedSoaringSectionComponent,
+    NewsletterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
