@@ -6,6 +6,7 @@ import { OfferSectionComponent } from './components/offer-section/offer-section.
 import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
 import { StreamlinedSoaringSectionComponent } from './components/streamlined-soaring-section/streamlined-soaring-section.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { SocialsComponent } from './components/socials/socials.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
     WhyUsSectionComponent,
     StreamlinedSoaringSectionComponent,
     NewsletterComponent,
+    SocialsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
