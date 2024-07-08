@@ -23,6 +23,11 @@
   padding: 10px;
   text-align: center;
 }
+
+.title {
+  display: none;
+}
+
 .newsletter-info {
   padding: 15px;
   text-align: center;
@@ -80,5 +85,40 @@
 
   .newsletter-form {
     padding: 10px;
+  }
+}
+
+@include tablet {
+  .mobile-title {
+    display: none;
+  }
+
+  .title {
+    display: block;
+  }
+
+  .newsletter-section {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .newsletter {
+    max-width: 800px;
+    max-height: 550px;
+    padding: 40px;
+  }
+
+  .newsletter-form {
+    flex-direction: row;
+
+    input {
+      width: 100%;
+      margin: 15px 25px 15px 0;
+    }
+
+    button {
+      width: unset;
+      white-space: nowrap;
+    }
   }
 }
