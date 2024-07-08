@@ -1,9 +1,12 @@
+@use '../styles/breakpoints' as *;
+
 .wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;
   border: 1px solid white;
 }
+
 app-main {
   height: 100%;
 }
@@ -23,4 +26,20 @@ app-streamlined-soaring-section {
 app-socials {
   display: flex;
   height: 75vh;
+}
+
+@include tablet {
+  app-socials {
+    height: 40vh;
+  }
+
+  app-newsletter {
+    height: 75vh;
+  }
+}
+
+@include laptop {
+  app-socials {
+    height: 50vh;
+  }
 }
