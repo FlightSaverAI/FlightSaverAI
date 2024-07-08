@@ -10,8 +10,7 @@ app-main {
 
 app-offer-section,
 app-why-us-section,
-app-newsletter,
-app-socials {
+app-newsletter {
   display: flex;
   height: 100vh;
 }
@@ -19,4 +18,9 @@ app-socials {
 app-streamlined-soaring-section {
   display: flex;
   height: 65vh;
+}
+
+app-socials {
+  display: flex;
+  height: 75vh;
 }
