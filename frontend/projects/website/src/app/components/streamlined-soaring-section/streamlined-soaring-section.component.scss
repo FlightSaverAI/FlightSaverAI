@@ -1,3 +1,5 @@
+@use '../../../styles/styles.scss' as *;
+
 .section-streamlined {
   display: flex;
   flex-direction: column;
@@ -53,7 +55,6 @@ h2 {
   display: flex;
   flex-direction: column;
   min-width: 310px;
-  max-width: 310px;
   height: 300px;
 }
 
@@ -151,4 +152,18 @@ h2 {
   justify-content: center;
   padding: 15px 0;
   width: 100%;
+}
+
+@include mobile-small {
+  .steps {
+    max-width: 270px;
+  }
+
+  .step {
+    min-width: 270px;
+  }
+
+  .step-text-container {
+    font-size: 1.1rem;
+  }
 }

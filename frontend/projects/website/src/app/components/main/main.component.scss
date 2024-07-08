@@ -1,3 +1,5 @@
+@use '../../../styles/styles.scss' as *;
+
 .main {
   display: grid;
   grid-template-rows: 2fr 1fr;
@@ -88,5 +90,23 @@ p {
     max-width: 250px;
     text-align: center;
     cursor: pointer;
+  }
+}
+
+@include mobile-small {
+  span {
+    font-size: 1.6rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  .shadow {
+    width: 310px;
+  }
+
+  .shape {
+    width: 293px;
   }
 }

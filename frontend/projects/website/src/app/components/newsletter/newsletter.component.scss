@@ -1,3 +1,5 @@
+@use '../../../styles/styles.scss' as *;
+
 .newsletter-section {
   display: flex;
   width: 100%;
@@ -8,6 +10,7 @@
 .newsletter {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   margin: 30px;
   padding: 20px;
   width: 100%;
@@ -58,7 +61,24 @@
     cursor: pointer;
   }
 }
+
 .newsletter-privacy-policy {
   padding: 15px;
   font-size: 0.8rem;
+}
+
+@include mobile-small {
+  .newsletter {
+    margin: 20px;
+  }
+
+  .newsletter-info {
+    padding: 15px;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .newsletter-form {
+    padding: 10px;
+  }
 }

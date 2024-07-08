@@ -1,3 +1,5 @@
+@use '../../../styles/styles.scss' as *;
+
 .offer-section {
   display: flex;
   flex-direction: column;
@@ -94,6 +96,8 @@ h2 {
 }
 
 .info-image {
+  width: 310px;
+  height: 290px;
   border-radius: 40px 40px 0 0;
   background-size: cover;
 }
@@ -173,4 +177,14 @@ h2 {
   justify-content: center;
   padding: 15px 0;
   width: 100%;
+}
+
+@include mobile-small {
+  .info-image {
+    width: 270px;
+  }
+
+  .cards {
+    max-width: 270px;
+  }
 }
