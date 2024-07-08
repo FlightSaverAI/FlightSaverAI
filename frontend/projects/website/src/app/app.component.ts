@@ -7,6 +7,7 @@ import { WhyUsSectionComponent } from './components/why-us-section/why-us-sectio
 import { StreamlinedSoaringSectionComponent } from './components/streamlined-soaring-section/streamlined-soaring-section.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { SocialsComponent } from './components/socials/socials.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { SocialsComponent } from './components/socials/socials.component';
     StreamlinedSoaringSectionComponent,
     NewsletterComponent,
     SocialsComponent,
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
