@@ -1,5 +1,9 @@
 @use '../styles/breakpoints' as *;
 
+.app-wrapper {
+  overflow: hidden;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -41,5 +45,9 @@ app-socials {
 @include laptop {
   app-socials {
     height: 50vh;
+  }
+
+  app-streamlined-soaring-section {
+    height: 75vh;
   }
 }

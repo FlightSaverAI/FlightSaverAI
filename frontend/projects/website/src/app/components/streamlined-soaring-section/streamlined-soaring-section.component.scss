@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid white;
 }
 
 .title-container {
@@ -12,7 +11,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid white;
   width: 100%;
   padding: 25px 0;
 }
@@ -23,12 +21,13 @@ h1 {
 }
 
 h2 {
+  display: none;
   font-size: 1.6rem;
   color: var(--color-secondary);
   font-weight: 400;
 }
 
-.cards-container {
+.steps-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,8 +94,8 @@ h2 {
   color: var(--color-secondary);
 }
 
-.previous-btn-container,
-.next-btn-container {
+.previous-btn-shadow,
+.next-btn-shadow {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,12 +107,12 @@ h2 {
   z-index: 1;
 }
 
-.previous-btn-container {
+.previous-btn-shadow {
   bottom: 0;
   left: -7%;
 }
 
-.next-btn-container {
+.next-btn-shadow {
   bottom: 0;
   right: -7%;
 }
@@ -155,6 +154,14 @@ h2 {
   width: 100%;
 }
 
+.arrow {
+  display: none;
+}
+
+.arrow-underline {
+  display: none;
+}
+
 @include mobile-small {
   .steps {
     max-width: 270px;
@@ -166,5 +173,69 @@ h2 {
 
   .step-text-container {
     font-size: 1.1rem;
+  }
+}
+
+@include laptop {
+  .title-container {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 25px 50px;
+  }
+
+  .slider-container {
+    width: 100%;
+  }
+
+  .steps-container {
+    align-items: flex-start;
+  }
+
+  .arrow-underline {
+    display: block;
+  }
+
+  h2 {
+    display: block;
+    margin-left: 10px;
+  }
+
+  .steps {
+    max-width: unset;
+    justify-content: space-evenly;
+  }
+
+  .step-number-shadow {
+    width: 150px;
+    height: 150px;
+  }
+
+  .step-text-container {
+    justify-content: space-evenly;
+    font-size: 1.2rem;
+  }
+
+  .step-number {
+    width: 120px;
+    height: 120px;
+  }
+
+  .step {
+    min-width: 250px;
+  }
+
+  .previous-btn-shadow,
+  .next-btn-shadow {
+    display: none;
+  }
+
+  .previous-btn,
+  .next-btn {
+    display: none;
+  }
+
+  .arrow {
+    display: block;
+    margin: 0 5px;
   }
 }
