@@ -189,3 +189,54 @@ p {
     width: 400px;
   }
 }
+
+@include laptop-large {
+  .shape {
+    width: 450px;
+  }
+
+  .shadow {
+    width: 475px;
+  }
+
+  .line1 {
+    height: 700px;
+    top: -150px;
+    left: 30px;
+  }
+
+  .line2 {
+    width: 700px;
+  }
+
+  .line3 {
+    height: 800px;
+    top: -230px;
+  }
+
+  span {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 2.5rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+  }
+}
+
+@include desktop {
+  span {
+    font-size: 3.5rem;
+  }
+
+  p {
+    font-size: 3rem;
+  }
+
+  .description {
+    font-size: 1.4rem;
+  }
+}

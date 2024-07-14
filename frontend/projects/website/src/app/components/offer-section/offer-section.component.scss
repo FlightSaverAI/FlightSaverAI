@@ -92,7 +92,7 @@ h2 {
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   padding: 10px;
   color: var(--color-secondary);
@@ -200,7 +200,7 @@ h2 {
 @include laptop {
   .title-container {
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
   }
 
   .offer-arrow {
@@ -224,11 +224,26 @@ h2 {
 
   .card {
     margin: 0 10px;
-    max-width: 310px;
+    max-width: 325px;
     max-height: 520px;
+    min-width: 240px;
   }
 
   .info-image {
     width: 100%;
+  }
+}
+
+@include desktop {
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .offer-description {
+    font-size: 1.2rem;
   }
 }

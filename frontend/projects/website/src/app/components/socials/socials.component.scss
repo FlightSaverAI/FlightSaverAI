@@ -5,7 +5,6 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .logo-container {
@@ -31,12 +30,10 @@
   left: -160%;
 }
 
-.line-1-desktop {
-  display: none;
-}
-
+.line-1-desktop,
 .line-2-desktop {
   display: none;
+  z-index: -1;
 }
 
 .socials {
@@ -169,14 +166,18 @@ button {
   .line-1-desktop {
     display: block;
     position: absolute;
-    top: -190%;
-    left: 5%;
+    top: -300%;
+    left: -65%;
+
+    width: 1400px;
   }
 
   .line-2-desktop {
     display: block;
     position: absolute;
-    left: 3%;
+    top: -65%;
+    left: -65%;
+    width: 1400px;
   }
 
   .socials-links {
@@ -185,5 +186,19 @@ button {
 
   .nav-column {
     font-size: 1.2rem;
+  }
+}
+
+@include laptop-large {
+  .line-1-desktop {
+    top: -365%;
+    left: -65%;
+    width: 1800px;
+  }
+
+  .line-2-desktop {
+    top: -80%;
+    left: -80%;
+    width: 1800px;
   }
 }

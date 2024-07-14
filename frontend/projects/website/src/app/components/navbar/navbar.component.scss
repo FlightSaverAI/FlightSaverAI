@@ -80,3 +80,9 @@ ul {
     margin: 0 30px;
   }
 }
+
+@include desktop {
+  .logo {
+    margin-left: 30px;
+  }
+}

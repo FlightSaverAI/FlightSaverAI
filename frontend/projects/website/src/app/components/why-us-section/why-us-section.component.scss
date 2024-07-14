@@ -29,12 +29,6 @@ h1 {
   color: var(--color-secondary);
 }
 
-h2 {
-  font-size: 1.6rem;
-  color: var(--color-secondary);
-  font-weight: 400;
-}
-
 .cards-container {
   display: flex;
   justify-content: center;
@@ -242,7 +236,7 @@ h2 {
 
   .cards {
     max-width: none;
-    justify-content: center;
+    justify-content: space-evenly;
   }
 
   .card {
@@ -269,5 +263,43 @@ h2 {
   .previous-btn,
   .next-btn {
     display: none;
+  }
+}
+
+@include laptop-large {
+  .title-container {
+    justify-content: space-around;
+  }
+
+  .cards {
+    height: 475px;
+  }
+
+  .card {
+    min-width: 230px;
+    max-width: 325px;
+    max-height: 475px;
+  }
+
+  .image {
+    width: 175px;
+    height: 175px;
+  }
+
+  .info-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .info {
+    padding: 25px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  .title-description {
+    font-size: 1.2rem;
   }
 }
