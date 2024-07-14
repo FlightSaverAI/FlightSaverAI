@@ -4,7 +4,6 @@
   display: grid;
   grid-template-rows: 2fr 1fr;
   height: 100%;
-  overflow-x: hidden;
 }
 
 .baner {
@@ -18,6 +17,11 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.description {
+  display: none;
+  font-size: 1.6rem;
 }
 
 .earth {
@@ -93,6 +97,10 @@ p {
   }
 }
 
+.main-arrow {
+  display: none;
+}
+
 @include mobile-small {
   span {
     font-size: 1.6rem;
@@ -108,5 +116,67 @@ p {
 
   .shape {
     width: 293px;
+  }
+}
+
+@include laptop {
+  .main {
+    grid-template-rows: none;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .baner {
+    padding: 30px;
+    justify-content: center;
+  }
+
+  .hero-text {
+    margin: 35px;
+    align-items: flex-start;
+  }
+
+  .hero-description {
+    margin: 0 35px;
+  }
+
+  .description {
+    display: block;
+    font-size: 1.1rem;
+  }
+
+  .hero-text {
+    height: unset;
+  }
+
+  .login-btn {
+    justify-content: flex-start;
+    height: unset;
+    margin: 35px;
+    padding: 0;
+  }
+
+  .main-arrow {
+    display: block;
+    margin-left: 20px;
+  }
+
+  .earth {
+    order: 2;
+  }
+
+  p {
+    font-size: 2rem;
+  }
+
+  span {
+    font-size: 2.6rem;
+  }
+
+  .shape {
+    width: 375px;
+  }
+
+  .shadow {
+    width: 400px;
   }
 }

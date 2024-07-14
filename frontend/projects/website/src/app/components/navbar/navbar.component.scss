@@ -1,9 +1,15 @@
+@use '../../../styles/styles.scss' as *;
+
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 30px 50px;
   width: 100%;
+}
+
+.burger {
+  display: block;
 }
 
 .logo {
@@ -27,11 +33,50 @@
   }
 }
 
+ul {
+  display: none;
+}
+
 .links {
   &__burger-menu {
     display: flex;
 
     background-color: transparent;
     border: none;
+  }
+}
+
+.try-btn {
+  color: black;
+  background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+  font-size: 1rem;
+  padding: 10px 20px;
+  margin: 0 30px;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Poppins';
+  font-weight: 500;
+  width: 100%;
+  min-width: 125px;
+  text-align: center;
+  cursor: pointer;
+}
+
+@include laptop {
+  .burger {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-secondary);
+    margin: 0 30px;
   }
 }
