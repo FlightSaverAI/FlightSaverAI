@@ -219,12 +219,13 @@ h2 {
   .cards {
     justify-content: space-evenly;
     max-width: none;
+    max-height: 520px;
   }
 
   .card {
     margin: 0 10px;
-    max-width: 325px;
-    width: 100%;
+    max-width: 310px;
+    max-height: 520px;
   }
 
   .info-image {

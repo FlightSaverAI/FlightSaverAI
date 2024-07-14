@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-.baner {
+.baner-container {
   display: flex;
   flex-direction: column;
 }
@@ -22,6 +22,7 @@
 .description {
   display: none;
   font-size: 1.6rem;
+  font-weight: 300;
 }
 
 .earth {
@@ -125,7 +126,7 @@ p {
     grid-template-columns: 1fr 1fr;
   }
 
-  .baner {
+  .baner-container {
     padding: 30px;
     justify-content: center;
   }
@@ -158,6 +159,14 @@ p {
   .main-arrow {
     display: block;
     margin-left: 20px;
+  }
+
+  .hehe1 {
+    white-space: nowrap;
+  }
+
+  .hehe2 {
+    white-space: nowrap;
   }
 
   .earth {
