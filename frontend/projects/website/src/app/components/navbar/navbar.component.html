@@ -1,32 +1,20 @@
 <nav class="nav">
-  <div class="logo">
-    <div class="logo__icon">
-      <img src="assets/icons/flight-saver-logo.svg" alt="" srcset="" />
+  <div class="nav__logo">
+    <div class="nav__logo-icon">
+      <img src="assets/icons/flight-saver-logo.svg" alt="Flight Saver Logo" />
     </div>
-    <div class="logo__title">
-      <span>FlightSaver</span>
-    </div>
+    <span class="nav__logo-title">FlightSaver</span>
   </div>
-  <div class="links">
-    <div class="navbar-hamburger" (click)="openNavbar()">
-      <div
-        class="navbar-hamburger__line"
-        [ngClass]="{ 'navbar-hamburger__line--open': isNavbarOpen }"
-      ></div>
-      <div
-        class="navbar-hamburger__line"
-        [ngClass]="{ 'navbar-hamburger__line--open': isNavbarOpen }"
-      ></div>
-      <div
-        class="navbar-hamburger__line"
-        [ngClass]="{ 'navbar-hamburger__line--open': isNavbarOpen }"
-      ></div>
-    </div>
-    <ul class="list" [ngClass]="{ 'list--open': isNavbarOpen }">
-      <li>ABOUT</li>
-      <li>NEWS</li>
-      <li>PRICING</li>
-      <button class="try-btn">SIGN IN</button>
-    </ul>
+  <div class="nav__burger" (click)="openNavbar()">
+    <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
+    <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
+    <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
   </div>
+  
+  <ul class="nav__list" [ngClass]="{ 'nav__list--open': isNavbarOpen }">
+    <li class="nav__list-item">ABOUT</li>
+    <li class="nav__list-item">NEWS</li>
+    <li class="nav__list-item">PRICING</li>
+    <button class="nav__list-btn">SIGN IN</button>
+  </ul>
 </nav>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
