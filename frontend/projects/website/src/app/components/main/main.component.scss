@@ -4,119 +4,116 @@
   display: grid;
   grid-template-rows: 2fr 1fr;
   height: 100%;
-}
 
-.baner-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.hero-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.description {
-  display: none;
-  font-size: 1.6rem;
-  font-weight: 300;
-}
-
-.earth {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  position: relative;
-}
-
-.shadow {
-  position: absolute;
-  top: -8px;
-  left: -10px;
-}
-
-span {
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-p {
-  font-size: 1.4rem;
-  color: var(--color-secondary);
-}
-
-.line1 {
-  position: absolute;
-  top: -95px;
-  left: 65px;
-  z-index: -1;
-}
-
-.line2 {
-  position: absolute;
-  top: 140px;
-  left: -140px;
-  z-index: -1;
-}
-
-.line3 {
-  position: absolute;
-  top: -200px;
-  left: 0;
-  z-index: -1;
-}
-
-.login-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 0 20px;
-
-  button {
-    color: black;
-    background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
-    font-size: 1rem;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 50px;
-    font-family: 'Poppins';
-    font-weight: 500;
-    width: 100%;
-    max-width: 250px;
-    text-align: center;
-    cursor: pointer;
+  &__earth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-}
 
-.main-arrow {
-  display: none;
+  &__earth {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__earth-shadow {
+    position: absolute;
+    top: -8px;
+    left: -10px;
+  }
+
+  &__earth-line1 {
+    position: absolute;
+    top: -95px;
+    left: 65px;
+    z-index: -1;
+  }
+
+  &__earth-line2 {
+    position: absolute;
+    top: 140px;
+    left: -140px;
+    z-index: -1;
+  }
+
+  &__earth-line3 {
+    position: absolute;
+    top: -200px;
+    left: 0;
+    z-index: -1;
+  }
+
+  &__banner-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__banner {
+    text-align: center;
+    white-space: nowrap;
+    margin: 0 35px;
+    font-size: 1.4rem;
+    color: var(--color-secondary);
+
+    & > span {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &__banner:nth-child(2) {
+    margin-bottom: 35px;
+  }
+
+  &__banner-description {
+    display: none;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin: 0 35px;
+    color: var(--color-secondary);
+  }
+
+  &__banner-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+
+    & > button {
+      @include button;
+      padding: 12px 20px;
+      max-width: 250px;
+    }
+
+    & > img {
+      display: none;
+    }
+  }
 }
 
 @include mobile-small {
-  span {
-    font-size: 1.6rem;
-  }
+  .main {
+    &__earth-shadow {
+      width: 310px;
+    }
 
-  p {
-    font-size: 1.2rem;
-  }
+    &__earth-shape {
+      width: 293px;
+    }
 
-  .shadow {
-    width: 310px;
-  }
+    &__banner {
+      font-size: 1.2rem;
 
-  .shape {
-    width: 293px;
+      & > span {
+        font-size: 1.6rem;
+      }
+    }
   }
 }
 
@@ -124,119 +121,102 @@ p {
   .main {
     grid-template-rows: none;
     grid-template-columns: 1fr 1fr;
-  }
 
-  .baner-container {
-    padding: 30px;
-    justify-content: center;
-  }
+    &__earth-container {
+      order: 2;
+    }
 
-  .hero-text {
-    margin: 35px;
-    align-items: flex-start;
-  }
+    &__earth-shape {
+      width: 375px;
+    }
 
-  .hero-description {
-    margin: 0 35px;
-  }
+    &__earth-shadow {
+      width: 400px;
+    }
 
-  .description {
-    display: block;
-    font-size: 1.1rem;
-  }
+    &__banner-container {
+      padding: 30px;
+      justify-content: center;
+    }
 
-  .hero-text {
-    height: unset;
-  }
+    &__banner {
+      font-size: 2rem;
+      text-align: left;
 
-  .login-btn {
-    justify-content: flex-start;
-    height: unset;
-    margin: 35px;
-    padding: 0;
-  }
+      & > span {
+        font-size: 2.6rem;
+      }
+    }
 
-  .main-arrow {
-    display: block;
-    margin-left: 20px;
-  }
+    &__banner-description {
+      display: block;
+      font-size: 1.1rem;
+    }
 
-  .hehe1 {
-    white-space: nowrap;
-  }
+    &__banner-btn-container {
+      justify-content: flex-start;
+      height: unset;
+      margin: 35px;
+      padding: 0;
 
-  .hehe2 {
-    white-space: nowrap;
-  }
-
-  .earth {
-    order: 2;
-  }
-
-  p {
-    font-size: 2rem;
-  }
-
-  span {
-    font-size: 2.6rem;
-  }
-
-  .shape {
-    width: 375px;
-  }
-
-  .shadow {
-    width: 400px;
+      & > img {
+        display: block;
+        margin-left: 20px;
+      }
+    }
   }
 }
 
 @include laptop-large {
-  .shape {
-    width: 450px;
-  }
+  .main {
+    &__earth-shape {
+      width: 450px;
+    }
 
-  .shadow {
-    width: 475px;
-  }
+    &__earth-shadow {
+      width: 475px;
+    }
 
-  .line1 {
-    height: 700px;
-    top: -150px;
-    left: 30px;
-  }
+    &__earth-line1 {
+      height: 700px;
+      top: -150px;
+      left: 30px;
+    }
 
-  .line2 {
-    width: 700px;
-  }
+    &__earth-line2 {
+      width: 700px;
+    }
 
-  .line3 {
-    height: 800px;
-    top: -230px;
-  }
+    &__earth-line3 {
+      height: 800px;
+      top: -230px;
+    }
 
-  span {
-    font-size: 3rem;
-  }
+    &__banner {
+      font-size: 2.5rem;
 
-  p {
-    font-size: 2.5rem;
-  }
-
-  .description {
-    font-size: 1.2rem;
+      & > span {
+        font-size: 3rem;
+      }
+    }
+    &__banner-description {
+      font-size: 1.2rem;
+    }
   }
 }
 
 @include desktop {
-  span {
-    font-size: 3.5rem;
-  }
+  .main {
+    &__banner {
+      font-size: 3rem;
 
-  p {
-    font-size: 3rem;
-  }
+      & > span {
+        font-size: 3.5rem;
+      }
+    }
 
-  .description {
-    font-size: 1.4rem;
+    &__banner-description {
+      font-size: 1.4rem;
+    }
   }
 }
