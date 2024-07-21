@@ -22,7 +22,7 @@
         [ngClass]="{ 'navbar-hamburger__line--open': isNavbarOpen }"
       ></div>
     </div>
-    <ul>
+    <ul class="list" [ngClass]="{ 'list--open': isNavbarOpen }">
       <li>ABOUT</li>
       <li>NEWS</li>
       <li>PRICING</li>
