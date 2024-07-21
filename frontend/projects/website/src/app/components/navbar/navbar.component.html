@@ -8,9 +8,20 @@
     </div>
   </div>
   <div class="links">
-    <button class="links__burger-menu">
-      <img class="burger" src="assets/icons/burger-menu.svg" alt="menu" />
-    </button>
+    <div class="navbar-hamburger" (click)="openNavbar()">
+      <div
+        class="navbar-hamburger__line"
+        [ngClass]="{ 'navbar-hamburger__line--open': isNavbarOpen }"
+      ></div>
+      <div
+        class="navbar-hamburger__line"
+        [ngClass]="{ 'navbar-hamburger__line--open': isNavbarOpen }"
+      ></div>
+      <div
+        class="navbar-hamburger__line"
+        [ngClass]="{ 'navbar-hamburger__line--open': isNavbarOpen }"
+      ></div>
+    </div>
     <ul>
       <li>ABOUT</li>
       <li>NEWS</li>

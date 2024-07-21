@@ -37,13 +37,36 @@ ul {
   display: none;
 }
 
-.links {
-  &__burger-menu {
-    display: flex;
+.navbar-hamburger {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  cursor: pointer;
 
-    background-color: transparent;
-    border: none;
+  &__line {
+    width: 35px;
+    height: 4px;
+    background: linear-gradient(to left, #7683af 0%, #b7c2e8 100%);
+    margin: 3px;
+    border-radius: 20px;
+    transition: 0.4s;
+
+    &--open:first-child {
+      transform: rotate(-45deg) translate(-10px, 4px);
+    }
+
+    &--open:nth-child(2) {
+      opacity: 0;
+    }
+
+    &--open:last-child {
+      transform: rotate(45deg) translate(-10px, -3px);
+    }
   }
+}
+
+.navbar-hamburger__line:nth-child(2) {
+  width: 25px;
 }
 
 .try-btn {
@@ -63,7 +86,7 @@ ul {
 }
 
 @include laptop {
-  .burger {
+  .navbar-hamburger {
     display: none;
   }
 
