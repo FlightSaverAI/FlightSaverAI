@@ -93,7 +93,20 @@
 
     & > img {
       display: none;
+      animation: move 1s infinite;
     }
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 
@@ -213,6 +226,10 @@
       & > span {
         font-size: 3.5rem;
       }
+    }
+
+    &__banner-container {
+      padding: 30px 50px;
     }
 
     &__banner-description {
