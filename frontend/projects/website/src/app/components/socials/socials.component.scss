@@ -1,204 +1,222 @@
 @use '../../../styles/styles.scss' as *;
 
-.socials-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90%;
-}
-
-.logo {
-  position: relative;
-}
-
-.line-1-mobile {
-  position: absolute;
-  top: 15%;
-  left: -160%;
-}
-
-.line-2-mobile {
-  position: absolute;
-  top: -95%;
-  left: -160%;
-}
-
-.line-1-desktop,
-.line-2-desktop {
-  display: none;
-  z-index: -1;
-}
-
 .socials {
   display: flex;
   flex-direction: column;
-  height: 60%;
-}
-
-.socials-subtitle {
-  padding: 15px 0;
-  font-size: 1.1rem;
-  text-align: center;
-  color: var(--color-secondary);
-}
-
-.socials-links-container {
-  display: flex;
-  justify-content: center;
-}
-
-.socials-links {
-  display: flex;
-  padding: 5px 15px;
-  width: 375px;
-  justify-content: space-evenly;
-  list-style: none;
-}
-
-.link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.socials-join-btn {
-  display: flex;
-  justify-content: center;
-  padding: 50px;
-}
-
-.nav-column {
-  display: none;
-  height: 100%;
-  font-weight: 500;
-
-  .list {
-    list-style: none;
-  }
-
-  a {
-    color: var(--color-secondary);
-    text-decoration: none;
-  }
-}
-
-.tablet-line {
-  display: none;
-}
-
-button {
-  color: black;
-  background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 50px;
-  font-family: 'Poppins';
   width: 100%;
-  text-align: center;
-  max-width: 250px;
-  cursor: pointer;
-}
+  height: 100%;
 
-@include tablet {
-  .socials-section {
-    justify-content: center;
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
-  .wrapper {
+  &__logo-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    height: 90%;
+  }
+
+  &__logo {
     position: relative;
   }
 
-  .line-1-mobile,
-  .line-2-mobile {
+  &__logo-line {
+    &--mobile-1 {
+      position: absolute;
+      top: 15%;
+      left: -160%;
+    }
+
+    &--mobile-2 {
+      position: absolute;
+      top: -95%;
+      left: -160%;
+    }
+
+    &--desktop-1,
+    &--desktop-2 {
+      display: none;
+      z-index: -1;
+    }
+  }
+
+  &__nav-column {
+    display: none;
+    height: 100%;
+    font-weight: 500;
+
+    .socials__list {
+      list-style: none;
+    }
+
+    .socials__list-link {
+      color: var(--color-secondary);
+      text-decoration: none;
+    }
+  }
+
+  &__tablet-line {
     display: none;
   }
 
-  .tablet-line {
-    display: block;
+  &__social-links {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
   }
 
-  .nav-column {
+  &__subtitle {
+    padding: 15px 0;
+    font-size: 1.1rem;
+    text-align: center;
+    color: var(--color-secondary);
+  }
+
+  &__links-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__links-list {
+    display: flex;
+    padding: 5px 15px;
+    width: 375px;
+    justify-content: space-evenly;
+    list-style: none;
+  }
+
+  &__links-item {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
 
-    li {
-      padding: 10px 0;
+  &__join-btn {
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+
+    &-text {
+      color: black;
+      background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Poppins';
+      width: 100%;
+      text-align: center;
+      max-width: 250px;
+      cursor: pointer;
     }
   }
+}
 
-  .logo-container {
-    height: 100%;
-  }
-
+@include tablet {
   .socials {
     justify-content: center;
-    height: 100%;
-  }
 
-  .socials-join-btn {
-    padding: 20px;
-
-    button {
-      padding: 10px 15px;
+    &__wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+      position: relative;
     }
-  }
 
-  .socials-links {
-    display: flex;
-    width: 275px;
+    &__logo-line {
+      &--mobile-1,
+      &--mobile-2 {
+        display: none;
+      }
+    }
+
+    &__tablet-line {
+      display: block;
+    }
+
+    &__nav-column {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .socials__list-item {
+        padding: 10px 0;
+      }
+    }
+
+    &__logo-container {
+      height: 100%;
+    }
+
+    &__social-links {
+      justify-content: center;
+      height: 100%;
+    }
+
+    &__join-btn {
+      padding: 20px;
+
+      &-text {
+        padding: 10px 15px;
+      }
+    }
+
+    &__links-list {
+      display: flex;
+      width: 275px;
+    }
   }
 }
 
 @include laptop {
-  .line-1-desktop {
-    display: block;
-    position: absolute;
-    top: -300%;
-    left: -65%;
+  .socials {
+    &__logo-line {
+      &--desktop-1 {
+        display: block;
+        position: absolute;
+        top: -300%;
+        left: -65%;
+        width: 1400px;
+      }
 
-    width: 1400px;
-  }
+      &--desktop-2 {
+        display: block;
+        position: absolute;
+        top: -65%;
+        left: -65%;
+        width: 1400px;
+      }
+    }
 
-  .line-2-desktop {
-    display: block;
-    position: absolute;
-    top: -65%;
-    left: -65%;
-    width: 1400px;
-  }
+    &__links-list {
+      width: 325px;
+    }
 
-  .socials-links {
-    width: 325px;
-  }
-
-  .nav-column {
-    font-size: 1.2rem;
+    &__nav-column {
+      font-size: 1.2rem;
+    }
   }
 }
 
 @include laptop-large {
-  .line-1-desktop {
-    top: -365%;
-    left: -65%;
-    width: 1800px;
-  }
+  .socials {
+    &__logo-line {
+      &--desktop-1 {
+        top: -365%;
+        left: -65%;
+        width: 1800px;
+      }
 
-  .line-2-desktop {
-    top: -80%;
-    left: -80%;
-    width: 1800px;
+      &--desktop-2 {
+        top: -80%;
+        left: -80%;
+        width: 1800px;
+      }
+    }
   }
 }
