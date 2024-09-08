@@ -29,6 +29,15 @@
     },
     "serve-original": {
       "cache": true
+    },
+    "nx": {
+      "cache": true
+    },
+    "start": {
+      "cache": true
+    },
+    "watch": {
+      "cache": true
     }
   },
   "defaultBase": "main",
@@ -43,5 +52,6 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/**/*.spec.[jt]s"
     ]
-  }
+  },
+  "nxCloudAccessToken": "YWNmMDhmYTAtNzY4My00OGQ2LWEwMTUtNjc4MDkzZTEyMGRkfHJlYWQtd3JpdGU="
 }
