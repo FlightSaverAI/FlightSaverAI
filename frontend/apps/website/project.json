@@ -7,20 +7,20 @@
       "style": "scss"
     }
   },
-  "sourceRoot": "projects/website/src",
+  "sourceRoot": "apps/website/src",
   "prefix": "app",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "options": {
         "outputPath": "dist/website",
-        "index": "projects/website/src/index.html",
-        "browser": "projects/website/src/main.ts",
+        "index": "apps/website/src/index.html",
+        "browser": "apps/website/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "projects/website/tsconfig.app.json",
+        "tsConfig": "apps/website/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["projects/website/src/favicon.ico", "projects/website/src/assets"],
-        "styles": ["projects/website/src/styles/styles.scss"],
+        "assets": ["apps/website/src/favicon.ico", "apps/website/src/assets"],
+        "styles": ["apps/website/src/styles/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -69,14 +69,14 @@
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
         "polyfills": ["zone.js", "zone.js/testing"],
-        "tsConfig": "projects/website/tsconfig.spec.json",
+        "tsConfig": "apps/website/tsconfig.spec.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "projects/website/src/favicon.ico",
-          "projects/website/src/assets",
-          "projects/website/src/manifest.webmanifest"
+          "apps/website/src/favicon.ico",
+          "apps/website/src/assets",
+          "apps/website/src/manifest.webmanifest"
         ],
-        "styles": ["projects/website/src/styles/styles.scss"],
+        "styles": ["apps/website/src/styles/styles.scss"],
         "scripts": []
       }
     },
@@ -84,17 +84,17 @@
       "executor": "@angular-devkit/build-angular:application",
       "options": {
         "outputPath": "dist/website",
-        "index": "projects/website/src/index.html",
-        "browser": "projects/website/src/main.ts",
+        "index": "apps/website/src/index.html",
+        "browser": "apps/website/src/main.ts",
         "polyfills": ["zone.js", "es-module-shims"],
-        "tsConfig": "projects/website/tsconfig.app.json",
+        "tsConfig": "apps/website/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "projects/website/src/favicon.ico",
-          "projects/website/src/assets",
-          "projects/website/src/manifest.webmanifest"
+          "apps/website/src/favicon.ico",
+          "apps/website/src/assets",
+          "apps/website/src/manifest.webmanifest"
         ],
-        "styles": ["projects/website/src/styles/styles.scss"],
+        "styles": ["apps/website/src/styles/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -112,7 +112,7 @@
             }
           ],
           "outputHashing": "all",
-          "serviceWorker": "projects/website/ngsw-config.json"
+          "serviceWorker": "apps/website/ngsw-config.json"
         },
         "development": {
           "optimization": false,
