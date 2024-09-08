@@ -10,7 +10,7 @@ import { SocialsComponent } from './components/socials/socials.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'web-root',
   standalone: true,
   imports: [
     RouterOutlet,

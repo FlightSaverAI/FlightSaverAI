@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-streamlined-soaring-section',
+  selector: 'web-streamlined-soaring-section',
   standalone: true,
   imports: [],
   templateUrl: './streamlined-soaring-section.component.html',
@@ -19,7 +19,7 @@ export class StreamlinedSoaringSectionComponent {
   }
 
   public previousCard() {
-    this.cardIndex > 0 ? this.cardIndex-- : this.cardIndex;
+    this.cardIndex = this.cardIndex > 0 ? --this.cardIndex : this.cardIndex;
 
     this.cards.nativeElement.style.transform = `translateX(-${this.cardIndex * 100}%)`;
   }

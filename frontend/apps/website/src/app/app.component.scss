@@ -4,49 +4,49 @@
   overflow: hidden;
 }
 
-.wrapper {
+.main-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-app-main {
+web-main {
   height: 100%;
 }
 
-app-offer-section,
-app-why-us-section,
-app-newsletter {
+web-offer-section,
+web-why-us-section,
+web-newsletter {
   display: flex;
   height: 100vh;
 }
 
-app-streamlined-soaring-section {
+web-streamlined-soaring-section {
   display: flex;
   height: 65vh;
 }
 
-app-socials {
+web-socials {
   display: flex;
   height: 75vh;
 }
 
 @include tablet {
-  app-socials {
+  web-socials {
     height: 40vh;
   }
 
-  app-newsletter {
+  web-newsletter {
     height: 80vh;
   }
 }
 
 @include laptop {
-  app-socials {
+  web-socials {
     height: 50vh;
   }
 
-  app-streamlined-soaring-section {
+  web-streamlined-soaring-section {
     height: 75vh;
   }
 }

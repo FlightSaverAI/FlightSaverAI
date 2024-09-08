@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-why-us-section',
+  selector: 'web-why-us-section',
   standalone: true,
   imports: [],
   templateUrl: './why-us-section.component.html',
@@ -19,7 +19,7 @@ export class WhyUsSectionComponent {
   }
 
   public previousCard() {
-    this.cardIndex > 0 ? this.cardIndex-- : this.cardIndex;
+    this.cardIndex = this.cardIndex > 0 ? --this.cardIndex : this.cardIndex;
 
     this.cards.nativeElement.style.transform = `translateX(-${this.cardIndex * 100}%)`;
   }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'web-navbar',
   standalone: true,
   imports: [NgClass],
   templateUrl: './navbar.component.html',
