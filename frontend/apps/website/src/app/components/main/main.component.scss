@@ -1,0 +1,239 @@
+@use '../../../styles/styles.scss' as *;
+
+.main {
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  height: 100%;
+
+  &__earth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__earth {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__earth-shadow {
+    position: absolute;
+    top: -8px;
+    left: -10px;
+  }
+
+  &__earth-line1 {
+    position: absolute;
+    top: -95px;
+    left: 65px;
+    z-index: -1;
+  }
+
+  &__earth-line2 {
+    position: absolute;
+    top: 140px;
+    left: -140px;
+    z-index: -1;
+  }
+
+  &__earth-line3 {
+    position: absolute;
+    top: -200px;
+    left: 0;
+    z-index: -1;
+  }
+
+  &__banner-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__banner {
+    text-align: center;
+    white-space: nowrap;
+    margin: 0 35px;
+    font-size: 1.4rem;
+    color: var(--color-secondary);
+
+    & > span {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &__banner:nth-child(2) {
+    margin-bottom: 35px;
+  }
+
+  &__banner-description {
+    display: none;
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin: 0 35px;
+    color: var(--color-secondary);
+  }
+
+  &__banner-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+
+    & > button {
+      @include button;
+      padding: 12px 20px;
+      max-width: 250px;
+    }
+
+    & > img {
+      display: none;
+      animation: move 1s infinite;
+    }
+  }
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@include mobile-small {
+  .main {
+    &__earth-shadow {
+      width: 310px;
+    }
+
+    &__earth-shape {
+      width: 293px;
+    }
+
+    &__banner {
+      font-size: 1.2rem;
+
+      & > span {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+@include laptop {
+  .main {
+    grid-template-rows: none;
+    grid-template-columns: 1fr 1fr;
+
+    &__earth-container {
+      order: 2;
+    }
+
+    &__earth-shape {
+      width: 375px;
+    }
+
+    &__earth-shadow {
+      width: 400px;
+    }
+
+    &__banner-container {
+      padding: 30px;
+      justify-content: center;
+    }
+
+    &__banner {
+      font-size: 2rem;
+      text-align: left;
+
+      & > span {
+        font-size: 2.6rem;
+      }
+    }
+
+    &__banner-description {
+      display: block;
+      font-size: 1.1rem;
+    }
+
+    &__banner-btn-container {
+      justify-content: flex-start;
+      height: unset;
+      margin: 35px;
+      padding: 0;
+
+      & > img {
+        display: block;
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+@include laptop-large {
+  .main {
+    &__earth-shape {
+      width: 450px;
+    }
+
+    &__earth-shadow {
+      width: 475px;
+    }
+
+    &__earth-line1 {
+      height: 700px;
+      top: -150px;
+      left: 30px;
+    }
+
+    &__earth-line2 {
+      width: 700px;
+    }
+
+    &__earth-line3 {
+      height: 800px;
+      top: -230px;
+    }
+
+    &__banner {
+      font-size: 2.5rem;
+
+      & > span {
+        font-size: 3rem;
+      }
+    }
+    &__banner-description {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@include desktop {
+  .main {
+    &__banner {
+      font-size: 3rem;
+
+      & > span {
+        font-size: 3.5rem;
+      }
+    }
+
+    &__banner-container {
+      padding: 30px 50px;
+    }
+
+    &__banner-description {
+      font-size: 1.4rem;
+    }
+  }
+}

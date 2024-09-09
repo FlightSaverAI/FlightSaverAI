@@ -1,0 +1,20 @@
+<nav class="nav">
+  <div class="nav__logo">
+    <div class="nav__logo-icon">
+      <img src="assets/icons/flight-saver-logo.svg" alt="Flight Saver Logo" />
+    </div>
+    <span class="nav__logo-title">FlightSaver</span>
+  </div>
+  <div class="nav__burger" (click)="openNavbar()">
+    <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
+    <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
+    <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
+  </div>
+  
+  <ul class="nav__list" [ngClass]="{ 'nav__list--open': isNavbarOpen }">
+    <li class="nav__list-item">ABOUT</li>
+    <li class="nav__list-item">NEWS</li>
+    <li class="nav__list-item">PRICING</li>
+    <button class="nav__list-btn">SIGN IN</button>
+  </ul>
+</nav>
