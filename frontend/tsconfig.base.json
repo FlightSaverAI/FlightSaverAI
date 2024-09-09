@@ -12,7 +12,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@flight-saver/authentication": ["libs/authentication/src/index.ts"]
+      "@flight-saver/authentication": ["libs/authentication/src/index.ts"],
+      "@global/*": ["apps/global/*"],
     }
   }
 }
