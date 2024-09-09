@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "es2022",
     "useDefineForClassFields": false,
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
@@ -14,11 +13,7 @@
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.editor.json",
-      "composite": true
-    },
-    {
-      "path": "./tsconfig.app.json",
+      "path": "./tsconfig.lib.json",
       "composite": true
     },
     {
@@ -26,7 +21,7 @@
       "composite": true
     }
   ],
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
