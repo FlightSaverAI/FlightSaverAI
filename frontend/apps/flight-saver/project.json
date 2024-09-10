@@ -16,8 +16,16 @@
         "polyfills": ["zone.js"],
         "tsConfig": "apps/flight-saver/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/flight-saver/src/favicon.ico", "apps/flight-saver/src/assets"],
-        "styles": ["apps/flight-saver/src/styles.scss"],
+        "assets": [
+          "apps/flight-saver/src/favicon.ico",
+          "apps/flight-saver/src/assets",
+          {
+            "glob": "**/*",
+            "input": "apps/global/assets",
+            "output": "global/assets/"
+          }
+        ],
+        "styles": ["apps/flight-saver/src/styles.scss", "apps/global/styles/styles.scss"],
         "scripts": []
       },
       "configurations": {
