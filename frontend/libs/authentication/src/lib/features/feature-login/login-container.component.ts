@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { LoginComponent } from '../../ui/ui-login/login.component';
 
 @Component({
-  selector: 'auth-login',
   standalone: true,
-  imports: [],
-  template: ` <p>login works!</p> `,
+  imports: [LoginComponent],
+  template: ` <auth-login></auth-login> `,
 })
-export class LoginComponent {}
+export class LoginContainerComponent {}

@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { LoginComponent } from '../features/feature-login/login-container.component';
+import { LoginContainerComponent } from '../features/feature-login/login-container.component';
 
 export const authRoutes: Route[] = [
   {
@@ -9,6 +9,6 @@ export const authRoutes: Route[] = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginContainerComponent,
   },
 ];
