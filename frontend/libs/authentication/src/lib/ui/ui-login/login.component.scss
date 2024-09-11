@@ -1,0 +1,89 @@
+@use '@global/styles/styles.scss' as *;
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid red;
+  height: 100vh;
+  width: 100%;
+  padding: 15px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+
+  &__logo {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 50px;
+  }
+
+  &__logo-title {
+    padding: 0 10px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: var(--btn-background-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-secondary);
+    margin-top: 45px;
+    width: 100%;
+    line-height: 1.5;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__form-options {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__alternatives {
+    display: flex;
+    flex-direction: column;
+
+    & > p {
+      text-align: center;
+    }
+  }
+
+  &__alternatives-options {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.hehe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background-color: var(--color-tertiary);
+  margin: 0 8px;
+}
+
+@include mobile-small {
+  .login__banner {
+    display: none;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-tertiary);
+  font-weight: bold;
+  margin-left: 5px;
+}
