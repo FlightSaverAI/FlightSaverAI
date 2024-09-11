@@ -14,8 +14,7 @@
     "paths": {
       "@flight-saver/authentication": ["libs/authentication/src/index.ts"],
       "@global/*": ["apps/global/*"],
-      "ui-components": ["libs/shared/ui-components/src/index.ts"],
-      "ui-directives": ["libs/shared/ui-directives/src/index.ts"]
+      "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]
     }
   }
 }
