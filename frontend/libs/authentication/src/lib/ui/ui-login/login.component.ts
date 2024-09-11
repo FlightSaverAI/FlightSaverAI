@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BannerComponent } from '../ui-banner/banner.component';
 import { NgOptimizedImage } from '@angular/common';
+import { InputComponent } from '@shared/ui-components';
 
 @Component({
   selector: 'auth-login',
   standalone: true,
-  imports: [BannerComponent, NgOptimizedImage],
+  imports: [BannerComponent, NgOptimizedImage, InputComponent],
   template: `
     <div class="login">
       <div class="login__logo">
@@ -23,8 +24,17 @@ import { NgOptimizedImage } from '@angular/common';
         </div>
 
         <form class="login__form">
-          <input type="text" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <shared-input
+            iconSrc="global/assets/email.svg"
+            placeholder="Enter your email adress"
+            label="Email"
+          ></shared-input>
+          <shared-input
+            iconSrc="global/assets/password.svg"
+            placeholder="Enter your password"
+            label="Password"
+            type="password"
+          ></shared-input>
           <div class="login__form-options" style="margin: 15px 0;">
             <div>
               <input type="checkbox" />
