@@ -1,0 +1,14 @@
+@use '@global/styles/styles.scss' as *;
+
+.button {
+  color: var(--text-color-black);
+  background: var(--btn-background-color);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -23,6 +23,7 @@
         "configDir": "libs/shared/ui-components/.storybook",
         "browserTarget": "ui-components:build-storybook",
         "compodoc": false,
+        "styles": ["apps/global/styles/styles.scss"],
         "assets": [
           {
             "glob": "**/*",
@@ -45,6 +46,7 @@
         "configDir": "libs/shared/ui-components/.storybook",
         "browserTarget": "ui-components:build-storybook",
         "compodoc": false,
+        "styles": ["apps/global/styles/styles.scss"],
         "assets": [
           {
             "glob": "**/*",

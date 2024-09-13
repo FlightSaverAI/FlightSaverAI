@@ -1,12 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'shared-button',
   standalone: true,
   imports: [CommonModule],
-  template: `<p>button works!</p>`,
+  template: `<button class="button" [type]="type()" (click)="emitEvent.emit()">
+    {{ content() }}
+  </button>`,
   styleUrl: './button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent {}
+export class ButtonComponent {
+  content = input.required();
+  type = input('');
+  emitEvent = output<void>();
+}
