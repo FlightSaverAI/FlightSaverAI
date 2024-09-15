@@ -28,3 +28,9 @@ label {
   color: var(--color-secondary);
   margin-bottom: 5px;
 }
+
+@include laptop {
+  .input-container {
+    height: unset;
+  }
+}

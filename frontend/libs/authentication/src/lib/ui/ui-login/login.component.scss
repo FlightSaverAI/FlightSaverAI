@@ -8,6 +8,18 @@ shared-button {
   margin: 5px 10px;
 }
 
+.line1 {
+  position: absolute;
+  right: 0;
+  top: 30%;
+  z-index: -1;
+}
+
+.line2 {
+  position: absolute;
+  right: 0;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -20,6 +32,7 @@ shared-button {
   width: 100%;
   align-items: center;
   margin-bottom: 30px;
+  z-index: 1;
 
   & > img {
     width: 35px;
@@ -40,14 +53,20 @@ shared-button {
   display: none;
 }
 
-.login {
+.login-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   color: var(--color-secondary);
   width: 100%;
   height: 100vh;
   line-height: 1.5;
+}
+
+.login {
+  width: 100%;
+  max-width: 450px;
 
   &__title {
     margin-bottom: 5px;
@@ -55,6 +74,7 @@ shared-button {
 
   &__subtitle {
     font-size: 0.9rem;
+    margin-bottom: 30px;
   }
 
   &__form {
@@ -76,6 +96,8 @@ shared-button {
     & > p {
       font-size: 0.9rem;
       text-align: center;
+      margin: 15px;
+      z-index: 1;
     }
   }
 
@@ -101,6 +123,12 @@ a {
   color: var(--color-tertiary);
   font-weight: bold;
   margin-left: 5px;
+}
+
+@include mobile-small {
+  .login__subtitle {
+    margin-bottom: 10px;
+  }
 }
 
 @include mobile-medium {
@@ -135,6 +163,76 @@ a {
 
     &__alternative > p {
       font-size: 1rem;
+    }
+  }
+}
+
+@include tablet {
+  section {
+    display: unset;
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    min-height: 100vh;
+    padding: 0;
+    width: unset;
+    overflow: hidden;
+  }
+
+  .logo {
+    width: unset;
+    position: absolute;
+    left: 0;
+    margin: 20px;
+  }
+
+  .banner {
+    position: relative;
+    display: flex;
+    height: 100vh;
+  }
+
+  .login {
+    padding: 30px;
+  }
+}
+
+@include laptop {
+  .login {
+    padding: 40px;
+
+    &__title {
+      font-size: 2rem;
+    }
+
+    &__subtitle {
+      margin-bottom: 30px;
+    }
+
+    &__alternative > p {
+      margin: 25px 0;
+    }
+  }
+}
+
+@include laptop-large {
+  .login {
+    padding: 15px;
+
+    &__title {
+      font-size: 2.2rem;
+    }
+
+    &__form-options {
+      margin: 20px 0;
+    }
+
+    .hehe {
+      width: 35px;
+      height: 35px;
+      border-radius: 18px;
     }
   }
 }
