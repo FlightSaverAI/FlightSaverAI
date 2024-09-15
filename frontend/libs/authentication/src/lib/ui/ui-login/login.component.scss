@@ -1,5 +1,11 @@
 @use '@global/styles/styles.scss' as *;
 
+section {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
 shared-input {
   margin: 10px 0;
 }
@@ -12,6 +18,7 @@ shared-button {
   position: absolute;
   right: 0;
   top: 30%;
+  height: 100%;
   z-index: -1;
 }
 
@@ -49,10 +56,6 @@ shared-button {
   }
 }
 
-.banner {
-  display: none;
-}
-
 .login-container {
   display: flex;
   flex-direction: column;
@@ -88,34 +91,6 @@ shared-button {
     margin: 15px 0;
     font-size: 0.9rem;
   }
-
-  &__alternative {
-    display: flex;
-    flex-direction: column;
-
-    & > p {
-      font-size: 0.9rem;
-      text-align: center;
-      margin: 15px;
-      z-index: 1;
-    }
-  }
-
-  &__alternative-options {
-    display: flex;
-    justify-content: center;
-  }
-}
-
-.hehe {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-  background-color: var(--color-tertiary);
-  margin: 0 15px;
 }
 
 a {
@@ -160,16 +135,12 @@ a {
     &__subtitle {
       font-size: 1rem;
     }
-
-    &__alternative > p {
-      font-size: 1rem;
-    }
   }
 }
 
 @include tablet {
   section {
-    display: unset;
+    display: block;
   }
 
   .wrapper {
@@ -188,51 +159,52 @@ a {
     margin: 20px;
   }
 
-  .banner {
-    position: relative;
-    display: flex;
-    height: 100vh;
-  }
-
   .login {
     padding: 30px;
-  }
-}
-
-@include laptop {
-  .login {
-    padding: 40px;
 
     &__title {
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
 
     &__subtitle {
       margin-bottom: 30px;
     }
+  }
+}
 
-    &__alternative > p {
-      margin: 25px 0;
+@include laptop {
+  .logo {
+    & > img {
+      width: 60px;
+      height: 60px;
+    }
+
+    &__title {
+      font-size: 1.8rem;
+    }
+  }
+
+  .login {
+    padding: 40px;
+
+    &__title {
+      font-size: 2.4rem;
+    }
+
+    &__subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
     }
   }
 }
 
 @include laptop-large {
   .login {
-    padding: 15px;
-
-    &__title {
-      font-size: 2.2rem;
-    }
+    padding: 0;
 
     &__form-options {
-      margin: 20px 0;
-    }
-
-    .hehe {
-      width: 35px;
-      height: 35px;
-      border-radius: 18px;
+      font-size: 1rem;
+      margin: 25px 0;
     }
   }
 }

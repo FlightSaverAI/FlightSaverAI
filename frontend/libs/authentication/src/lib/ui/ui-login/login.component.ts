@@ -3,11 +3,18 @@ import { BannerComponent } from '../ui-banner/banner.component';
 import { NgOptimizedImage } from '@angular/common';
 import { InputComponent } from '@shared/ui-components';
 import { ButtonComponent } from '@shared/ui-components';
+import { ExternalLoginsComponent } from '../ui-external-logins/external-logins.component';
 
 @Component({
   selector: 'auth-login',
   standalone: true,
-  imports: [BannerComponent, NgOptimizedImage, InputComponent, ButtonComponent],
+  imports: [
+    BannerComponent,
+    NgOptimizedImage,
+    InputComponent,
+    ButtonComponent,
+    ExternalLoginsComponent,
+  ],
   template: `
     <section>
       <img class="line2" src="global/assets/line2.svg" alt="" />
@@ -17,7 +24,7 @@ import { ButtonComponent } from '@shared/ui-components';
           <img src="global/assets/flight-saver-logo.svg" alt="logo" />
           <p class="logo__title">FlightSaver</p>
         </div>
-        <auth-banner class="banner"></auth-banner>
+        <auth-banner></auth-banner>
         <div class="login-container">
           <div class="login">
             <h2 class="login__title">Sign in</h2>
@@ -47,21 +54,7 @@ import { ButtonComponent } from '@shared/ui-components';
               </div>
               <shared-button content="Login" type="submit"></shared-button>
             </form>
-
-            <div class="login__alternative">
-              <p>or continue with</p>
-              <div class="login__alternative-options">
-                <div class="hehe">
-                  <img ngSrc="global/assets/facebook.svg" alt="apple" width="25" height="25" />
-                </div>
-                <div class="hehe">
-                  <img ngSrc="global/assets/apple.svg" alt="apple" width="16" height="16" />
-                </div>
-                <div class="hehe">
-                  <img ngSrc="global/assets/google.svg" alt="facebook" width="16" height="16" />
-                </div>
-              </div>
-            </div>
+            <auth-external-logins></auth-external-logins>
           </div>
         </div>
       </div>
