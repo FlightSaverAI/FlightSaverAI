@@ -8,7 +8,11 @@ export function passwordMatchValidator(
     const control = formGroup.get(controlName);
     const matchingControl = formGroup.get(matchingControlName);
 
-    if (control && matchingControl && control.value !== matchingControl.value) {
+    if (
+      control &&
+      matchingControl &&
+      (control.value !== matchingControl.value || matchingControl.value.length === 0)
+    ) {
       matchingControl.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
     } else {
