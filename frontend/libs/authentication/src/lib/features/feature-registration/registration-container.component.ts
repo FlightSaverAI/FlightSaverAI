@@ -16,6 +16,10 @@ export class RegistrationContainerComponent {
   readonly registrationForm = registrationForm();
 
   confirmRegistration() {
-    console.log(this.registrationForm.getRawValue());
+    if (this.registrationForm.valid) {
+      console.log('Form submitted', this.registrationForm.value);
+    } else {
+      console.log('Form is invalid');
+    }
   }
 }
