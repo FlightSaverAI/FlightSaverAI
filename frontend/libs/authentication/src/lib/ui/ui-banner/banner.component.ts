@@ -4,13 +4,8 @@ import { Component } from '@angular/core';
   selector: 'auth-banner',
   standalone: true,
   imports: [],
-  template: `
-    <p>
-      banner works!
-    </p>
-  `,
-  styleUrl: './banner.component.scss'
+  template: ` <img src="global/assets/images/banner-login.png" />
+    <div class="shadow"></div>`,
+  styleUrl: './banner.component.scss',
 })
-export class BannerComponent {
-
-}
+export class BannerComponent {}
