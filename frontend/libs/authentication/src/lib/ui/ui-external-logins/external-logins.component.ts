@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'auth-external-logins',
@@ -22,5 +22,6 @@ import { Component } from '@angular/core';
     </div>
   `,
   styleUrl: './external-logins.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExternalLoginsComponent {}
