@@ -12,8 +12,9 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "data-access": ["libs/auth/data-access/src/index.ts"],
-      "utils": ["libs/auth/utils/src/index.ts"]
+      "@flight-saver/authentication": ["libs/authentication/src/index.ts"],
+      "@global/*": ["apps/global/*"],
+      "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]
     }
   }
 }

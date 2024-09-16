@@ -16,19 +16,20 @@
         "outputPath": "dist/website",
         "index": "apps/website/src/index.html",
         "browser": "apps/website/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/website/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/website/src/favicon.ico",
           "apps/website/src/assets",
-          "apps/website/src/manifest.webmanifest"
+          "apps/website/src/manifest.webmanifest",
+          {
+            "glob": "**/*",
+            "input": "apps/global/assets",
+            "output": "global/assets/"
+          }
         ],
-        "styles": [
-          "apps/website/src/styles/styles.scss"
-        ],
+        "styles": ["apps/global/styles/styles.scss"],
         "scripts": [],
         "server": "apps/website/src/main.server.ts",
         "prerender": true,
@@ -82,10 +83,7 @@
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "polyfills": [
-          "zone.js",
-          "zone.js/testing"
-        ],
+        "polyfills": ["zone.js", "zone.js/testing"],
         "tsConfig": "apps/website/tsconfig.spec.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -94,9 +92,7 @@
           "apps/website/src/manifest.webmanifest",
           "apps/website/src/manifest.webmanifest"
         ],
-        "styles": [
-          "apps/website/src/styles/styles.scss"
-        ],
+        "styles": ["apps/website/src/styles/styles.scss"],
         "scripts": []
       }
     },
@@ -106,10 +102,7 @@
         "outputPath": "dist/website",
         "index": "apps/website/src/index.html",
         "browser": "apps/website/src/main.ts",
-        "polyfills": [
-          "zone.js",
-          "es-module-shims"
-        ],
+        "polyfills": ["zone.js", "es-module-shims"],
         "tsConfig": "apps/website/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -118,9 +111,7 @@
           "apps/website/src/manifest.webmanifest",
           "apps/website/src/manifest.webmanifest"
         ],
-        "styles": [
-          "apps/website/src/styles/styles.scss"
-        ],
+        "styles": ["apps/website/src/styles/styles.scss"],
         "scripts": []
       },
       "configurations": {

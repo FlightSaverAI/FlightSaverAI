@@ -1,0 +1,59 @@
+@use '@global/styles/styles.scss' as *;
+
+.input-container {
+  display: flex;
+  border-radius: 8px;
+  height: 35px;
+  background-color: var(--color-secondary);
+  padding-right: 10px;
+
+  &--error {
+    border: 2px solid red;
+  }
+
+  &--success {
+    border: 2px solid green;
+  }
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+label {
+  font-size: 0.9rem;
+  display: inline-block;
+  color: var(--color-secondary);
+  margin-bottom: 5px;
+}
+
+.error-message {
+  margin: 5px;
+  color: red;
+  animation: displayMessage 0.5s 1;
+}
+
+@keyframes displayMessage {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@include laptop {
+  .input-container {
+    height: unset;
+  }
+}
