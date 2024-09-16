@@ -1,22 +1,56 @@
-import { ChangeDetectionStrategy, Component, forwardRef, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  forwardRef,
+  input,
+  signal,
+} from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
-import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
 
 @Component({
   selector: 'shared-input',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule, NgOptimizedImage, ValidationSignComponent, NgClass],
   template: `
     <label for="input">{{ label() }}</label>
-    <div id="input" class="input-container">
+    <div
+      id="input"
+      class="input-container"
+      [ngClass]="
+        !formField.pristine
+          ? {
+              'input-container--error': hasValidator && formField.status === 'INVALID',
+              'input-container--success': hasValidator && formField.status === 'VALID'
+            }
+          : {}
+      "
+    >
       @if(iconSrc()){
       <div class="icon-container">
-        <img [ngSrc]="iconSrc()" alt="" [width]="20" [height]="20" />
+        <img [ngSrc]="iconSrc()" alt="" width="20" height="20" />
       </div>
       }
-      <input (input)="setInput($event.target)" [type]="type()" [placeholder]="placeholder()" />
+      <input
+        [type]="type()"
+        [placeholder]="placeholder()"
+        (input)="setInput($event.target)"
+        (blur)="onTouched()"
+      />
+
+      @if(formField){
+      <shared-validation-sign [formField]="formField"></shared-validation-sign>
+      }
     </div>
+
+    @if(hasValidator && !formField.pristine && formField.status === 'INVALID'){
+    <div class="error-message">
+      <p>Field {{ label() }} {{ valueChangeListener() ? 'is invalid' : 'is required' }}</p>
+    </div>
+    }
   `,
   styleUrl: './input.component.scss',
   providers: [
@@ -36,26 +70,40 @@ export class InputComponent implements ControlValueAccessor {
   parentForm = input.required<FormGroup<any>>();
   fieldName = input.required<string>();
 
+  valueChangeListener = signal('');
+
   onChange!: <T>(value: T) => void;
   onTouched!: () => void;
 
-  get formField() {
-    return this.parentForm().get(this.fieldName());
+  get formField(): FormControl {
+    return this.parentForm().get(this.fieldName()) as FormControl;
   }
 
-  writeValue(obj: any): void {
-    console.log(obj);
+  get hasValidator(): boolean {
+    return this.formField && this.formField.validator ? true : false;
+  }
+
+  writeValue(value: any): void {
+    if (!value) {
+      this.valueChangeListener.set('');
+      return;
+    }
+
+    this.valueChangeListener.set(value);
   }
 
   registerOnChange(fn: () => void): void {
     this.onChange = fn;
   }
+
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setInput(target: EventTarget | null): void {
     const inputValue = (target as HTMLInputElement).value;
+
+    this.valueChangeListener.set(inputValue);
 
     this.onChange(inputValue);
   }
