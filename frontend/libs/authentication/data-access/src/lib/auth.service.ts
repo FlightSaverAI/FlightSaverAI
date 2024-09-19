@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LoginFormData } from '@flight-saver/authentication/models';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -7,8 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthService {
-  login(loginData: LoginFormData) {
-    if (loginData.email === 'error@example.com') {
+  authentication<T>(formData: T) {
+    if (!formData) {
       const errorResponse = new HttpErrorResponse({
         status: 401,
         statusText: 'Unauthorized',

@@ -14,7 +14,7 @@ export const loginActions = createActionGroup({
 export const registerActions = createActionGroup({
   source: 'register',
   events: {
-    register: props<RegistrationFormData>(),
+    register: props<{ registerFormData: RegistrationFormData }>(),
     registerSuccess: props<{ currentUser: CurrentUser }>(),
   },
 });

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthFacadeService } from '@flight-saver/authentication/data-access';
 import { RegistrationComponent } from '@flight-saver/authentication/ui';
 import { registrationForm } from '@flight-saver/authentication/utils';
 
@@ -15,11 +16,13 @@ import { registrationForm } from '@flight-saver/authentication/utils';
 export class RegistrationContainerComponent {
   readonly registrationForm = registrationForm();
 
+  private _authFacade = inject(AuthFacadeService);
+
   confirmRegistration() {
-    if (this.registrationForm.valid) {
-      console.log('Form submitted', this.registrationForm.value);
-    } else {
-      console.log('Form is invalid');
+    if (this.registrationForm.invalid) {
+      return;
     }
+
+    this._authFacade.registration(this.registrationForm.getRawValue());
   }
 }
