@@ -4,6 +4,6 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadChildren: async () =>
-      await import('@flight-saver/authentication').then((m) => m.authRoutes),
+      await import('@flight-saver/authentication/routes').then((m) => m.authRoutes),
   },
 ];
