@@ -2,12 +2,9 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
+  selector: 'app-root',
   standalone: true,
   imports: [RouterModule],
-  selector: 'app-root',
   template: `<router-outlet></router-outlet>`,
-  styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'flight-saver';
-}
+export class AppComponent {}
