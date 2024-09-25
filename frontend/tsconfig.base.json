@@ -12,13 +12,14 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@global/*": ["apps/global/*"],
       "@flight-saver/authentication/data-access": ["libs/authentication/data-access/src/index.ts"],
       "@flight-saver/authentication/features": ["libs/authentication/features/src/index.ts"],
       "@flight-saver/authentication/models": ["libs/authentication/models/src/index.ts"],
       "@flight-saver/authentication/routes": ["libs/authentication/routes/src/index.ts"],
       "@flight-saver/authentication/ui": ["libs/authentication/ui/src/index.ts"],
       "@flight-saver/authentication/utils": ["libs/authentication/utils/src/index.ts"],
-      "@global/*": ["apps/global/*"],
+      "@flight-saver/home/routes": ["libs/home/routes/src/index.ts"],
       "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]
     }
   }
