@@ -51,7 +51,7 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "community:build",
-        "port": 4200,
+        "port": 4202,
         "staticFilePath": "dist/apps/community/browser",
         "spa": true
       }
