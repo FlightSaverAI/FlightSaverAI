@@ -87,8 +87,6 @@
   }
 
   &__list-btn {
-    @include button;
-
     max-width: 150px;
     min-width: 125px;
     margin: 15px;

@@ -86,8 +86,6 @@
     padding: 0 20px;
 
     & > button {
-      @include button;
-      padding: 12px 20px;
       max-width: 250px;
     }
 
