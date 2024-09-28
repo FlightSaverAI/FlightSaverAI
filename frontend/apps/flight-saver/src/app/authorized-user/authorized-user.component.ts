@@ -1,28 +1,40 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NavbarComponent, NavConfig } from '@shared/ui-components';
 
 @Component({
   selector: 'app-authorized-user',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NavbarComponent],
   template: `
-    <nav class="nav">
-      <div class="logo">
-        <img src="" alt="" />
-        <span>Flight Saver</span>
-      </div>
-      <div class="links">
-        <a routerLink="/authorized/home">Home</a>
-        <a>Statistics</a>
-        <a routerLink="/authorized/community">Community</a>
-        <button>Add Flight</button>
-        <div class="photo"></div>
-      </div>
-    </nav>
+    <shared-navbar [navConfig]="navConfig"></shared-navbar>
     <main>
       <router-outlet></router-outlet>
     </main>
   `,
   styleUrl: './authorized-user.component.scss',
 })
-export class AuthorizedUserComponent {}
+export class AuthorizedUserComponent {
+  navConfig: NavConfig[] = [
+    {
+      type: 'list',
+      name: 'Home',
+      routerLink: '/authorized/home',
+    },
+    {
+      type: 'list',
+      name: 'Statistics',
+      routerLink: '',
+    },
+    {
+      type: 'list',
+      name: 'Community',
+      routerLink: '/authorized/community',
+    },
+    {
+      type: 'button',
+      name: 'ADD FLIGHT',
+      routerLink: '',
+    },
+  ];
+}

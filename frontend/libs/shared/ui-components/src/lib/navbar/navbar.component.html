@@ -12,9 +12,12 @@
   </div>
 
   <ul class="nav__list" [ngClass]="{ 'nav__list--open': isNavbarOpen }">
-    <li class="nav__list-item">ABOUT</li>
-    <li class="nav__list-item">NEWS</li>
-    <li class="nav__list-item">PRICING</li>
-    <shared-button class="nav__list-btn" content="SIGN IN"></shared-button>
+    @for(item of navConfig(); track $index){ @if(item.type === "list"){
+    <li class="nav__list-item" [routerLink]="item.routerLink">
+      {{ item.name }}
+    </li>
+    } @if(item.type === "button"){
+    <shared-button class="nav__list-btn" [content]="item.name"></shared-button>
+    } }
   </ul>
 </nav>
