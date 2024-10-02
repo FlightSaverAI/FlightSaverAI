@@ -73,8 +73,12 @@
             "output": "global/assets/"
           }
         ],
-        "styles": ["apps/flight-saver/src/styles.scss", "apps/global/styles/styles.scss"],
-        "scripts": []
+        "styles": [
+          "apps/flight-saver/src/styles.scss",
+          "apps/global/styles/styles.scss",
+          "node_modules/leaflet/dist/leaflet.css"
+        ],
+        "scripts": ["node_modules/leaflet/dist/leaflet.js"]
       },
       "configurations": {
         "production": {
