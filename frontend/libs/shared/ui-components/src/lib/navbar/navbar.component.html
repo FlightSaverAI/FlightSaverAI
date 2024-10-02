@@ -1,8 +1,6 @@
 <nav class="nav">
   <div class="nav__logo">
-    <div class="nav__logo-icon">
-      <img src="global/assets/flight-saver-logo.svg" alt="Flight Saver Logo" />
-    </div>
+    <img src="global/assets/flight-saver-logo.svg" alt="Flight Saver Logo" />
     <span class="nav__logo-title">FlightSaver</span>
   </div>
   <div class="nav__burger" (click)="openNavbar()">
@@ -10,14 +8,24 @@
     <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
     <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
   </div>
-
   <ul class="nav__list" [ngClass]="{ 'nav__list--open': isNavbarOpen }">
-    @for(item of navConfig(); track $index){ @if(item.type === "list"){
-    <li class="nav__list-item" [routerLink]="item.routerLink">
-      {{ item.name }}
-    </li>
-    } @if(item.type === "button"){
-    <shared-button class="nav__list-btn" [content]="item.name"></shared-button>
-    } }
+    <ng-container *ngFor="let item of navConfig()">
+      <li *ngIf="item.type === 'list'" class="nav__list-item" [routerLink]="item.routerLink">
+        {{ item.name }}
+      </li>
+      <shared-button
+        *ngIf="item.type === 'button'"
+        class="nav__list-btn"
+        [content]="item.name"
+      ></shared-button>
+      <div *ngIf="item.image && item.type === 'photo'" class="nav__list-photo">
+        <img
+          [ngSrc]="item.image.src"
+          [alt]="item.image.alt"
+          [width]="item.image.width"
+          [height]="item.image.height"
+        />
+      </div>
+    </ng-container>
   </ul>
 </nav>
