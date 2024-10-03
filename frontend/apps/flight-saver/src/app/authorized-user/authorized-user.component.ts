@@ -36,5 +36,16 @@ export class AuthorizedUserComponent {
       name: 'ADD FLIGHT',
       routerLink: '',
     },
+    {
+      type: 'photo',
+      name: '',
+      routerLink: '',
+      image: {
+        src: 'global/assets/images/user-photo.png',
+        alt: 'User Photo',
+        width: 50,
+        height: 50,
+      },
+    },
   ];
 }
