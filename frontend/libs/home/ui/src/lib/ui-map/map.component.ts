@@ -34,6 +34,7 @@ export class MapComponent implements OnInit {
       );
 
       this.flightsMap.fitBounds(polyline.getBounds());
+      this.flightsMap.setZoom(5);
 
       this._addMarker(flight.start.latLng, `Start: ${flight.start.departureAirport}`);
       this._addMarker(flight.end.latLng, `End: ${flight.end.arrivalAirport}`);
