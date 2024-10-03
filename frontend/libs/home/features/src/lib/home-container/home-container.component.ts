@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import { MapComponent } from '@flight-saver/home/ui';
 import L from 'leaflet';
+import { FlightsSummaryComponent } from '@flight-saver/home/ui';
 
 @Component({
   standalone: true,
-  imports: [MapComponent],
-  template: `<home-map [markerIcon]="markerIcon" [flightData]="flightData"></home-map>`,
+  imports: [MapComponent, FlightsSummaryComponent],
+  template: `
+    <div class="wrapper">
+      <home-map [markerIcon]="markerIcon" [flightData]="flightData"></home-map>
+      <home-flights-summary></home-flights-summary>
+    </div>
+  `,
   styleUrl: './home-container.component.scss',
 })
 export class HomeContainerComponent {

@@ -68,7 +68,7 @@
     background-color: rgba(0, 0, 0, 0.8);
     transform: translateY(-100%);
     color: var(--color-secondary);
-    z-index: 997;
+    z-index: 998;
     list-style: none;
     transition: 0.3s;
     cursor: pointer;
@@ -100,12 +100,14 @@
 
 @include mobile-small {
   .nav {
-    padding: 30px;
+    padding: 25px;
   }
 }
 
 @include laptop {
   .nav {
+    padding: 20px 50px;
+
     &__burger {
       display: none;
     }
@@ -124,7 +126,7 @@
       align-items: center;
       color: var(--color-secondary);
       margin: 0 30px;
-      font-size: 1rem;
+      font-size: 1.1rem;
     }
   }
 }
