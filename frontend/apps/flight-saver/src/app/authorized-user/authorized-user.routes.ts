@@ -13,6 +13,11 @@ export const authorizedUserRoutes: Route[] = [
           await import('@flight-saver/home/routes').then((m) => m.homeRoutes),
       },
       {
+        path: 'statistics',
+        loadChildren: async () =>
+          await import('@flight-saver/statistics/routes').then((m) => m.statisticsRoutes),
+      },
+      {
         path: 'community',
         loadComponent: () =>
           loadRemoteModule('community', './Component').then((m) => m.AppComponent),
