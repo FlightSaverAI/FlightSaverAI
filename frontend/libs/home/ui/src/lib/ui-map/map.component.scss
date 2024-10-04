@@ -1,0 +1,72 @@
+@use '@global/styles/styles.scss' as *;
+
+#map {
+  height: 55vh;
+}
+
+::ng-deep {
+  .leaflet-control-zoom-out,
+  .leaflet-control-zoom-in {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 30px !important;
+    height: 30px !important;
+    background: var(--btn-background-color);
+  }
+
+  .leaflet-control-zoom-in {
+    border-top-left-radius: 6px !important;
+    border-top-right-radius: 6px !important;
+  }
+
+  .leaflet-control-zoom-out {
+    border-bottom-left-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+  }
+
+  .leaflet-bar {
+    border: none !important;
+
+    > a {
+      font-size: 25px !important;
+      border-bottom: unset !important;
+    }
+  }
+
+  .leaflet-container {
+    background: unset !important;
+  }
+
+  .leaflet-control-container {
+    & > div:first-child {
+      margin: 0 10px;
+      top: 45%;
+      z-index: 996 !important;
+    }
+
+    & > div:last-child {
+      display: none;
+    }
+  }
+}
+
+@include tablet {
+  #map {
+    height: 80vh;
+  }
+
+  ::ng-deep {
+    .leaflet-control-zoom-out,
+    .leaflet-control-zoom-in {
+      width: 40px !important;
+      height: 40px !important;
+    }
+  }
+}
+
+@include laptop {
+  #map {
+    height: 75vh;
+  }
+}

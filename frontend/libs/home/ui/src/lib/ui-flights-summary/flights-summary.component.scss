@@ -1,0 +1,93 @@
+@use '@global/styles/styles.scss' as *;
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 25px;
+  color: white;
+  line-height: 1.7;
+  width: 250px;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+  border-radius: 30px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -15%);
+  z-index: 997;
+
+  &__flights {
+    display: flex;
+    align-items: center;
+
+    & > img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  &__stats {
+    margin: 0 25px;
+
+    & > p:first-child {
+      font-size: 1.1rem;
+    }
+
+    & > p {
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+  }
+}
+
+@include mobile-medium {
+  .summary {
+    width: 300px;
+  }
+
+  .summary__stats {
+    & > p:first-child {
+      font-size: 1.2rem;
+    }
+
+    & > p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .summary__flights > img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@include tablet {
+  .summary {
+    display: flex;
+    flex-direction: row;
+    max-width: 85vw;
+    width: unset;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@include laptop {
+  .summary {
+    max-width: 70vw;
+  }
+
+  .summary__stats {
+    & > p:first-child {
+      font-size: 1.4rem;
+    }
+
+    & > p {
+      font-size: 1rem;
+    }
+  }
+
+  .summary__flights > img {
+    width: 50px;
+    height: 50px;
+  }
+}

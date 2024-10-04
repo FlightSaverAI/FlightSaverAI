@@ -7,64 +7,26 @@
   "tags": ["type:app"],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/apps/flight-saver",
-        "index": "apps/flight-saver/src/index.html",
-        "browser": "apps/flight-saver/src/main.ts",
-        "polyfills": ["zone.js"],
-        "tsConfig": "apps/flight-saver/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/flight-saver/src/favicon.ico",
-          "apps/flight-saver/src/assets",
-          {
-            "glob": "**/*",
-            "input": "apps/global/assets",
-            "output": "global/assets/"
-          }
-        ],
-        "styles": ["apps/flight-saver/src/styles.scss", "apps/global/styles/styles.scss"],
-        "scripts": []
-      },
+      "executor": "@angular-architects/native-federation:build",
+      "options": {},
       "configurations": {
         "production": {
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
-            }
-          ],
-          "outputHashing": "all"
+          "target": "flight-saver:esbuild:production"
         },
         "development": {
-          "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
+          "target": "flight-saver:esbuild:development",
+          "dev": true
         }
       },
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
-      "configurations": {
-        "production": {
-          "buildTarget": "flight-saver:build:production"
-        },
-        "development": {
-          "buildTarget": "flight-saver:build:development"
-        }
-      },
-      "defaultConfiguration": "development",
+      "executor": "@angular-architects/native-federation:build",
       "options": {
-        "port": 4201
+        "target": "flight-saver:serve-original:development",
+        "rebuildDelay": 0,
+        "dev": true,
+        "port": 0
       }
     },
     "extract-i18n": {
@@ -90,6 +52,71 @@
         "port": 4201,
         "staticFilePath": "dist/apps/flight-saver/browser",
         "spa": true
+      }
+    },
+    "esbuild": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/flight-saver",
+        "index": "apps/flight-saver/src/index.html",
+        "browser": "apps/flight-saver/src/main.ts",
+        "polyfills": ["zone.js", "es-module-shims"],
+        "tsConfig": "apps/flight-saver/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/flight-saver/src/favicon.ico",
+          "apps/flight-saver/src/assets",
+          {
+            "glob": "**/*",
+            "input": "apps/global/assets",
+            "output": "global/assets/"
+          }
+        ],
+        "styles": [
+          "apps/flight-saver/src/styles.scss",
+          "apps/global/styles/styles.scss",
+          "node_modules/leaflet/dist/leaflet.css"
+        ],
+        "scripts": ["node_modules/leaflet/dist/leaflet.js"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-original": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "flight-saver:esbuild:production"
+        },
+        "development": {
+          "buildTarget": "flight-saver:esbuild:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4201
       }
     }
   }

@@ -20,7 +20,8 @@
                   "type:ui",
                   "type:data-access",
                   "type:utils",
-                  "type:models"
+                  "type:models",
+                  "domain:shared"
                 ]
               },
               {

@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "auth-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/authentication/ui/src",
   "prefix": "lib",
