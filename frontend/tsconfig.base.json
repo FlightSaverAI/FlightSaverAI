@@ -23,7 +23,8 @@
       "@flight-saver/home/ui": ["libs/home/ui/src/index.ts"],
       "@flight-saver/statistics/routes": ["libs/statistics/routes/src/index.ts"],
       "@global/*": ["apps/global/*"],
-      "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]
+      "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"],
+      "@flight-saver/statistics/features": ["libs/statistics/features/src/index.ts"]
     }
   }
 }
