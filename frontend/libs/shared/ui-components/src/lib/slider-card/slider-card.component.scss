@@ -1,0 +1,156 @@
+@use '@global/styles/styles.scss' as *;
+
+.offer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.offer {
+  &__title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 25px 0;
+  }
+
+  &__title > h1 {
+    font-size: 1.8rem;
+    color: var(--color-secondary);
+  }
+
+  &__title > h2 {
+    font-size: 1.6rem;
+    color: var(--color-secondary);
+    font-weight: 400;
+    text-align: center;
+  }
+
+  &__title-arrow {
+    display: none;
+  }
+
+  &__title-description {
+    display: none;
+    color: var(--color-secondary);
+  }
+
+  &__cards-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    z-index: 0;
+  }
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider {
+  overflow: hidden;
+}
+
+.cards {
+  display: flex;
+  max-width: 310px;
+  max-height: 500px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.previous-btn-container,
+.next-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 35px;
+  z-index: 3;
+}
+
+.previous-btn-container {
+  top: 50%;
+  left: -8%;
+  transform: translateY(-50%);
+}
+
+.next-btn-container {
+  top: 50%;
+  right: -8%;
+  transform: translateY(-50%);
+}
+
+.previous-btn,
+.next-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 35px;
+  border: none;
+  background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+  cursor: pointer;
+}
+
+.previous-btn {
+  transform: rotate(180deg);
+}
+
+.arrow-right {
+  margin-left: 3px;
+}
+
+.arrow-left {
+  margin-left: 5px;
+}
+
+@include laptop {
+  .offer {
+    &__title-container {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    &__title-arrow {
+      display: block;
+    }
+
+    &__title-description {
+      display: block;
+      width: 25vw;
+    }
+  }
+
+  .slider-container {
+    width: 100%;
+  }
+
+  .cards {
+    justify-content: space-evenly;
+    max-width: none;
+    max-height: 520px;
+  }
+}
+
+@include desktop {
+  .offer {
+    &__title-description {
+      font-size: 1.2rem;
+    }
+
+    &__title > h1 {
+      font-size: 2.2rem;
+    }
+
+    &__title > h2 {
+      font-size: 2rem;
+    }
+  }
+}
