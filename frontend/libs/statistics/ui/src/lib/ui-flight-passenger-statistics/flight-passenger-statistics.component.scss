@@ -1,0 +1,25 @@
+@use '@global/styles/styles.scss' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  max-width: 312px;
+  max-height: 500px;
+  z-index: 2;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+
+  & > div:first-child {
+    height: 425px;
+    width: 310px;
+  }
+}
+
+@include laptop {
+  .card {
+    margin: 0 10px;
+    max-width: 325px;
+    max-height: 520px;
+    min-width: 240px;
+  }
+}
