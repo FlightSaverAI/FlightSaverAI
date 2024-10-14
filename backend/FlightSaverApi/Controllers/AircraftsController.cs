@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FlightSaverApi.Models.Aircraft;
+using FlightSaverApi.Data;
 
 namespace FlightSaverApi.Controllers
 {
@@ -47,7 +48,7 @@ namespace FlightSaverApi.Controllers
             }
 
             var plane = await _context.Aircrafts.FindAsync(id);
-            if(plane == null)
+            if (plane == null)
             {
                 return NotFound();
             }

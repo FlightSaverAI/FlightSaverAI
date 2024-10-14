@@ -1,3 +1,4 @@
+using FlightSaverApi.Data;
 using FlightSaverApi.Models.Aircraft;
 using Microsoft.EntityFrameworkCore;
 
