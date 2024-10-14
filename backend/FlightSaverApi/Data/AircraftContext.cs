@@ -1,5 +1,6 @@
 ﻿using System;
 using FlightSaverApi.Models.Aircraft;
+using FlightSaverApi.Models.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Data
@@ -8,10 +9,10 @@ namespace FlightSaverApi.Data
     {
         public AircraftContext(DbContextOptions<AircraftContext> options) : base(options)
         {
-
         }
 
-        public DbSet<Aircraft> Aircrafts { get; set; }
+        public DbSet<Aircraft> Aircrafts { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +23,13 @@ namespace FlightSaverApi.Data
                 entity.Property(e => e.IataCode).HasMaxLength(3);
                 entity.Property(e => e.IcaoCode).HasMaxLength(4);
                 entity.Property(e => e.RegNumber).HasMaxLength(10);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.Username).IsUnique();
+                entity.Property(e => e.Username).IsRequired().HasMaxLength(50);
             });
         }
     }

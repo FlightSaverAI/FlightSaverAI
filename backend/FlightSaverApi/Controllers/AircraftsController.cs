@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using FlightSaverApi.Models.Aircraft;
 using FlightSaverApi.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FlightSaverApi.Controllers
 {
     [Route("/Aircrafts")]
     [ApiController]
+    [Authorize]
     public class AircraftsController : ControllerBase
     {
         private readonly AircraftContext _context;
