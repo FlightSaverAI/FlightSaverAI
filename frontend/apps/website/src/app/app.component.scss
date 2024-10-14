@@ -1,0 +1,52 @@
+@use '@global/styles/styles.scss' as *;
+
+.app-wrapper {
+  overflow: hidden;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+web-main {
+  height: 100%;
+}
+
+web-offer-section,
+web-why-us-section,
+web-newsletter {
+  display: flex;
+  height: 100vh;
+}
+
+web-streamlined-soaring-section {
+  display: flex;
+  height: 65vh;
+}
+
+web-socials {
+  display: flex;
+  height: 75vh;
+}
+
+@include tablet {
+  web-socials {
+    height: 40vh;
+  }
+
+  web-newsletter {
+    height: 80vh;
+  }
+}
+
+@include laptop {
+  web-socials {
+    height: 50vh;
+  }
+
+  web-streamlined-soaring-section {
+    height: 75vh;
+  }
+}

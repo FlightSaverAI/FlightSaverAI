@@ -1,0 +1,88 @@
+<section class="offer-container">
+  <div class="offer__title-container">
+    <div class="offer__title">
+      <h1>READY TO TAKE OFF ?</h1>
+      <h2>Discover our offer !</h2>
+    </div>
+    <img class="offer__title-arrow" src="assets/icons/offer_arrow.svg" alt="" />
+    <p class="offer__title-description">
+      Unlock a world of seamless travel tracking with our app. From interactive maps to detailed
+      flight statistics, experience the ultimate tool for frequent flyers and travel enthusiasts.
+      Join our community and elevate your travel adventures today!
+    </p>
+  </div>
+  <div class="offer__cards-container">
+    <div class="slider-container">
+      <div class="slider">
+        <div #cards class="cards">
+          <div class="card">
+            <div class="card__image-container">
+              <img class="card__image" src="assets/images/card_image_1.png" alt="" srcset="" />
+              <div class="card__title"><p>FLIGHTS</p></div>
+            </div>
+            <div class="card__info-container">
+              <p class="card__info">
+                Get ready for the adventure of a lifetime! Track all your flights and routes on an
+                amazing, interactive map! Manage your travel itineraries effortlessly and create a
+                complete picture of your journeys all in one place.
+              </p>
+              <button class="card__info-btn">TRY IT NOW</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__image-container">
+              <img class="card__image" src="assets/images/card_image_2.png" alt="" srcset="" />
+              <div class="card__title"><p>MAP</p></div>
+            </div>
+            <div class="card__info-container">
+              <p class="card__info">
+                Dive into the fascinating world of travel! Track all your routes and discover new
+                places with an interactive map! Manage your travel plans effortlessly and create a
+                complete picture of your journeys all in one place.
+              </p>
+              <button class="card__info-btn">TRY IT NOW</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__image-container">
+              <img class="card__image" src="assets/images/card_image_3.png" />
+              <div class="card__title"><p>SHARE</p></div>
+            </div>
+            <div class="card__info-container">
+              <p class="card__info">
+                Share your amazing travel experiences! Capture your journeys and share them with
+                friends and family. Create a beautiful travel diary and let others join you in your
+                adventures.
+              </p>
+              <button class="card__info-btn">TRY IT NOW</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__image-container">
+              <img class="card__image" src="assets/images/card_image_4.png" />
+              <div class="card__title"><p>STATISTICS</p></div>
+            </div>
+            <div class="card__info-container">
+              <p class="card__info">
+                Discover detailed insights about your travels! Analyze your journeys with
+                comprehensive statistics. Track your progress, compare past trips, and plan future
+                adventures with data-driven accuracy.
+              </p>
+              <button class="card__info-btn">TRY IT NOW</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="previous-btn-container">
+        <button class="previous-btn" (click)="previousCard()">
+          <img class="arrow-left" src="assets/icons/shape.svg" alt="" />
+        </button>
+      </div>
+      <div class="next-btn-container">
+        <button class="next-btn" (click)="nextCard()">
+          <img class="arrow-right" src="assets/icons/shape.svg" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+:root {
+  --color-primary: #2c3142;
+  --color-secondary: #ffffff;
+  --color-tertiary: #b7c2e8;
+
+  --text-color-black: #000000;
+
+  --btn-background-color: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-primary);
+}

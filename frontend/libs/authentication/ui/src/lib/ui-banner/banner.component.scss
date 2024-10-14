@@ -1,0 +1,25 @@
+@use '@global/styles/styles.scss' as *;
+
+.banner {
+  display: none;
+}
+
+@include tablet {
+  .banner {
+    position: relative;
+    display: flex;
+    height: 100vh;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.shadow {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
