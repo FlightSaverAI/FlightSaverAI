@@ -14,7 +14,7 @@ namespace FlightSaverApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous] // Allow anonymous access to all actions
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly AircraftContext _context;
@@ -30,16 +30,13 @@ namespace FlightSaverApi.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
-            // Check if user already exists
             if (await _context.Users.AnyAsync(u => u.Username == request.Username))
             {
                 return BadRequest("Username already exists.");
             }
 
-            // Create password hash and salt
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            // Create user
             var user = new User
             {
                 Username = request.Username,
@@ -50,7 +47,6 @@ namespace FlightSaverApi.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            // Generate JWT Token
             var token = CreateToken(user);
 
             return Ok(new { token });
@@ -71,17 +67,14 @@ namespace FlightSaverApi.Controllers
                 return BadRequest("Incorrect password.");
             }
 
-            // Generate JWT Token
             var token = CreateToken(user);
 
             return Ok(new { token });
         }
 
-        // Helper Methods
-
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using (var hmac = new HMACSHA512()) // You can choose a different algorithm
+            using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -103,7 +96,6 @@ namespace FlightSaverApi.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-                // Add more claims if needed
             };
 
             var jwtSettings = _configuration.GetSection("JwtSettings");

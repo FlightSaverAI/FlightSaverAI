@@ -7,14 +7,11 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 
-// Configure Entity Framework with In-Memory Database
 builder.Services.AddDbContext<AircraftContext>(opt =>
     opt.UseInMemoryDatabase("PlaneList"));
 
-// Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
@@ -25,14 +22,13 @@ builder.Services.AddSwaggerGen(setup =>
         Description = "API for managing aircraft data in Flight Saver application."
     });
 
-    // Add JWT Authentication to Swagger
     var securityScheme = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
         Description = "Enter JWT Bearer token **_only_**",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-        Scheme = "bearer", // must be lower case
+        Scheme = "bearer",
         BearerFormat = "JWT",
         Reference = new Microsoft.OpenApi.Models.OpenApiReference
         {
@@ -48,7 +44,6 @@ builder.Services.AddSwaggerGen(setup =>
     });
 });
 
-// Configure JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKeyBase64 = jwtSettings["Secret"];
 
@@ -67,7 +62,6 @@ catch (FormatException)
     throw new ArgumentException("JWT Secret Key is not a valid Base64 string.");
 }
 
-// Ensure the key is at least 65 bytes (520 bits) for HS512
 if (keyBytes.Length < 65)
 {
     throw new ArgumentException("JWT Secret Key must be at least 65 bytes (520 bits) long.");
@@ -97,20 +91,19 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Flight Saver API V1");
-        c.RoutePrefix = string.Empty; // To serve Swagger UI at application's root
+        c.RoutePrefix = string.Empty;
     });
 }
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Add Authentication Middleware
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
