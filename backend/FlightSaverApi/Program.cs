@@ -76,8 +76,8 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true, // Set to true in production
-        ValidateAudience = true, // Set to true in production
+        ValidateIssuer = true, // Set true in production
+        ValidateAudience = true, // Set true in production
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtSettings["Issuer"],

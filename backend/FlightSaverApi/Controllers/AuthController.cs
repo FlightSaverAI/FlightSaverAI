@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FlightSaverApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/Auth")]
     [ApiController]
     [AllowAnonymous]
     public class AuthController : ControllerBase
@@ -26,7 +26,7 @@ namespace FlightSaverApi.Controllers
             _configuration = configuration;
         }
 
-        // POST: api/Auth/Register
+        // POST: /Auth/Register
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
@@ -52,7 +52,7 @@ namespace FlightSaverApi.Controllers
             return Ok(new { token });
         }
 
-        // POST: api/Auth/Login
+        // POST: /Auth/Login
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
