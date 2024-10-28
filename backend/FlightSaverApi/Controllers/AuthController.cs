@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol;
 
 namespace FlightSaverApi.Controllers
 {
@@ -30,9 +31,9 @@ namespace FlightSaverApi.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
-            if (await _context.Users.AnyAsync(u => u.Username == request.Username))
+            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
             {
-                return BadRequest("Username already exists.");
+                return BadRequest("Email already exists.");
             }
 
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -40,6 +41,7 @@ namespace FlightSaverApi.Controllers
             var user = new User
             {
                 Username = request.Username,
+                Email = request.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
@@ -56,10 +58,10 @@ namespace FlightSaverApi.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             if (user == null)
             {
-                return Unauthorized("Invalid username or password.");
+                return Unauthorized("Invalid email or password.");
             }
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
@@ -94,6 +96,7 @@ namespace FlightSaverApi.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 

@@ -12,6 +12,5 @@ namespace FlightSaverApi.Models.Aircraft
         [StringLength(4, MinimumLength = 3)]
         public string? IcaoCode { get; set; }
         public string? RegNumber { get; set; }
-        public string? Secret { get; set; }
     }
 }
