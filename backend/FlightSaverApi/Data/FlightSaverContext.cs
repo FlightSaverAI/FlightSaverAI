@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Data
 {
-    public class AircraftContext : DbContext
+    public class FlightSaverContext : DbContext
     {
-        public AircraftContext(DbContextOptions<AircraftContext> options) : base(options)
+        public FlightSaverContext(DbContextOptions<FlightSaverContext> options) : base(options)
         {
         }
 

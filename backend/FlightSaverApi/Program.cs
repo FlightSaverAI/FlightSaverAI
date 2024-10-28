@@ -9,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<AircraftContext>(opt =>
-    opt.UseInMemoryDatabase("PlaneList"));
+builder.Services.AddDbContext<FlightSaverContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("FlightSaverDbConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>

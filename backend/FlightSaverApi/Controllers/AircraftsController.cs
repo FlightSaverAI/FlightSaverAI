@@ -11,9 +11,9 @@ namespace FlightSaverApi.Controllers
     [Authorize]
     public class AircraftsController : ControllerBase
     {
-        private readonly AircraftContext _context;
+        private readonly FlightSaverContext _context;
 
-        public AircraftsController(AircraftContext context)
+        public AircraftsController(FlightSaverContext context)
         {
             _context = context;
         }

@@ -17,10 +17,10 @@ namespace FlightSaverApi.Controllers
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
-        private readonly AircraftContext _context;
+        private readonly FlightSaverContext _context;
         private readonly IConfiguration _configuration;
 
-        public AuthController(AircraftContext context, IConfiguration configuration)
+        public AuthController(FlightSaverContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
@@ -59,16 +59,15 @@ namespace FlightSaverApi.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
             if (user == null)
             {
-                return BadRequest("User not found.");
+                return Unauthorized("Invalid username or password.");
             }
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return BadRequest("Incorrect password.");
+                return Unauthorized("Invalid username or password.");
             }
 
             var token = CreateToken(user);
-
             return Ok(new { token });
         }
 
