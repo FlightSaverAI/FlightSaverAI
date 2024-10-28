@@ -22,7 +22,7 @@ namespace FlightSaverApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AircraftDTO>>> GetAircrafts()
         {
-            return await _context.Aircrafts.Select(x => ItemToDTO(x)).ToListAsync();
+            return await _context.Aircrafts.Select(x => ItemToDto(x)).ToListAsync();
         }
 
         // GET: api/Aicrafts/5
@@ -36,15 +36,16 @@ namespace FlightSaverApi.Controllers
                 return NotFound();
             }
 
-            return ItemToDTO(plane);
+            return ItemToDto(plane);
         }
 
         // PUT: api/Aicrafts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAircraft(int id, AircraftDTO planeDTO)
+        [Authorize(Policy = "RequireAdminRole")]
+        public async Task<IActionResult> PutAircraft(int id, AircraftDTO planeDto)
         {
-            if (id != planeDTO.Id)
+            if (id != planeDto.Id)
             {
                 return BadRequest();
             }
@@ -55,10 +56,10 @@ namespace FlightSaverApi.Controllers
                 return NotFound();
             }
 
-            plane.Name = planeDTO.Name;
-            plane.IataCode = planeDTO.IataCode;
-            plane.IcaoCode = planeDTO.IcaoCode;
-            plane.RegNumber = planeDTO.RegNumber;
+            plane.Name = planeDto.Name;
+            plane.IataCode = planeDto.IataCode;
+            plane.IcaoCode = planeDto.IcaoCode;
+            plane.RegNumber = planeDto.RegNumber;
 
             try
             {
@@ -75,14 +76,15 @@ namespace FlightSaverApi.Controllers
         // POST: api/Aicrafts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AircraftDTO>> PostAircraft(AircraftDTO aircraftDTO)
+        [Authorize(Policy = "RequireAdminRole")]
+        public async Task<ActionResult<AircraftDTO>> PostAircraft(AircraftDTO aircraftDto)
         {
             var aircraft = new Aircraft
             {
-                Name = aircraftDTO.Name,
-                IataCode = aircraftDTO.IataCode,
-                IcaoCode = aircraftDTO.IcaoCode,
-                RegNumber = aircraftDTO.RegNumber,
+                Name = aircraftDto.Name,
+                IataCode = aircraftDto.IataCode,
+                IcaoCode = aircraftDto.IcaoCode,
+                RegNumber = aircraftDto.RegNumber,
             };
 
             _context.Aircrafts.Add(aircraft);
@@ -91,11 +93,12 @@ namespace FlightSaverApi.Controllers
             return CreatedAtAction(
                 nameof(PostAircraft),
                 new { id = aircraft.Id },
-                ItemToDTO(aircraft));
+                ItemToDto(aircraft));
         }
 
         // DELETE: api/Aicrafts/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> DeleteAircraft(int id)
         {
             var plane = await _context.Aircrafts.FindAsync(id);
@@ -115,7 +118,7 @@ namespace FlightSaverApi.Controllers
             return _context.Aircrafts.Any(e => e.Id == id);
         }
 
-        private static AircraftDTO ItemToDTO(Aircraft aircraft) =>
+        private static AircraftDTO ItemToDto(Aircraft aircraft) =>
             new AircraftDTO
             {
                 Id = aircraft.Id,
