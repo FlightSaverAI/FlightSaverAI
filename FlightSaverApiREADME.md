@@ -14,7 +14,7 @@ To run this API, ensure the following are installed:
 
    ```bash
    git clone <repository-url>
-   cd FlightSaverApi
+   cd FlightSaverApi/backend/FlightSaverApi
    ```
 
 2. **Install Dependencies**
