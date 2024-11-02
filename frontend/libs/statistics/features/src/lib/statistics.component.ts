@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FlightPassengerStatisticsComponent } from '@flight-saver/statistics/ui';
-import { TopStatisticsComponent } from '@flight-saver/statistics/ui';
+import { FlightPassengerOverviewComponent } from '@flight-saver/statistics/ui';
+import { TopOverviewComponent } from '@flight-saver/statistics/ui';
 import { StatisticsContants } from './constants/statistics.constants';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FlightPassengerStatisticsComponent, TopStatisticsComponent],
-  template: `<statistics-flight-passenger-statistics
-      [flightPassangerStatistics]="flightPassangerOverview"
-    ></statistics-flight-passenger-statistics>
-    <statistics-top-statistics [topStatistics]="topOverview"></statistics-top-statistics> `,
+  imports: [CommonModule, FlightPassengerOverviewComponent, TopOverviewComponent],
+  template: `<statistics-flight-passenger-overview
+      [flightPassangerOverview]="flightPassangerOverview"
+    ></statistics-flight-passenger-overview>
+    <statistics-top-overview [topOverview]="topOverview"></statistics-top-overview> `,
   styleUrl: './statistics.component.scss',
 })
 export class StatisticsComponent {

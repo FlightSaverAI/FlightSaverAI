@@ -1,2 +1,2 @@
-export * from './lib/ui-top-statistics/top-statistics.component';
-export * from './lib/ui-flight-passenger-statistics/flight-passenger-statistics.component';
+export * from './lib/ui-top-overview/top-overview.component';
+export * from './lib/ui-flight-passenger-overview/flight-passenger-overview.component';
