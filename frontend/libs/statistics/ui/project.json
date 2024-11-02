@@ -4,7 +4,7 @@
   "sourceRoot": "libs/statistics/ui/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["type:ui", "domain:statistics"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
