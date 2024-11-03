@@ -1,0 +1,36 @@
+@use '@global/styles/styles.scss' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  max-height: 500px;
+  z-index: 2;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+
+  &__chart {
+    height: 450px;
+    width: 310px;
+    flex: 1;
+  }
+}
+
+@include laptop {
+  .card {
+    max-height: 520px;
+    min-width: 20vw;
+
+    &__chart {
+      height: 425px;
+      width: unset;
+      flex: 1;
+    }
+  }
+
+  ::ng-deep {
+    .card__chart > div:first-child {
+      width: unset !important;
+      height: 425px !important;
+    }
+  }
+}

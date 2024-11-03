@@ -1,0 +1,69 @@
+@use '@global/styles/styles.scss' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 40px;
+  max-height: 500px;
+  z-index: 2;
+  flex: 1;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    border-radius: 40px;
+    opacity: 0.3;
+  }
+
+  &__title {
+    text-align: center;
+    padding: 15px 20px 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 35px 35px 0 0;
+    white-space: nowrap;
+    color: var(--color-secondary);
+  }
+
+  &__chart-container {
+    color: var(--color-secondary);
+  }
+
+  &__chart {
+    height: 400px;
+    width: 310px;
+  }
+}
+
+@include laptop {
+  .card {
+    max-height: 425px;
+    min-width: 240px;
+
+    &__chart {
+      width: unset;
+    }
+  }
+
+  .card:first-child {
+    margin-right: 60px;
+  }
+
+  ::ng-deep {
+    .card__chart > div:first-child {
+      width: unset !important;
+    }
+  }
+}
+
+@include laptop-large {
+  .card:first-child {
+    margin-right: 100px;
+  }
+}

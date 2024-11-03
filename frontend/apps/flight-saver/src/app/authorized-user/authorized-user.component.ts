@@ -24,7 +24,7 @@ export class AuthorizedUserComponent {
     {
       type: 'list',
       name: 'Statistics',
-      routerLink: '',
+      routerLink: '/authorized/statistics',
     },
     {
       type: 'list',

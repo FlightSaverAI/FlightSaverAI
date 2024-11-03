@@ -10,5 +10,5 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideStore({ auth: authReducer.reducer }),
     provideEffects(AuthEffects),
-  ],
+  ]
 };

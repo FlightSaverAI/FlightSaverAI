@@ -1,0 +1,78 @@
+@use '@global/styles/styles.scss' as *;
+
+.chart-container {
+  height: 400px;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  max-height: 500px;
+  z-index: 2;
+  flex: 1;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+
+  &__image-container {
+    position: relative;
+    display: flex;
+    height: 100%;
+  }
+
+  &__image {
+    width: 100%;
+    height: 150px;
+    border-radius: 40px 40px 0 0;
+    background-size: cover;
+  }
+
+  &__title {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    padding: 15px 20px 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 35px 35px 0 0;
+    background-color: #363d55;
+    white-space: nowrap;
+    color: var(--color-secondary);
+    transform: translateX(-50%);
+  }
+
+  &__chart-container {
+    color: var(--color-secondary);
+  }
+
+  &__chart {
+    height: 350px;
+    width: 310px;
+  }
+}
+
+@include laptop {
+  .card {
+    min-width: 240px;
+
+    &__chart {
+      width: unset;
+    }
+  }
+
+  .card:nth-child(2) {
+    margin: 0 60px;
+  }
+
+  ::ng-deep {
+    .card__chart > div:first-child {
+      width: unset !important;
+    }
+  }
+}
+
+@include laptop-large {
+  .card:nth-child(2) {
+    margin: 0 100px;
+  }
+}

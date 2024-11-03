@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { MapComponent } from '@flight-saver/home/ui';
-import L from 'leaflet';
 import { FlightsSummaryComponent } from '@flight-saver/home/ui';
+
+import L from 'leaflet';
 
 @Component({
   standalone: true,
