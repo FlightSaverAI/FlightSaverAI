@@ -14,13 +14,17 @@ import { ActivityOverviewComponent } from '@flight-saver/statistics/ui';
     TopOverviewComponent,
     ActivityOverviewComponent,
   ],
-  template: `<statistics-flight-passenger-overview
-      [flightPassangerOverview]="flightPassangerOverview"
-    ></statistics-flight-passenger-overview>
-    <statistics-top-overview [topOverview]="topOverview"></statistics-top-overview>
-    <statistics-activity-overview
-      [activityOverview]="activityOverview"
-    ></statistics-activity-overview>`,
+  template: `
+    <div class="wrapper">
+      <statistics-flight-passenger-overview
+        [flightPassangerOverview]="flightPassangerOverview"
+      ></statistics-flight-passenger-overview>
+      <statistics-top-overview [topOverview]="topOverview"></statistics-top-overview>
+      <statistics-activity-overview
+        [activityOverview]="activityOverview"
+      ></statistics-activity-overview>
+    </div>
+  `,
   styleUrl: './statistics.component.scss',
 })
 export class StatisticsComponent {

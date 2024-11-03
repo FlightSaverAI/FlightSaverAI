@@ -8,9 +8,9 @@ import { SliderCardComponent } from '@shared/ui-components';
   standalone: true,
   imports: [CommonModule, NgxEchartsDirective, SliderCardComponent],
   template: `
-    <shared-slider-card style="display: flex; justify-content: center; margin-top: 20px">
+    <shared-slider-card style="display: flex; justify-content: center">
       <div class="card" *ngFor="let statistic of flightPassangerOverview()">
-        <div echarts [options]="statistic"></div>
+        <div class="card__chart" echarts [options]="statistic"></div>
       </div>
     </shared-slider-card>
   `,

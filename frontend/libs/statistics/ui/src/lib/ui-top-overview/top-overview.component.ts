@@ -7,7 +7,7 @@ import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
   selector: 'statistics-top-overview',
   standalone: true,
   imports: [CommonModule, SliderCardComponent, NgxEchartsDirective],
-  template: ` <shared-slider-card style="display: flex; justify-content: center; margin-top: 50px">
+  template: ` <shared-slider-card style="display: flex; justify-content: center">
     <div class="card" *ngFor="let statistic of topOverview()">
       <div class="card__image-container">
         <img class="card__image" [src]="statistic.imageSrc" alt="" />
@@ -15,8 +15,8 @@ import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
           <p>{{ statistic.cardTitle }}</p>
         </div>
       </div>
-      <div class="card__info-container">
-        <div echarts [options]="statistic"></div>
+      <div class="card__chart-container">
+        <div class="card__chart" echarts [options]="statistic"></div>
       </div>
     </div>
   </shared-slider-card>`,

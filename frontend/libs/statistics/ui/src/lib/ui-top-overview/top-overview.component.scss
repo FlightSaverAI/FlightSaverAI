@@ -9,7 +9,6 @@
   display: flex;
   flex-direction: column;
   border-radius: 40px;
-  max-width: 312px;
   max-height: 500px;
   z-index: 2;
   flex: 1;
@@ -42,26 +41,38 @@
     transform: translateX(-50%);
   }
 
-  &__info-container {
+  &__chart-container {
     color: var(--color-secondary);
-
-    & > div:first-child {
-      height: 275px;
-      width: 100%;
-    }
   }
-}
 
-@include mobile-medium {
-  .card {
-    min-width: 310px;
+  &__chart {
+    height: 350px;
+    width: 310px;
   }
 }
 
 @include laptop {
   .card {
-    max-width: 325px;
-    max-height: 425px;
     min-width: 240px;
+
+    &__chart {
+      width: unset;
+    }
+  }
+
+  .card:nth-child(2) {
+    margin: 0 60px;
+  }
+
+  ::ng-deep {
+    .card__chart > div:first-child {
+      width: unset !important;
+    }
+  }
+}
+
+@include laptop-large {
+  .card:nth-child(2) {
+    margin: 0 100px;
   }
 }

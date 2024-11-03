@@ -38,7 +38,7 @@ export abstract class StatisticsContants {
         {
           name: 'Access From',
           type: 'pie',
-          radius: '60%',
+          radius: '50%',
           center: ['50%', '40%'],
           data: [
             { value: 7, name: 'Economy' },
@@ -94,7 +94,7 @@ export abstract class StatisticsContants {
         {
           name: 'Access From',
           type: 'pie',
-          radius: '60%',
+          radius: '50%',
           center: ['50%', '40%'],
           data: [
             { value: 3, name: 'aisle' },
@@ -149,7 +149,7 @@ export abstract class StatisticsContants {
         {
           name: 'Access From',
           type: 'pie',
-          radius: '60%',
+          radius: '50%',
           center: ['50%', '40%'],
           data: [
             { value: 6, name: 'leisure' },
@@ -207,7 +207,7 @@ export abstract class StatisticsContants {
         {
           name: 'Access From',
           type: 'pie',
-          radius: '60%',
+          radius: '50%',
           center: ['50%', '40%'],
           data: [
             { value: 0, name: 'Oceania' },

@@ -31,20 +31,13 @@
     color: var(--color-secondary);
   }
 
-  &__info-container {
+  &__chart-container {
     color: var(--color-secondary);
-
-    & > div:first-child {
-      height: 400px;
-      width: 100%;
-    }
   }
-}
 
-@include mobile-medium {
-  .card {
-    min-width: 310px;
-    max-width: 525px;
+  &__chart {
+    height: 400px;
+    width: 310px;
   }
 }
 
@@ -52,5 +45,25 @@
   .card {
     max-height: 425px;
     min-width: 240px;
+
+    &__chart {
+      width: unset;
+    }
+  }
+
+  .card:first-child {
+    margin-right: 60px;
+  }
+
+  ::ng-deep {
+    .card__chart > div:first-child {
+      width: unset !important;
+    }
+  }
+}
+
+@include laptop-large {
+  .card:first-child {
+    margin-right: 100px;
   }
 }
