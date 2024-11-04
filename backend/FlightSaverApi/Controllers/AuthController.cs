@@ -1,5 +1,4 @@
-﻿// Controllers/AuthController.cs
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FlightSaverApi.Data;
 using FlightSaverApi.Models.User;
@@ -66,7 +65,7 @@ namespace FlightSaverApi.Controllers
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return Unauthorized("Invalid username or password.");
+                return Unauthorized("Invalid email or password.");
             }
 
             var token = CreateToken(user);

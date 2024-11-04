@@ -1,13 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FlightSaverApi.Models.User
+namespace FlightSaverApi.Models.UserModel
 {
     public class UserRegisterDTO
     {
         [Required]
         public string Username { get; set; } = null!;
-        
+
         [Required]
         public string Email { get; set; } = null!;
 

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using FlightSaverApi.Enums;
 
-namespace FlightSaverApi.Models.User
+namespace FlightSaverApi.Models.UserModel
 {
     public class User
     {
@@ -10,10 +10,10 @@ namespace FlightSaverApi.Models.User
 
         [Required]
         public string Username { get; set; } = null!;
-        
+
         [Required]
         public string Email { get; set; } = null!;
-        
+
         [Required]
         public UserRole Role { get; set; } = UserRole.User;
 
