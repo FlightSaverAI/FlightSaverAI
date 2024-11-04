@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FlightSaverApi.Models.AirlineModel
 {
-    public class Airline
+    public class AirlineDTO
     {
         public int Id { get; set; }
 

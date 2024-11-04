@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FlightSaverApi.Models.ReviewModel
 {
-    public abstract class Review
+    public abstract class ReviewDTO
     {
         public int Id { get; set; }
 
