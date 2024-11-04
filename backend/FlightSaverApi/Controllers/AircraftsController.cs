@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FlightSaverApi.Models.Aircraft;
 using FlightSaverApi.Data;
 using Microsoft.AspNetCore.Authorization;
+using FlightSaverApi.Models.AircraftModel;
 
 namespace FlightSaverApi.Controllers
 {
@@ -85,6 +85,7 @@ namespace FlightSaverApi.Controllers
                 IataCode = aircraftDto.IataCode,
                 IcaoCode = aircraftDto.IcaoCode,
                 RegNumber = aircraftDto.RegNumber,
+                AirlineId = aircraftDto.AirlineId
             };
 
             _context.Aircrafts.Add(aircraft);
@@ -125,7 +126,8 @@ namespace FlightSaverApi.Controllers
                 Name = aircraft.Name,
                 IataCode = aircraft.IataCode,
                 IcaoCode = aircraft.IcaoCode,
-                RegNumber = aircraft.RegNumber
+                RegNumber = aircraft.RegNumber,
+                AirlineId = aircraft.AirlineId
             };
     }
 }

@@ -7,17 +7,22 @@ namespace FlightSaverApi.Models.AircraftModel
         public int Id { get; set; }
 
         [Required]
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
         [StringLength(3)]
-        public string? IataCode { get; set; }
+        public required string IataCode { get; set; }
 
         [Required]
         [StringLength(4)]
-        public string? IcaoCode { get; set; }
+        public required string IcaoCode { get; set; }
 
         [Required]
-        public string? RegNumber { get; set; }
+        public required string RegNumber { get; set; }
+
+        public string? AircraftUrl { get; set; }
+
+        [Required]
+        public required int AirlineId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 // Program.cs
+// CHECK AUTOMAPPER, CQRS and MediatR
 using FlightSaverApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

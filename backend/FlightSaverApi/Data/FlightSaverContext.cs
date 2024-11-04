@@ -1,6 +1,6 @@
 ﻿using System;
-using FlightSaverApi.Models.Aircraft;
-using FlightSaverApi.Models.User;
+using FlightSaverApi.Models.AircraftModel;
+using FlightSaverApi.Models.UserModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Data
