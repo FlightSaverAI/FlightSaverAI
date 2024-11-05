@@ -37,6 +37,7 @@
     <None Remove="Models\ReviewModel\" />
     <None Remove="Models\UserModel\" />
     <None Remove="Models\AirlineModel\" />
+    <None Remove="Mappings\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -47,5 +48,6 @@
     <Folder Include="Models\ReviewModel\" />
     <Folder Include="Models\UserModel\" />
     <Folder Include="Models\AirlineModel\" />
+    <Folder Include="Mappings\" />
   </ItemGroup>
 </Project>

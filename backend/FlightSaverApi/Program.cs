@@ -15,6 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<FlightSaverContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("FlightSaverDbConnection")));
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
