@@ -9,26 +9,26 @@ namespace FlightSaverApi.Models.AirportModel
 
         [Required]
         [StringLength(4)]
-        public string? IcaoCode { get; set; }
+        public required string IcaoCode { get; set; }
 
         [Required]
         [StringLength(3)]
-        public string? IataCode { get; set; }
+        public required string IataCode { get; set; }
 
         [Required]
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
-        public string? City { get; set; }
+        public required string City { get; set; }
 
         [Required]
-        public string? Country { get; set; }
+        public required string Country { get; set; }
 
         [Required]
-        public double Latitude { get; set; }
+        public required double Latitude { get; set; }
 
         [Required]
-        public double Longitude { get; set; }
+        public required double Longitude { get; set; }
     }
 }
 

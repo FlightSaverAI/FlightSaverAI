@@ -16,10 +16,10 @@ namespace FlightSaverApi.Models.AirlineModel
 
         [Required]
         [StringLength(4)]
-        public required string? IcaoCode { get; set; }
+        public required string IcaoCode { get; set; }
 
         [Required]
-        public required string? Country { get; set; }
+        public required string Country { get; set; }
 
         public string? LogoUrl { get; set; }
     }

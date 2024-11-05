@@ -14,47 +14,47 @@ namespace FlightSaverApi.Models.FlightModel
         public int Id { get; set; }
 
         [Required]
-        public string? FlightNumber { get; set; }
+        public required string FlightNumber { get; set; }
 
         [Required]
-        public int DepartureAirportId { get; set; }
+        public required int DepartureAirportId { get; set; }
 
         public virtual Airport? DepartureAirport { get; set; }
 
         [Required]
-        public int ArrivalAirportId { get; set; }
+        public required int ArrivalAirportId { get; set; }
 
         public virtual Airport? ArrivalAirport { get; set; }
 
         [Required]
-        public int? AirlineId { get; set; }
+        public required int AirlineId { get; set; }
 
         public virtual Airline? Airline { get; set; }
 
         [Required]
-        public int? AircraftId { get; set; }
+        public required int AircraftId { get; set; }
 
         public virtual Aircraft? Aircraft { get; set; }
 
         [Required]
-        public DateTime DepartureTime { get; set; }
+        public required DateTime DepartureTime { get; set; }
 
         [Required]
-        public DateTime ArrivalTime { get; set; }
+        public required DateTime ArrivalTime { get; set; }
 
         public TimeSpan FlightDuration => ArrivalTime - DepartureTime;
 
         [Required]
-        public ClassType ClassType { get; set; }
+        public required ClassType ClassType { get; set; }
 
         [Required]
-        public SeatType SeatType { get; set; }
+        public required SeatType SeatType { get; set; }
 
         [Required]
-        public string? SeatNumber { get; set; }
+        public required string SeatNumber { get; set; }
 
         [Required]
-        public Reason Reason { get; set; }
+        public required Reason Reason { get; set; }
 
         public AirportReview? DepartureAirportReview { get; set; }
 
@@ -65,7 +65,7 @@ namespace FlightSaverApi.Models.FlightModel
         public AircraftReview? AircraftReview { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public required int UserId { get; set; }
 
         public virtual User? User { get; set; }
     }

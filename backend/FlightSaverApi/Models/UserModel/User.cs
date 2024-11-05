@@ -9,19 +9,19 @@ namespace FlightSaverApi.Models.UserModel
         public int Id { get; set; }
 
         [Required]
-        public string Username { get; set; } = null!;
+        public required string Username { get; set; }
 
         [Required]
-        public string Email { get; set; } = null!;
+        public required string Email { get; set; }
 
         [Required]
-        public UserRole Role { get; set; } = UserRole.User;
+        public required UserRole Role { get; set; } = UserRole.User;
 
         [Required]
-        public byte[] PasswordHash { get; set; } = null!;
+        public required byte[] PasswordHash { get; set; }
 
         [Required]
-        public byte[] PasswordSalt { get; set; } = null!;
+        public required byte[] PasswordSalt { get; set; }
     }
 }
 
