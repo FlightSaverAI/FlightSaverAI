@@ -6,10 +6,9 @@ namespace FlightSaverApi.Models.ReviewModel
 {
     public class AircraftReview : Review
     {
-        [Required]
-        public required int AircraftId { get; set; }
+        public int AircraftId { get; set; }
 
-        public virtual Aircraft? Aircraft { get; set; }
+        public virtual Aircraft Aircraft { get; set; }
     }
 }
 

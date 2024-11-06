@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FlightSaverApi.Models.UserModel;
 
 namespace FlightSaverApi.Models.ReviewModel
 {
@@ -7,13 +8,13 @@ namespace FlightSaverApi.Models.ReviewModel
     {
         public int Id { get; set; }
 
-        [Required]
-        public required int ReviewerId { get; set; }
-
-        [Required]
-        public required int Rating { get; set; }
+        public int Rating { get; set; }
 
         public string? Comment { get; set; }
+
+        public int ReviewerId { get; set; }
+
+        public virtual User Reviewer { get; set; }
     }
 }
 

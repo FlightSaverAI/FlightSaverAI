@@ -79,22 +79,23 @@ namespace FlightSaverApi.Controllers
         [Authorize(Policy = "RequireAdminRole")]
         public async Task<ActionResult<AircraftDTO>> PostAircraft(AircraftDTO aircraftDto)
         {
-            var aircraft = new Aircraft
-            {
-                Name = aircraftDto.Name,
-                IataCode = aircraftDto.IataCode,
-                IcaoCode = aircraftDto.IcaoCode,
-                RegNumber = aircraftDto.RegNumber,
-                AirlineId = aircraftDto.AirlineId
-            };
+            throw new NotImplementedException();
+            //var aircraft = new Aircraft
+            //{
+            //    Name = aircraftDto.Name,
+            //    IataCode = aircraftDto.IataCode,
+            //    IcaoCode = aircraftDto.IcaoCode,
+            //    RegNumber = aircraftDto.RegNumber,
+            //    AirlineId = aircraftDto.AirlineId,
+            //};
 
-            _context.Aircrafts.Add(aircraft);
-            await _context.SaveChangesAsync();
+            //_context.Aircrafts.Add(aircraft);
+            //await _context.SaveChangesAsync();
 
-            return CreatedAtAction(
-                nameof(PostAircraft),
-                new { id = aircraft.Id },
-                ItemToDto(aircraft));
+            //return CreatedAtAction(
+            //    nameof(PostAircraft),
+            //    new { id = aircraft.Id },
+            //    ItemToDto(aircraft));
         }
 
         // DELETE: api/Aicrafts/5

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using FlightSaverApi.Enums;
+using FlightSaverApi.Models.ReviewModel;
 
 namespace FlightSaverApi.Models.UserModel
 {
@@ -8,20 +9,15 @@ namespace FlightSaverApi.Models.UserModel
     {
         public int Id { get; set; }
 
-        [Required]
-        public required string Username { get; set; }
+        public string Username { get; set; }
 
-        [Required]
-        public required string Email { get; set; }
+        public string Email { get; set; }
 
-        [Required]
-        public required UserRole Role { get; set; } = UserRole.User;
+        public UserRole Role { get; set; } = UserRole.User;
 
-        [Required]
-        public required byte[] PasswordHash { get; set; }
+        public byte[] PasswordHash { get; set; }
 
-        [Required]
-        public required byte[] PasswordSalt { get; set; }
+        public byte[] PasswordSalt { get; set; }
     }
 }
 

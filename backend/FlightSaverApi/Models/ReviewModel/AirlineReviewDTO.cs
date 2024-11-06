@@ -5,8 +5,7 @@ namespace FlightSaverApi.Models.ReviewModel
 {
     public class AirlineReviewDTO : ReviewDTO
     {
-        [Required]
-        public required int AirlineId { get; set; }
+        public int AirlineId { get; set; }
     }
 
 }

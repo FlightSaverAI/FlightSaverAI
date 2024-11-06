@@ -1,10 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace FlightSaverApi.Models.ReviewModel
 {
     public class AirportReviewDTO : ReviewDTO
     {
-        [Required]
-        public required int AirportId { get; set; }
+        public int AirportId { get; set; }
     }
 }
 

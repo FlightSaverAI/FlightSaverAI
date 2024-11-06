@@ -13,61 +13,57 @@ namespace FlightSaverApi.Models.FlightModel
     {
         public int Id { get; set; }
 
-        [Required]
-        public required string FlightNumber { get; set; }
+        public string FlightNumber { get; set; }
 
-        [Required]
-        public required int DepartureAirportId { get; set; }
+        public int DepartureAirportId { get; set; }
 
-        public virtual Airport? DepartureAirport { get; set; }
+        public Airport DepartureAirport { get; set; }
 
-        [Required]
-        public required int ArrivalAirportId { get; set; }
+        public int ArrivalAirportId { get; set; }
 
-        public virtual Airport? ArrivalAirport { get; set; }
+        public Airport ArrivalAirport { get; set; }
 
-        [Required]
-        public required int AirlineId { get; set; }
+        public int AirlineId { get; set; }
 
-        public virtual Airline? Airline { get; set; }
+        public Airline Airline { get; set; }
 
-        [Required]
-        public required int AircraftId { get; set; }
+        public int AircraftId { get; set; }
 
-        public virtual Aircraft? Aircraft { get; set; }
+        public Aircraft Aircraft { get; set; }
 
-        [Required]
-        public required DateTime DepartureTime { get; set; }
+        public DateTime DepartureTime { get; set; }
 
-        [Required]
-        public required DateTime ArrivalTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
 
         public TimeSpan FlightDuration => ArrivalTime - DepartureTime;
 
-        [Required]
-        public required ClassType ClassType { get; set; }
+        public ClassType ClassType { get; set; }
 
-        [Required]
-        public required SeatType SeatType { get; set; }
+        public SeatType SeatType { get; set; }
 
-        [Required]
-        public required string SeatNumber { get; set; }
+        public string SeatNumber { get; set; }
 
-        [Required]
-        public required Reason Reason { get; set; }
+        public Reason Reason { get; set; }
+
+        public int? DepartureAirportReviewId { get; set; }
 
         public AirportReview? DepartureAirportReview { get; set; }
 
+        public int? ArrivalAirportReviewId { get; set; }
+
         public AirportReview? ArrivalAirportReview { get; set; }
+
+        public int? AirlineReviewId { get; set; }
 
         public AirlineReview? AirlineReview { get; set; }
 
+        public int? AircraftReviewId { get; set; }
+
         public AircraftReview? AircraftReview { get; set; }
 
-        [Required]
-        public required int UserId { get; set; }
+        public int UserId { get; set; }
 
-        public virtual User? User { get; set; }
+        public User User { get; set; }
     }
 }
 

@@ -7,11 +7,9 @@ namespace FlightSaverApi.Models.ReviewModel
     {
         public int Id { get; set; }
 
-        [Required]
-        public required int ReviewerId { get; set; }
+        public int ReviewerId { get; set; }
 
-        [Required]
-        public required int Rating { get; set; }
+        public int Rating { get; set; }
 
         public string? Comment { get; set; }
     }

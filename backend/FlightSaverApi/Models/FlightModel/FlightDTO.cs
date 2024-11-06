@@ -9,41 +9,29 @@ namespace FlightSaverApi.Models.FlightModel
     {
         public int Id { get; set; }
 
-        [Required]
-        public required string FlightNumber { get; set; }
+        public string FlightNumber { get; set; }
 
-        [Required]
-        public required int DepartureAirportId { get; set; }
+        public int DepartureAirportId { get; set; }
 
-        [Required]
-        public required int ArrivalAirportId { get; set; }
+        public int ArrivalAirportId { get; set; }
 
-        [Required]
-        public required int? AirlineId { get; set; }
+        public int AirlineId { get; set; }
 
-        [Required]
-        public required int? AircraftId { get; set; }
+        public int AircraftId { get; set; }
 
-        [Required]
-        public required DateTime DepartureTime { get; set; }
+        public DateTime DepartureTime { get; set; }
 
-        [Required]
-        public required DateTime ArrivalTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
 
-        [Required]
-        public required ClassType ClassType { get; set; }
+        public ClassType ClassType { get; set; }
 
-        [Required]
-        public required SeatType SeatType { get; set; }
+        public SeatType SeatType { get; set; }
 
-        [Required]
-        public required string? SeatNumber { get; set; }
+        public string SeatNumber { get; set; }
 
-        [Required]
-        public required Reason Reason { get; set; }
+        public Reason Reason { get; set; }
 
-        [Required]
-        public required int UserId { get; set; }
+        public int UserId { get; set; }
 
         public AirportReviewDTO? DepartureAirportReview { get; set; }
 

@@ -14,36 +14,44 @@ namespace FlightSaverApi.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Aircraft, AircraftDTO>().ReverseMap();
-
-            CreateMap<User, UserLoginDTO>();
-
             CreateMap<UserRegisterDTO, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => UserRole.User));
 
-            CreateMap<Airline, AirlineDTO>().ReverseMap();
+            CreateMap<UserLoginDTO, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Username, opt => opt.Ignore())
+                .ForMember(dest => dest.Role, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore());
 
-            CreateMap<Airport, AirportDTO>().ReverseMap();
+            CreateMap<User, UserRegisterDTO>()
+                .ForMember(dest => dest.Password, opt => opt.Ignore());
 
-            CreateMap<Flight, FlightDTO>().ReverseMap();
+            CreateMap<AirlineDTO, Airline>()
+                .ReverseMap()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-            CreateMap<Review, ReviewDTO>()
-                .Include<AircraftReview, AircraftReviewDTO>()
-                .Include<AirlineReview, AirlineReviewDTO>()
-                .Include<AirportReview, AirportReviewDTO>();
+            CreateMap<AirportDTO, Airport>()
+                .ReverseMap()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-            CreateMap<ReviewDTO, Review>()
-                .Include<AircraftReviewDTO, AircraftReview>()
-                .Include<AirlineReviewDTO, AirlineReview>()
-                .Include<AirportReviewDTO, AirportReview>();
+            CreateMap<AircraftDTO, Aircraft>()
+                .ReverseMap();
 
-            CreateMap<AircraftReview, AircraftReviewDTO>().ReverseMap();
+            CreateMap<FlightDTO, Flight>()
+               .ForMember(dest => dest.DepartureAirportReview, opt => opt.MapFrom(src => src.DepartureAirportReview))
+               .ForMember(dest => dest.ArrivalAirportReview, opt => opt.MapFrom(src => src.ArrivalAirportReview))
+               .ForMember(dest => dest.AirlineReview, opt => opt.MapFrom(src => src.AirlineReview))
+               .ForMember(dest => dest.AircraftReview, opt => opt.MapFrom(src => src.AircraftReview));
 
-            CreateMap<AirlineReview, AirlineReviewDTO>().ReverseMap();
+            CreateMap<AirportReview, AirportReviewDTO>();
 
-            CreateMap<AirportReview, AirportReviewDTO>().ReverseMap();
+            CreateMap<AirlineReview, AirlineReviewDTO>();
+
+            CreateMap<AircraftReview, AircraftReviewDTO>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FlightSaverApi.Models.AircraftModel;
 
 namespace FlightSaverApi.Models.AirlineModel
 {
@@ -7,21 +8,17 @@ namespace FlightSaverApi.Models.AirlineModel
     {
         public int Id { get; set; }
 
-        [Required]
-        public required string Name { get; set; }
+        public string Name { get; set; }
 
-        [Required]
-        [StringLength(3)]
-        public required string IataCode { get; set; }
+        public string IataCode { get; set; }
 
-        [Required]
-        [StringLength(4)]
-        public required string? IcaoCode { get; set; }
+        public string IcaoCode { get; set; }
 
-        [Required]
-        public required string? Country { get; set; }
+        public string Country { get; set; }
 
         public string? LogoUrl { get; set; }
+
+        public virtual ICollection<Aircraft>? Aircrafts { get; set; }
     }
 }
 
