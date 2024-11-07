@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FlightSaverApi.Models.FlightModel;
+using FlightSaverApi.Models.ReviewModel;
 
 namespace FlightSaverApi.Models.AirportModel
 {
@@ -20,6 +22,12 @@ namespace FlightSaverApi.Models.AirportModel
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }
+        
+        public virtual List<AirportReview>? AirportReviews { get; set; }
+        
+        public virtual List<Flight> DepartingFlights { get; set; }
+        
+        public virtual List<Flight> ArrivingFlights { get; set; }
     }
 }
 

@@ -42,9 +42,8 @@ namespace FlightSaverApi.Mappings
                 .ReverseMap();
 
             CreateMap<FlightDTO, Flight>()
-               .ForMember(dest => dest.DepartureAirportReview, opt => opt.MapFrom(src => src.DepartureAirportReview))
-               .ForMember(dest => dest.ArrivalAirportReview, opt => opt.MapFrom(src => src.ArrivalAirportReview))
                .ForMember(dest => dest.AirlineReview, opt => opt.MapFrom(src => src.AirlineReview))
+               .ForMember(dest => dest.AirportReviews, opt => opt.MapFrom(src => src.AirportReviews))
                .ForMember(dest => dest.AircraftReview, opt => opt.MapFrom(src => src.AircraftReview));
 
             CreateMap<AirportReview, AirportReviewDTO>();

@@ -40,7 +40,6 @@
     <None Remove="Mappings\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Models\FlightModel\" />
     <Folder Include="Enums\FlightEnums\" />
     <Folder Include="Models\AirportModel\" />

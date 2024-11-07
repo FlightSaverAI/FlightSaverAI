@@ -33,9 +33,7 @@ namespace FlightSaverApi.Models.FlightModel
 
         public int UserId { get; set; }
 
-        public AirportReviewDTO? DepartureAirportReview { get; set; }
-
-        public AirportReviewDTO? ArrivalAirportReview { get; set; }
+        public List<AirportReview> AirportReviews { get; set; }
 
         public AirlineReviewDTO? AirlineReview { get; set; }
 

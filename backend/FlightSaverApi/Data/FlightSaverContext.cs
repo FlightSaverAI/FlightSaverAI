@@ -1,5 +1,4 @@
-﻿using System;
-using FlightSaverApi.Models.AircraftModel;
+﻿using FlightSaverApi.Models.AircraftModel;
 using FlightSaverApi.Models.AirlineModel;
 using FlightSaverApi.Models.AirportModel;
 using FlightSaverApi.Models.FlightModel;
@@ -19,10 +18,10 @@ namespace FlightSaverApi.Data
         public DbSet<Airline> Airlines { get; set; }
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<AircraftReview> AircraftReviews { get; set; }
-        //public DbSet<Flight> Flights { get; set; }
-        //public DbSet<AirlineReview> AirlineReviews { get; set; }
-        //public DbSet<AirportReview> AirportReviews { get; set; }
+        public DbSet<AircraftReview> AircraftReviews { get; set; }
+        public DbSet<AirlineReview> AirlineReviews { get; set; }
+        public DbSet<AirportReview> AirportReviews { get; set; }
+        public DbSet<Flight> Flights { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,10 +33,12 @@ namespace FlightSaverApi.Data
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.HasIndex(a => a.IataCode).IsUnique();
                 entity.Property(a => a.IataCode)
                     .IsRequired()
                     .HasMaxLength(3);
 
+                entity.HasIndex(a => a.IcaoCode).IsUnique();
                 entity.Property(a => a.IcaoCode)
                     .IsRequired()
                     .HasMaxLength(4);
@@ -57,6 +58,16 @@ namespace FlightSaverApi.Data
                 entity.Property(a => a.Longitude)
                     .IsRequired()
                     .HasColumnType("decimal(9, 6)");
+                
+                entity
+                    .HasMany(a => a.DepartingFlights)
+                    .WithOne(f => f.DepartureAirport)
+                    .HasForeignKey(f => f.DepartureAirportId);
+                
+                entity
+                    .HasMany(a => a.ArrivingFlights)
+                    .WithOne(f => f.ArrivalAirport)
+                    .HasForeignKey(r => r.ArrivalAirportId);
             });
 
             modelBuilder.Entity<Airline>(entity =>
@@ -64,11 +75,13 @@ namespace FlightSaverApi.Data
                 entity.Property(a => a.Name)
                     .IsRequired()
                     .HasMaxLength(100);
-
+                
+                entity.HasIndex(a => a.IataCode).IsUnique();
                 entity.Property(a => a.IataCode)
                     .IsRequired()
                     .HasMaxLength(3);
 
+                entity.HasIndex(a => a.IcaoCode).IsUnique();
                 entity.Property(a => a.IcaoCode)
                     .IsRequired()
                     .HasMaxLength(4);
@@ -85,6 +98,16 @@ namespace FlightSaverApi.Data
                     .WithOne()
                     .HasForeignKey(a => a.AirlineId)
                     .IsRequired();
+                
+                entity
+                    .HasMany(a => a.AirlineReviews)
+                    .WithOne()
+                    .HasForeignKey(r => r.AirlineId);
+                
+                entity
+                    .HasMany(a => a.Flights)
+                    .WithOne()
+                    .HasForeignKey(r => r.AirlineId);
             });
 
             modelBuilder.Entity<Aircraft>(entity =>
@@ -101,6 +124,7 @@ namespace FlightSaverApi.Data
                     .IsRequired()
                     .HasMaxLength(4);
 
+                entity.HasIndex(a => a.RegNumber).IsUnique();
                 entity.Property(a => a.RegNumber)
                     .IsRequired()
                     .HasMaxLength(20);
@@ -113,14 +137,26 @@ namespace FlightSaverApi.Data
                     .WithMany(a => a.Aircrafts)
                     .HasForeignKey(a => a.AirlineId)
                     .IsRequired();
+
+                entity
+                    .HasMany(a => a.AircraftReviews)
+                    .WithOne()
+                    .HasForeignKey(r => r.AircraftId);
+                
+                entity
+                    .HasMany(a => a.Flights)
+                    .WithOne()
+                    .HasForeignKey(r => r.AircraftId);
             });
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.HasIndex(a => a.Username).IsUnique();
                 entity.Property(u => u.Username)
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.HasIndex(a => a.Email).IsUnique();
                 entity.Property(u => u.Email)
                     .IsRequired()
                     .HasMaxLength(100);
@@ -133,158 +169,180 @@ namespace FlightSaverApi.Data
 
                 entity.Property(u => u.PasswordSalt)
                     .IsRequired();
+
+                entity
+                    .HasMany(u => u.AircraftReviews)
+                    .WithOne()
+                    .HasForeignKey(r => r.UserId);
+                
+                entity
+                    .HasMany(u => u.AirlineReviews)
+                    .WithOne()
+                    .HasForeignKey(r => r.UserId);
+                
+                entity
+                    .HasMany(u => u.AirportReviews)
+                    .WithOne()
+                    .HasForeignKey(r => r.UserId);
+                
+                entity
+                    .HasMany(a => a.Flights)
+                    .WithOne()
+                    .HasForeignKey(r => r.UserId);
+            });
+            
+            modelBuilder.Entity<AircraftReview>(entity =>
+            {
+                entity.Property(u => u.Rating)
+                    .IsRequired();
+
+                entity.Property(u => u.Comment)
+                    .HasMaxLength(200);
+
+                entity
+                    .HasOne(a => a.Aircraft)
+                    .WithMany(a => a.AircraftReviews)
+                    .HasForeignKey(a => a.AircraftId)
+                    .IsRequired();
+
+                entity
+                    .HasOne(r => r.User)
+                    .WithMany(u => u.AircraftReviews)
+                    .HasForeignKey(r => r.UserId)
+                    .IsRequired();
+                
+                entity
+                    .HasOne(r => r.Flight)
+                    .WithOne(r => r.AircraftReview)
+                    .HasForeignKey<AircraftReview>(r => r.FlightId)
+                    .IsRequired();
+            });
+            
+            modelBuilder.Entity<AirlineReview>(entity =>
+            {
+                entity.Property(u => u.Rating)
+                    .IsRequired();
+
+                entity.Property(u => u.Comment)
+                    .HasMaxLength(200);
+
+                entity
+                    .HasOne(a => a.Airline)
+                    .WithMany(a => a.AirlineReviews)
+                    .HasForeignKey(a => a.AirlineId)
+                    .IsRequired();
+
+                entity
+                    .HasOne(r => r.User)
+                    .WithMany(u => u.AirlineReviews)
+                    .HasForeignKey(r => r.UserId)
+                    .IsRequired();
+                
+                entity
+                    .HasOne(r => r.Flight)
+                    .WithOne(r => r.AirlineReview)
+                    .HasForeignKey<AirlineReview>(r => r.FlightId)
+                    .IsRequired();
+            });
+            
+            modelBuilder.Entity<AirportReview>(entity =>
+            {
+                entity.Property(u => u.Rating)
+                    .IsRequired();
+
+                entity.Property(u => u.Comment)
+                    .HasMaxLength(200);
+
+                entity
+                    .HasOne(a => a.Airport)
+                    .WithMany(a => a.AirportReviews)
+                    .HasForeignKey(a => a.AirportId)
+                    .IsRequired();
+
+                entity
+                    .HasOne(r => r.User)
+                    .WithMany(u => u.AirportReviews)
+                    .HasForeignKey(r => r.UserId)
+                    .IsRequired();
+
+                entity
+                    .HasOne(r => r.Flight)
+                    .WithMany(r => r.AirportReviews)
+                    .HasForeignKey(r => r.FlightId)
+                    .IsRequired();
             });
 
-            //modelBuilder.Entity<AircraftReview>(entity =>
-            //{
-            //    entity.Property(r => r.Rating)
-            //        .IsRequired();
+            modelBuilder.Entity<Flight>(entity =>
+            {
+                entity.Property(f => f.FlightNumber)
+                    .IsRequired()
+                    .HasMaxLength(50);
+                
+                entity.Property(f => f.DepartureTime)
+                    .IsRequired();
+                
+                entity.Property(f => f.ArrivalTime)
+                    .IsRequired();
+                
+                entity.Property(f => f.ClassType)
+                    .IsRequired();
+                
+                entity.Property(f => f.SeatType)
+                    .IsRequired();
+                
+                entity.Property(f => f.SeatNumber)
+                    .IsRequired();
+                
+                entity.Property(f => f.Reason)
+                    .IsRequired();
+                
+                entity
+                    .HasOne(f => f.DepartureAirport)
+                    .WithMany(a => a.DepartingFlights)
+                    .HasForeignKey(f => f.DepartureAirportId)
+                    .IsRequired();
+                
+                entity
+                    .HasOne(f => f.ArrivalAirport)
+                    .WithMany(a => a.ArrivingFlights)
+                    .HasForeignKey(f => f.ArrivalAirportId)
+                    .IsRequired();
+                
+                entity
+                    .HasOne(f => f.Airline)
+                    .WithMany(a => a.Flights)
+                    .HasForeignKey(f => f.AirlineId)
+                    .IsRequired();
+                
+                entity
+                    .HasOne(f => f.Aircraft)
+                    .WithMany(a => a.Flights)
+                    .HasForeignKey(f => f.AircraftId)
+                    .IsRequired();
 
-            //    entity.Property(r => r.Comment)
-            //        .HasMaxLength(200);
+                entity.HasMany(f => f.AirportReviews)
+                    .WithOne(r => r.Flight)
+                    .HasForeignKey(r => r.FlightId)
+                    .IsRequired(false);
+                
+                entity
+                    .HasOne(f => f.AircraftReview)
+                    .WithOne(f => f.Flight)
+                    .HasForeignKey<AircraftReview>(f => f.FlightId)
+                    .IsRequired(false);
+                
+                entity
+                    .HasOne(f => f.AirlineReview)
+                    .WithOne(f => f.Flight)
+                    .HasForeignKey<AirlineReview>(f => f.FlightId)
+                    .IsRequired(false);
 
-            //    entity
-            //        .HasOne(r => r.Reviewer)
-            //        .WithMany(u => u.AircraftReviews)
-            //        .HasForeignKey(r => r.ReviewerId)
-            //        .IsRequired();
-
-            //    entity
-            //        .HasOne(r => r.Aircraft)
-            //        .WithMany(a => a.AircraftReviews)
-            //        .HasForeignKey(r => r.AircraftId)
-            //        .IsRequired();
-            //});
-
-            //modelBuilder.Entity<Flight>(entity =>
-            //{
-            //    entity.Property(f => f.FlightNumber)
-            //        .IsRequired()
-            //        .HasMaxLength(50);
-
-            //    entity.Property(f => f.DepartureTime)
-            //        .IsRequired();
-
-            //    entity.Property(f => f.ArrivalTime)
-            //        .IsRequired();
-
-            //    entity.Property(f => f.SeatType)
-            //        .IsRequired();
-
-            //    entity.Property(f => f.SeatNumber)
-            //        .IsRequired()
-            //        .HasMaxLength(4);
-
-            //    entity.Property(f => f.ClassType)
-            //        .IsRequired();
-
-            //    entity.Property(f => f.Reason)
-            //        .HasMaxLength(200);
-
-            //    entity
-            //        .HasOne<User>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.UserId)
-            //        .IsRequired();
-
-            //    entity
-            //        .HasOne<Airport>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.DepartureAirportId)
-            //        .IsRequired()
-            //        .HasConstraintName("FK_Flight_DepartureAirport");
-
-            //    entity
-            //        .HasOne<Airport>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.ArrivalAirportId)
-            //        .IsRequired()
-            //        .HasConstraintName("FK_Flight_ArrivalAirport");
-
-            //    entity
-            //        .HasOne<Airline>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.AirlineId)
-            //        .IsRequired();
-
-            //    entity
-            //        .HasOne<Aircraft>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.AircraftId)
-            //        .IsRequired()
-            //        .HasConstraintName("FK_Flight_Aircraft");
-
-            //    entity
-            //        .HasOne<AirportReview>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.DepartureAirportReviewId)
-            //        .IsRequired(false)
-            //        .HasConstraintName("FK_Flight_DepartureAirportReview");
-
-            //    entity
-            //        .HasOne<AirportReview>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.ArrivalAirportReviewId)
-            //        .IsRequired(false)
-            //        .HasConstraintName("FK_Flight_ArrivalAirportReview");
-
-            //    entity
-            //        .HasOne<AirlineReview>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.AirlineReviewId)
-            //        .IsRequired(false)
-            //        .HasConstraintName("FK_Flight_AirlineReview");
-
-            //    entity
-            //        .HasOne<AircraftReview>()
-            //        .WithMany()
-            //        .HasForeignKey(f => f.AircraftReviewId)
-            //        .IsRequired(false)
-            //        .HasConstraintName("FK_Flight_AircraftReview");
-            //});
-
-
-            //modelBuilder.Entity<AirlineReview>(entity =>
-            //{
-            //    entity.Property(r => r.Rating)
-            //        .IsRequired();
-
-            //    entity.Property(r => r.Comment)
-            //        .HasMaxLength(200);
-
-            //    entity
-            //        .HasOne<User>()
-            //        .WithMany()
-            //        .HasForeignKey(r => r.ReviewerId)
-            //        .IsRequired();
-
-            //    entity
-            //        .HasOne<Airline>()
-            //        .WithMany()
-            //        .HasForeignKey(r => r.AirlineId)
-            //        .IsRequired();
-            //});
-
-            //modelBuilder.Entity<AirportReview>(entity =>
-            //{
-            //    entity.Property(r => r.Rating)
-            //        .IsRequired();
-
-            //    entity.Property(r => r.Comment)
-            //        .HasMaxLength(200);
-
-            //    entity
-            //        .HasOne<User>()
-            //        .WithMany()
-            //        .HasForeignKey(r => r.ReviewerId)
-            //        .IsRequired();
-
-            //    entity
-            //        .HasOne<Airport>()
-            //        .WithMany()
-            //        .HasForeignKey(r => r.AirportId)
-            //        .IsRequired();
-            //});
+                entity
+                    .HasOne(f => f.User)
+                    .WithMany(u => u.Flights)
+                    .HasForeignKey(f => f.UserId)
+                    .IsRequired();
+            });
         }
     }
 }

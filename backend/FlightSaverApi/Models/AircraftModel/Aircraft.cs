@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FlightSaverApi.Models.AirlineModel;
+using FlightSaverApi.Models.FlightModel;
 using FlightSaverApi.Models.ReviewModel;
 
 namespace FlightSaverApi.Models.AircraftModel
@@ -21,5 +22,9 @@ namespace FlightSaverApi.Models.AircraftModel
         public int AirlineId { get; set; }
 
         public virtual Airline Airline { get; set; }
+
+        public virtual List<AircraftReview>? AircraftReviews { get; set; }
+        
+        public virtual List<Flight>? Flights { get; set; }
     }
 }

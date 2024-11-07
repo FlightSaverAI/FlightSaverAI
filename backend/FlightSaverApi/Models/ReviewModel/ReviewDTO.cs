@@ -7,7 +7,7 @@ namespace FlightSaverApi.Models.ReviewModel
     {
         public int Id { get; set; }
 
-        public int ReviewerId { get; set; }
+        public int UserId { get; set; }
 
         public int Rating { get; set; }
 
