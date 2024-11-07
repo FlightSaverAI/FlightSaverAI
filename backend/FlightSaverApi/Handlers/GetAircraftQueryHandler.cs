@@ -11,7 +11,7 @@ public class GetAircraftQueryHandler : IRequestHandler<GetAircraftQuery, Aircraf
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
 
-    public GetAircraftQueryHandler(FlightSaverContext context, Mapper mapper)
+    public GetAircraftQueryHandler(FlightSaverContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
