@@ -78,7 +78,7 @@ namespace FlightSaverApi.Controllers
         [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> DeleteAircraft(int id, CancellationToken cancellationToken)
         {
-            var command = new DeleteAircraftCommand() { Id = id };
+            var command = new DeleteAircraftCommand { Id = id };
             
             await _mediator.Send(command, cancellationToken);
             

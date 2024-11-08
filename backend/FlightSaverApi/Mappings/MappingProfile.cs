@@ -31,12 +31,10 @@ namespace FlightSaverApi.Mappings
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
 
             CreateMap<AirlineDTO, Airline>()
-                .ReverseMap()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ReverseMap();
 
             CreateMap<AirportDTO, Airport>()
-                .ReverseMap()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ReverseMap();
 
             CreateMap<AircraftDTO, Aircraft>()
                 .ReverseMap();
@@ -46,11 +44,14 @@ namespace FlightSaverApi.Mappings
                .ForMember(dest => dest.AirportReviews, opt => opt.MapFrom(src => src.AirportReviews))
                .ForMember(dest => dest.AircraftReview, opt => opt.MapFrom(src => src.AircraftReview));
 
-            CreateMap<AirportReview, AirportReviewDTO>();
+            CreateMap<AirportReview, AirportReviewDTO>()
+                .ReverseMap();
 
-            CreateMap<AirlineReview, AirlineReviewDTO>();
+            CreateMap<AirlineReview, AirlineReviewDTO>()
+                .ReverseMap();
 
-            CreateMap<AircraftReview, AircraftReviewDTO>();
+            CreateMap<AircraftReview, AircraftReviewDTO>()
+                .ReverseMap();
         }
     }
 }
