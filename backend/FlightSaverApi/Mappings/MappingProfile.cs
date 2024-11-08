@@ -38,11 +38,17 @@ namespace FlightSaverApi.Mappings
 
             CreateMap<AircraftDTO, Aircraft>()
                 .ReverseMap();
+                
 
             CreateMap<FlightDTO, Flight>()
                .ForMember(dest => dest.AirlineReview, opt => opt.MapFrom(src => src.AirlineReview))
                .ForMember(dest => dest.AirportReviews, opt => opt.MapFrom(src => src.AirportReviews))
                .ForMember(dest => dest.AircraftReview, opt => opt.MapFrom(src => src.AircraftReview));
+            
+            CreateMap<Flight, FlightDTO>()
+                .ForMember(dest => dest.AirlineReview, opt => opt.MapFrom(src => src.AirlineReview))
+                .ForMember(dest => dest.AirportReviews, opt => opt.MapFrom(src => src.AirportReviews))
+                .ForMember(dest => dest.AircraftReview, opt => opt.MapFrom(src => src.AircraftReview));
 
             CreateMap<AirportReview, AirportReviewDTO>()
                 .ReverseMap();

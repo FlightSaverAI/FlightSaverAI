@@ -23,7 +23,7 @@ namespace FlightSaverApi.Controllers
         
         // GET: /Aircrafts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Aircraft>>> GetAircrafts(CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<AircraftDTO>>> GetAircrafts(CancellationToken cancellationToken)
         {
             var query = new GetAircraftsQuery();
             var aircrafts = await _mediator.Send(query, cancellationToken);

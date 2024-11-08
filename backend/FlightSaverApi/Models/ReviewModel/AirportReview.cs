@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using FlightSaverApi.Enums;
 using FlightSaverApi.Models.AirportModel;
 using FlightSaverApi.Models.FlightModel;
+using Newtonsoft.Json;
 
 namespace FlightSaverApi.Models.ReviewModel
 {
@@ -11,7 +12,7 @@ namespace FlightSaverApi.Models.ReviewModel
         public AirportReviewType AirportReviewType { get; set; }
         
         public int AirportId { get; set; }
-
+        
         public virtual Airport Airport { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace FlightSaverApi.Models.ReviewModel
         public int Rating { get; set; }
 
         public string? Comment { get; set; }
+        
+        public int FlightId { get; set; }
     }
 }
 

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using FlightSaverApi.Models.FlightModel;
 using FlightSaverApi.Models.UserModel;
+using Newtonsoft.Json;
 
 namespace FlightSaverApi.Models.ReviewModel
 {
