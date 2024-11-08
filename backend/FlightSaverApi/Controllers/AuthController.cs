@@ -30,18 +30,33 @@ namespace FlightSaverApi.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
-            var command = new RegisterUserCommand { UserRegisterDTO = request };
-            var token = await _mediator.Send(command);
-            return Ok(new { token = token });
+            try
+            {
+                var command = new RegisterUserCommand { UserRegisterDTO = request };
+                var token = await _mediator.Send(command);
+                return Ok(new { token = token });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while registering the user.", details = ex.Message });
+            }
         }
 
         // POST: /Auth/Login
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
-            var command = new LoginUserCommand { UserLoginDTO = request };
-            var token = await _mediator.Send(command);
-            return Ok(new { token = token });
+            try
+            {
+                var command = new LoginUserCommand { UserLoginDTO = request };
+                var token = await _mediator.Send(command);
+                return Ok(new { token = token });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while registering the user.", details = ex.Message });
+            }
+
         }
     }
 }

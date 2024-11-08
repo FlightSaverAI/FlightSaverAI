@@ -10,8 +10,6 @@ namespace FlightSaverApi.Models.ReviewModel
         public int AirlineId { get; set; }
 
         public virtual Airline Airline { get; set; }
-        
-        public virtual Flight Flight { get; set; }
     }
 }
 

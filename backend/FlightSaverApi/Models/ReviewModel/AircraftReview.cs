@@ -11,8 +11,6 @@ namespace FlightSaverApi.Models.ReviewModel
         public int AircraftId { get; set; }
 
         public virtual Aircraft Aircraft { get; set; }
-        
-        public virtual Flight Flight { get; set; }
     }
 }
 
