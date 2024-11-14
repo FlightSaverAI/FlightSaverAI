@@ -34,7 +34,7 @@ export class AuthorizedUserComponent {
     {
       type: 'button',
       name: 'ADD FLIGHT',
-      routerLink: '',
+      routerLink: '/authorized/flight-creation',
     },
     {
       type: 'photo',

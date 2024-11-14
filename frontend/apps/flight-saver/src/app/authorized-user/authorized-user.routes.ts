@@ -22,6 +22,11 @@ export const authorizedUserRoutes: Route[] = [
         loadComponent: () =>
           loadRemoteModule('community', './Component').then((m) => m.AppComponent),
       },
+      {
+        path: 'flight-creation',
+        loadChildren: async () =>
+          await import('@flight-saver/flight-creation/routes').then((m) => m.flightCreationRoutes),
+      },
     ],
   },
 ];
