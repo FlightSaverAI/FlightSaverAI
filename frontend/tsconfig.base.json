@@ -18,6 +18,8 @@
       "@flight-saver/authentication/routes": ["libs/authentication/routes/src/index.ts"],
       "@flight-saver/authentication/ui": ["libs/authentication/ui/src/index.ts"],
       "@flight-saver/authentication/utils": ["libs/authentication/utils/src/index.ts"],
+      "@flight-saver/flight-creation/routes": ["libs/flight-creation/routes/src/index.ts"],
+      "@flight-saver/flight-creation/features": ["libs/flight-creation/features/src/index.ts"],
       "@flight-saver/home/features": ["libs/home/features/src/index.ts"],
       "@flight-saver/home/routes": ["libs/home/routes/src/index.ts"],
       "@flight-saver/home/ui": ["libs/home/ui/src/index.ts"],
