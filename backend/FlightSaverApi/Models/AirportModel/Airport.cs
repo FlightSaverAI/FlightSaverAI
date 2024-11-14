@@ -6,7 +6,6 @@ using FlightSaverApi.Models.ReviewModel;
 
 namespace FlightSaverApi.Models.AirportModel
 {
-    [SwaggerExclude]
     public class Airport
     {
         public int Id { get; set; }

@@ -10,7 +10,6 @@ using FlightSaverApi.Models.UserModel;
 
 namespace FlightSaverApi.Models.FlightModel
 {
-    [SwaggerExclude]
     public class Flight
     {
         public int Id { get; set; }

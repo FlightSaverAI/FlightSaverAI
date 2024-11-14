@@ -21,7 +21,7 @@ public class AirlinesController : ControllerBase
     
     // GET: /Airlines
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Airline>>> GetAirlines(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<AirlineDTO>>> GetAirlines(CancellationToken cancellationToken)
     {
         var query = new GetAirlinesQuery();
         var airlines =  await _mediator.Send(query, cancellationToken);

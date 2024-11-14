@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 
 namespace FlightSaverApi.Models.ReviewModel
 { 
-    [SwaggerExclude]
     public class AirportReview : Review
     {
         public AirportReviewType AirportReviewType { get; set; }

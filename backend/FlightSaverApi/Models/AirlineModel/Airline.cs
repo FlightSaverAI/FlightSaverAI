@@ -7,7 +7,6 @@ using FlightSaverApi.Models.ReviewModel;
 
 namespace FlightSaverApi.Models.AirlineModel
 {
-    [SwaggerExclude]
     public class Airline
     {
         public int Id { get; set; }

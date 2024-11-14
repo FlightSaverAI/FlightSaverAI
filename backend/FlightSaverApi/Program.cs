@@ -1,5 +1,4 @@
 // Program.cs
-// CHECK AUTOMAPPER, CQRS and MediatR
 using FlightSaverApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,7 +28,7 @@ builder.Services.AddMediatR(cfg => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
-    setup.DocumentFilter<SwaggerExcludeFilter>();
+    //setup.DocumentFilter<SwaggerExcludeFilter>();
     
     setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
@@ -112,7 +111,6 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
