@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FlightSaverApi.Attributes;
 using FlightSaverApi.Enums.FlightEnums;
 using FlightSaverApi.Models.AircraftModel;
 using FlightSaverApi.Models.AirlineModel;
@@ -9,6 +10,7 @@ using FlightSaverApi.Models.UserModel;
 
 namespace FlightSaverApi.Models.FlightModel
 {
+    [SwaggerExclude]
     public class Flight
     {
         public int Id { get; set; }

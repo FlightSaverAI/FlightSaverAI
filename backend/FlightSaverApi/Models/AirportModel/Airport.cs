@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FlightSaverApi.Attributes;
 using FlightSaverApi.Models.FlightModel;
 using FlightSaverApi.Models.ReviewModel;
 
 namespace FlightSaverApi.Models.AirportModel
 {
+    [SwaggerExclude]
     public class Airport
     {
         public int Id { get; set; }

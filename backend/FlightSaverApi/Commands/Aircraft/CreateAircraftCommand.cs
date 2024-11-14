@@ -1,8 +1,10 @@
+using FlightSaverApi.Attributes;
 using FlightSaverApi.Models.AircraftModel;
 using MediatR;
 
 namespace FlightSaverApi.Commands.Aircraft;
 
+[SwaggerExclude]
 public class CreateAircraftCommand : IRequest<AircraftDTO>
 {
     public string Name { get; set; }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FlightSaverApi.Attributes;
 using FlightSaverApi.Enums;
 using FlightSaverApi.Models.FlightModel;
 using FlightSaverApi.Models.ReviewModel;
 
 namespace FlightSaverApi.Models.UserModel
 {
+    [SwaggerExclude]
     public class User
     {
         public int Id { get; set; }

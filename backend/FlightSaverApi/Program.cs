@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
 using FlightSaverApi.Enums;
+using FlightSaverApi.Filters;
 using FlightSaverApi.Services;
 using Microsoft.Extensions.Options;
 
@@ -28,6 +29,8 @@ builder.Services.AddMediatR(cfg => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
+    setup.DocumentFilter<SwaggerExcludeFilter>();
+    
     setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "Flight Saver API",
@@ -111,6 +114,7 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 var app = builder.Build();

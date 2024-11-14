@@ -2,11 +2,13 @@ using AutoMapper;
 using FlightSaverApi.Commands.Aircraft;
 using FlightSaverApi.Data;
 using FlightSaverApi.Models.AircraftModel;
+using FlightSaverApi.Models.AirportModel;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Handlers;
 
-public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftCommand, Unit>
+public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftCommand, AircraftDTO>
 {
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
@@ -17,18 +19,19 @@ public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftComman
         _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(UpdateAircraftCommand request, CancellationToken cancellationToken)
+    public async Task<AircraftDTO> Handle(UpdateAircraftCommand request, CancellationToken cancellationToken)
     {
-        var aircraft = await _context.Aircrafts.FindAsync(request.Id);
+        var aircraft = await _context.Aircrafts.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
+        
         if (aircraft == null)
         {
             throw new KeyNotFoundException($"Aircraft with Id {request.Id} does not exist.");
         }
         
-        _mapper.Map(request, aircraft);
+        _mapper.Map(request.AircraftDto, aircraft);
         
         await _context.SaveChangesAsync(cancellationToken);
         
-        return Unit.Value;
+        return _mapper.Map<AircraftDTO>(aircraft);;
     }
 }
