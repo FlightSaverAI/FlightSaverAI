@@ -1,14 +1,48 @@
 @use '@global/styles/styles.scss' as *;
 
 .button {
-  color: var(--text-color-black);
-  background: var(--btn-background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px 20px;
   border: none;
   border-radius: 50px;
   width: 100%;
-  text-align: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: 'Poppins';
+  transition: 0.3s;
   cursor: pointer;
+
+  &__primary {
+    color: var(--text-color-black);
+    background: var(--btn-background-color);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &__secondary {
+    background: transparent;
+    border: 2px solid #b7c2e8;
+    color: #b7c2e8;
+
+    &--active {
+      background: #b7c2e8;
+      color: black;
+    }
+
+    & > img {
+      color: white;
+    }
+
+    &:hover {
+      background: #b7c2e8;
+      color: black;
+    }
+  }
+}
+
+img {
+  margin: 0 10px;
 }
