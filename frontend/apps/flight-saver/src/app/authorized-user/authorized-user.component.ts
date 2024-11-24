@@ -33,7 +33,7 @@ export class AuthorizedUserComponent {
     },
     {
       type: 'button',
-      name: 'ADD FLIGHT',
+      name: 'Add Flight',
       routerLink: '/authorized/flight-creation',
     },
     {
