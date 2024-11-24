@@ -1,0 +1,28 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+h3 {
+  color: white;
+  font-size: 1.2rem;
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 16px;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+}
+
+form > div > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+shared-button {
+  min-width: 120px;
+}
