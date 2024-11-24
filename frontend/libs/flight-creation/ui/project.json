@@ -2,7 +2,7 @@
   "name": "flight-creation-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/flight-creation/ui/src",
-  "prefix": "lib",
+  "prefix": "flight-creation",
   "projectType": "library",
   "tags": ["domain:flight-creation", "type:ui"],
   "targets": {
