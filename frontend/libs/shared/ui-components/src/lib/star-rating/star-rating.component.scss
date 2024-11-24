@@ -1,0 +1,24 @@
+.star {
+  cursor: pointer;
+  color: gray;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: #b7c2e8;
+  animation: starFilled 0.1s ease-in-out;
+}
+
+@keyframes starFilled {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.star:hover {
+  color: #b7c2e8;
+}
