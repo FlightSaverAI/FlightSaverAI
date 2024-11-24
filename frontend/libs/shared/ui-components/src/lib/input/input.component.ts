@@ -28,6 +28,7 @@ import { ValidationSignComponent } from '../validation-sign/validation-sign.comp
       </div>
       }
       <input
+        [ngStyle]="!iconSrc() ? { padding: '10px' } : null"
         [type]="type()"
         [placeholder]="placeholder()"
         (input)="setInput($event.target)"
