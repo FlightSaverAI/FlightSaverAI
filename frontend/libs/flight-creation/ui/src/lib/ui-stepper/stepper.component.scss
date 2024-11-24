@@ -1,0 +1,76 @@
+@use '@global/styles/styles.scss' as *;
+
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 16px;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+
+  &__option {
+    display: flex;
+    align-items: center;
+
+    &--active {
+      animation: opacityIncrease 0.3s ease-out;
+      cursor: pointer;
+    }
+
+    &--disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      animation: opacityDescrease 0.3s ease-out;
+    }
+  }
+
+  &__option-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  &__option-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 35px;
+    border: none;
+    background: linear-gradient(to right, #7683af 0%, #b7c2e8 100%);
+  }
+
+  @keyframes opacityDescrease {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes opacityIncrease {
+    0% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@include tablet {
+  .stepper {
+    padding: 15px 30px;
+
+    &__option-number {
+      font-size: 1.1rem;
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
