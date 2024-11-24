@@ -1,6 +1,10 @@
 import { Route } from '@angular/router';
 import { FlightCreationContainerComponent } from '@flight-saver/flight-creation/features';
-import { FlightFormComponent, TicketFormComponent } from '@flight-saver/flight-creation/ui';
+import {
+  FlightFormComponent,
+  RateAndReviewComponent,
+  TicketFormComponent,
+} from '@flight-saver/flight-creation/ui';
 import { flightFormGuard } from './flight-form.guard';
 import { ticketFormGuard } from './ticket-form.guard';
 import { flightCreationGuard } from './flight-creation.guard';
@@ -23,7 +27,7 @@ export const flightCreationRoutes: Route[] = [
       },
       {
         path: 'rate-and-review',
-        component: FlightFormComponent,
+        component: RateAndReviewComponent,
       },
     ],
   },
