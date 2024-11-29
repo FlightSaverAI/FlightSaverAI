@@ -4,9 +4,10 @@ public enum Continent
 {
     Europe,
     Asia,
-    Antarctica,
+    Antarctic,
     NorthAmerica,
     SouthAmerica,
     Oceania,
-    Africa
+    Africa,
+    Unknown
 }
