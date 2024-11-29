@@ -15,6 +15,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,14 +25,29 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Cqrs" Version="5.2.2.69" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Data\" />
-    <None Remove="Models\User\" />
+    <None Remove="Enums\FlightEnums\" />
+    <None Remove="Models\AirportModel\" />
+    <None Remove="Models\FlightModel\" />
+    <None Remove="Models\ReviewModel\" />
+    <None Remove="Models\UserModel\" />
+    <None Remove="Models\AirlineModel\" />
+    <None Remove="Mappings\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Models\User\" />
+    <Folder Include="Models\FlightModel\" />
+    <Folder Include="Enums\FlightEnums\" />
+    <Folder Include="Models\AirportModel\" />
+    <Folder Include="Models\FlightModel\" />
+    <Folder Include="Models\ReviewModel\" />
+    <Folder Include="Models\UserModel\" />
+    <Folder Include="Models\AirlineModel\" />
+    <Folder Include="Mappings\" />
   </ItemGroup>
 </Project>

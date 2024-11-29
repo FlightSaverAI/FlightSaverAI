@@ -3,6 +3,7 @@ using System;
 using FlightSaverApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlightSaverApi.Migrations
 {
     [DbContext(typeof(FlightSaverContext))]
-    partial class FlightSaverContextModelSnapshot : ModelSnapshot
+    [Migration("20241107141641_AddFlights")]
+    partial class AddFlights
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,6 +174,9 @@ namespace FlightSaverApi.Migrations
                     b.Property<int>("AircraftId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("AircraftReviewId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("AirlineId")
                         .HasColumnType("integer");
 
@@ -184,6 +190,9 @@ namespace FlightSaverApi.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("DepartureAirportId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("DepartureAirportReviewId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DepartureTime")

@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FlightSaverApi.Commands.Aircraft;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FlightSaverApi.Models.Aircraft;
 using FlightSaverApi.Data;
 using Microsoft.AspNetCore.Authorization;
+using FlightSaverApi.Models.AircraftModel;
+using FlightSaverApi.Queries.Aircraft;
+using MediatR;
 
 namespace FlightSaverApi.Controllers
 {
@@ -11,121 +14,75 @@ namespace FlightSaverApi.Controllers
     [Authorize]
     public class AircraftsController : ControllerBase
     {
-        private readonly FlightSaverContext _context;
+        private readonly IMediator _mediator;
 
-        public AircraftsController(FlightSaverContext context)
+        public AircraftsController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
-
-        // GET: api/Aicrafts
+        
+        // GET: /Aircrafts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AircraftDTO>>> GetAircrafts()
+        public async Task<ActionResult<IEnumerable<AircraftDTO>>> GetAircrafts(CancellationToken cancellationToken)
         {
-            return await _context.Aircrafts.Select(x => ItemToDto(x)).ToListAsync();
+            var query = new GetAircraftsQuery();
+            var aircrafts = await _mediator.Send(query, cancellationToken);
+            
+            return Ok(aircrafts);
         }
-
-        // GET: api/Aicrafts/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AircraftDTO>> GetAircraft(int id)
+        
+        // GET: /Aircrafts/{id}
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<AircraftDTO>> GetAircraft([FromRoute] int id,
+            CancellationToken cancellationToken)
         {
-            var plane = await _context.Aircrafts.FindAsync(id);
+            var query = new GetAircraftQuery(id);
+            var aircraft = await _mediator.Send(query, cancellationToken);
 
-            if (plane == null)
+            if (aircraft == null)
             {
                 return NotFound();
             }
-
-            return ItemToDto(plane);
+            
+            return Ok(aircraft);
         }
-
-        // PUT: api/Aicrafts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        
+        // PUT: /Aircrafts/{id}
+        [HttpPut("{id:int}")]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<IActionResult> PutAircraft(int id, AircraftDTO planeDto)
+        public async Task<IActionResult> PutAircraft(int id, UpdateAircraftCommand command, CancellationToken cancellationToken)
         {
-            if (id != planeDto.Id)
+            if (id != command.Id)
             {
                 return BadRequest();
             }
-
-            var plane = await _context.Aircrafts.FindAsync(id);
-            if (plane == null)
-            {
-                return NotFound();
-            }
-
-            plane.Name = planeDto.Name;
-            plane.IataCode = planeDto.IataCode;
-            plane.IcaoCode = planeDto.IcaoCode;
-            plane.RegNumber = planeDto.RegNumber;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) when (!AircraftExists(id))
-            {
-                return NotFound();
-            }
-
+            
+            await _mediator.Send(command, cancellationToken);
+            
             return NoContent();
         }
-
-        // POST: api/Aicrafts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
+        // POST: /Aircrafts
         [HttpPost]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult<AircraftDTO>> PostAircraft(AircraftDTO aircraftDto)
+        public async Task<ActionResult<AircraftDTO>> PostAircraft(CreateAircraftCommand command,
+            CancellationToken cancellationToken)
         {
-            var aircraft = new Aircraft
-            {
-                Name = aircraftDto.Name,
-                IataCode = aircraftDto.IataCode,
-                IcaoCode = aircraftDto.IcaoCode,
-                RegNumber = aircraftDto.RegNumber,
-            };
-
-            _context.Aircrafts.Add(aircraft);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(PostAircraft),
-                new { id = aircraft.Id },
-                ItemToDto(aircraft));
+            var createdAicraft = await _mediator.Send(command, cancellationToken);
+            
+            return CreatedAtAction(nameof(GetAircraft), new { id = createdAicraft.Id }, createdAicraft);
         }
-
-        // DELETE: api/Aicrafts/5
-        [HttpDelete("{id}")]
+        
+        // DELETE: /Aircrafts/{id}
+        [HttpDelete("{id:int}")]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<IActionResult> DeleteAircraft(int id)
+        public async Task<IActionResult> DeleteAircraft(int id, CancellationToken cancellationToken)
         {
-            var plane = await _context.Aircrafts.FindAsync(id);
-            if (plane == null)
-            {
-                return NotFound();
-            }
-
-            _context.Aircrafts.Remove(plane);
-            await _context.SaveChangesAsync();
-
+            var command = new DeleteAircraftCommand { Id = id };
+            
+            await _mediator.Send(command, cancellationToken);
+            
             return NoContent();
         }
-
-        private bool AircraftExists(int id)
-        {
-            return _context.Aircrafts.Any(e => e.Id == id);
-        }
-
-        private static AircraftDTO ItemToDto(Aircraft aircraft) =>
-            new AircraftDTO
-            {
-                Id = aircraft.Id,
-                Name = aircraft.Name,
-                IataCode = aircraft.IataCode,
-                IcaoCode = aircraft.IcaoCode,
-                RegNumber = aircraft.RegNumber
-            };
     }
 }

@@ -1,15 +1,16 @@
-﻿// Controllers/AuthController.cs
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FlightSaverApi.Data;
-using FlightSaverApi.Models.User;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using FlightSaverApi.Commands.Auth;
 using Microsoft.AspNetCore.Authorization;
 using NuGet.Protocol;
+using FlightSaverApi.Models.UserModel;
+using MediatR;
 
 namespace FlightSaverApi.Controllers
 {
@@ -18,122 +19,44 @@ namespace FlightSaverApi.Controllers
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
-        private readonly FlightSaverContext _context;
-        private readonly IConfiguration _configuration;
-
-        public AuthController(FlightSaverContext context, IConfiguration configuration)
+        private readonly IMediator _mediator;
+        
+        public AuthController(IMediator mediator)
         {
-            _context = context;
-            _configuration = configuration;
+            _mediator = mediator;
         }
 
         // POST: /Auth/Register
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+            try
             {
-                return BadRequest("Email already exists.");
+                var command = new RegisterUserCommand { UserRegisterDTO = request };
+                var token = await _mediator.Send(command);
+                return Ok(new { token = token });
             }
-
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-
-            var user = new User
+            catch (Exception ex)
             {
-                Username = request.Username,
-                Email = request.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            var token = CreateToken(user);
-
-            return Ok(new { token });
+                return StatusCode(500, new { message = "An error occurred while registering the user.", details = ex.Message });
+            }
         }
 
         // POST: /Auth/Login
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
-            if (user == null)
-            {
-                return Unauthorized("Invalid email or password.");
-            }
-
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            {
-                return Unauthorized("Invalid username or password.");
-            }
-
-            var token = CreateToken(user);
-            return Ok(new { token });
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
-        {
-            using (var hmac = new HMACSHA512(storedSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(storedHash);
-            }
-        }
-
-        private string CreateToken(User user)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
-
-            var jwtSettings = _configuration.GetSection("JwtSettings");
-            var secretKeyBase64 = jwtSettings["Secret"];
-            var issuer = jwtSettings["Issuer"];
-            var audience = jwtSettings["Audience"];
-
-            byte[] keyBytes;
             try
             {
-                keyBytes = Convert.FromBase64String(secretKeyBase64);
+                var command = new LoginUserCommand { UserLoginDTO = request };
+                var token = await _mediator.Send(command);
+                return Ok(new { token = token });
             }
-            catch (FormatException)
+            catch (Exception ex)
             {
-                throw new ArgumentException("JWT Secret Key is not a valid Base64 string.");
+                return StatusCode(500, new { message = "An error occurred while registering the user.", details = ex.Message });
             }
 
-            if (keyBytes.Length < 65)
-            {
-                throw new ArgumentException("JWT Secret Key must be at least 65 bytes (520 bits) long.");
-            }
-
-            var key = new SymmetricSecurityKey(keyBytes);
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
-
-            var token = new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
-                signingCredentials: creds
-            );
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-            return jwt;
         }
     }
 }
