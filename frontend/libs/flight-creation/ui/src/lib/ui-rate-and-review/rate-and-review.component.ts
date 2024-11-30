@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TextareaComponent, StarRatingComponent } from '@shared/ui-components';
-import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -14,74 +14,53 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     ReactiveFormsModule,
   ],
-  template: ` <form [formGroup]="form" class="cards">
-    @for(item of rateAndReview; track item; let cardIndex = $index){
-    <div class="card">
-      <div class="card__image-container">
-        <img class="card__image" [src]="item.imgSrc" alt="" />
-        <div class="card__title">
-          <p>Louisville / Louisville</p>
+  template: `
+    <div class="cards">
+      @for(item of rateAndReviewFormConfig(); track item){
+      <form [formGroup]="rateAndReviewForm().get(item.fieldName)">
+        <div class="card">
+          <div class="card__image-container">
+            <img class="card__image" [src]="item.imgSrc" alt="" />
+            <div class="card__title">
+              <p>Louisville / Louisville</p>
+            </div>
+          </div>
+          <div class="card__opinion-container">
+            <shared-textarea
+              formControlName="review"
+              [parentForm]="rateAndReviewForm().get(item.fieldName)"
+              [fieldName]="'review'"
+              placeholder="Share your opinion..."
+            ></shared-textarea>
+            <div class="star-rating">
+              @for(star of getStars(item.fieldName); track star; let starIndex = $index){
+              <shared-star-rating
+                [state]="star"
+                [starIndex]="starIndex"
+                (selectRate)="emitSelectRate($event, item.fieldName)"
+              ></shared-star-rating>
+              }
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="card__opinion-container">
-        <shared-textarea
-          [formControlName]="item.formControlName || null"
-          [parentForm]="form"
-          [fieldName]="item.fieldName"
-          placeholder="Share your opinion..."
-        ></shared-textarea>
-        <div class="star-rating">
-          @for(star of item.stars; track star; let starIndex = $index){
-          <shared-star-rating
-            [state]="star"
-            [starIndex]="starIndex"
-            (selectRate)="selectRate($event, cardIndex)"
-          ></shared-star-rating>
-          }
-        </div>
-      </div>
+      </form>
+      }
     </div>
-    }
-  </form>`,
+  `,
   styleUrl: './rate-and-review.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RateAndReviewComponent {
-  rateAndReview = [
-    {
-      formControlName: 'airportOpinion',
-      fieldName: 'airportOpinion',
-      imgSrc: 'global/assets/images/top-airports.jpg',
-      stars: [false, false, false, false, false],
-    },
-    {
-      formControlName: 'airlinesOpinion',
-      fieldName: 'airlinesOpinion',
-      imgSrc: 'global/assets/images/top-airports.jpg',
-      stars: [false, false, false, false, false],
-    },
-    {
-      formControlName: 'airlinesOpinion',
-      fieldName: 'airlinesOpinion',
-      imgSrc: 'global/assets/images/top-airlines.jpg',
-      stars: [false, false, false, false, false],
-    },
-    {
-      formControlName: 'airPlaneOpinion',
-      fieldName: 'airPlaneOpinion',
-      imgSrc: 'global/assets/images/activity-per-week.jpeg',
-      stars: [false, false, false, false, false],
-    },
-  ];
+  rateAndReviewForm = input.required<any>();
+  rateAndReviewFormConfig = input.required<any>();
 
-  form = inject(NonNullableFormBuilder).group({
-    airportOpinion: [],
-    airlinesOpinion: [''],
-    airPlaneOpinion: [''],
-  });
+  selectRate = output<any>();
 
-  public selectRate(starIndex: number, cardIndex: number) {
-    this.rateAndReview[cardIndex].stars = this.rateAndReview[cardIndex].stars.map(
-      (_, index) => index <= starIndex
-    );
+  public getStars(fieldName: string): boolean[] {
+    return this.rateAndReviewForm().get(fieldName).value.stars;
+  }
+
+  public emitSelectRate(starIndex: number, fieldName: string) {
+    this.selectRate.emit({ starIndex, fieldName });
   }
 }
