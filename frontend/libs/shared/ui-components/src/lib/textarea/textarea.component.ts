@@ -3,15 +3,17 @@ import { CommonModule } from '@angular/common';
 import { InputComponent } from '../input/input.component';
 import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shared-textarea',
   standalone: true,
-  imports: [CommonModule, ValidationSignComponent],
+  imports: [CommonModule, ValidationSignComponent, FormsModule],
   template: `<label for="textarea">{{ label() }}</label>
 
     <div id="textarea" class="textarea-container">
       <textarea
+        [ngModel]="value"
         class="textarea"
         [placeholder]="placeholder()"
         (input)="setInput($event.target)"
