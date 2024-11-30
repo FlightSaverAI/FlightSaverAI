@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "statistics-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/statistics/ui/src",
   "prefix": "lib",

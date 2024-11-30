@@ -1,0 +1,90 @@
+@use '@global/styles/styles.scss' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 16px;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+}
+
+.check {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.colon {
+  padding: 6px;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+}
+
+.part1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.part2 {
+  display: flex;
+  flex-direction: column;
+}
+
+shared-input {
+  margin: 10px 0;
+  flex: 1;
+}
+
+@include tablet {
+  .wrapper {
+    gap: 50px;
+  }
+
+  .colon {
+    padding: 10px;
+  }
+
+  shared-input {
+    margin: 15px 0;
+    flex: none;
+  }
+
+  form {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 30px;
+  }
+}
+
+@include laptop {
+  .part1,
+  .part2 {
+    width: 100%;
+  }
+
+  .time {
+    flex: 1;
+  }
+
+  .wrapper > form {
+    gap: 100px;
+  }
+
+  .wrapper > form:last-child shared-input {
+    flex: 1;
+    gap: 20px;
+  }
+}
+
+@include laptop-large {
+  .wrapper > form {
+    gap: 150px;
+  }
+}

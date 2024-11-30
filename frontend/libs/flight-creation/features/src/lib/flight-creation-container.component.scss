@@ -1,0 +1,40 @@
+@use '@global/styles/styles.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 50px;
+  gap: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+@include mobile-large {
+  shared-button {
+    min-width: 125px;
+  }
+}
+
+@include tablet {
+  .container {
+    margin: 30px 75px;
+    gap: 30px;
+  }
+}
+
+@include laptop {
+  .container {
+    margin: 30px 100px;
+    gap: 30px;
+  }
+}
+
+@include laptop-large {
+  .container {
+    margin: 30px 200px;
+  }
+}

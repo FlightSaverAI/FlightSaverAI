@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
+import { Router } from '@angular/router';
 
 export type NavTypes = 'button' | 'list' | 'photo';
 
@@ -32,7 +33,13 @@ export class NavbarComponent {
 
   isNavbarOpen!: boolean;
 
+  private _router = inject(Router);
+
   public openNavbar() {
     this.isNavbarOpen = !this.isNavbarOpen;
+  }
+
+  public navigateToPassedUrl(url: string) {
+    this._router.navigateByUrl(url);
   }
 }

@@ -3,11 +3,12 @@ import { CommonModule, NgClass } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shared-input',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, ValidationSignComponent, NgClass],
+  imports: [CommonModule, NgOptimizedImage, ValidationSignComponent, NgClass, FormsModule],
   template: `
     <label for="input">{{ label() }}</label>
     <div
@@ -28,6 +29,8 @@ import { ValidationSignComponent } from '../validation-sign/validation-sign.comp
       </div>
       }
       <input
+        [ngModel]="value"
+        [style.padding]="!iconSrc() ? '10px' : null"
         [type]="type()"
         [placeholder]="placeholder()"
         (input)="setInput($event.target)"
@@ -64,6 +67,7 @@ export class InputComponent implements ControlValueAccessor {
   fieldName = input.required<string>();
 
   valueChangeListener = signal('');
+  value: any;
 
   onChange!: <T>(value: T) => void;
   onTouched!: () => void;
@@ -82,6 +86,11 @@ export class InputComponent implements ControlValueAccessor {
       return;
     }
 
+    if (value === undefined) {
+      this.value = null;
+    } else {
+      this.value = value;
+    }
     this.valueChangeListener.set(value);
   }
 

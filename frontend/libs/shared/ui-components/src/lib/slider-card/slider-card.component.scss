@@ -36,14 +36,6 @@
     display: none;
     color: var(--color-secondary);
   }
-
-  &__cards-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    z-index: 0;
-  }
 }
 
 .slider-container {
