@@ -1,7 +1,7 @@
 import { CanDeactivateFn } from '@angular/router';
-import { TicketFormComponent } from '@flight-saver/flight-creation/ui';
+import { StepTicketComponent } from '@flight-saver/flight-creation/features';
 
-export const ticketFormGuard: CanDeactivateFn<TicketFormComponent> = (
+export const stepTicketGuard: CanDeactivateFn<StepTicketComponent> = (
   component,
   currentRoute,
   currentState,
