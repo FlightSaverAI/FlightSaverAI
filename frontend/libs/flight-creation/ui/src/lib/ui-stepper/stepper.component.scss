@@ -24,9 +24,14 @@
   }
 
   &__option-name {
+    display: none;
     font-size: 1.1rem;
     font-weight: bold;
     color: white;
+
+    &--active {
+      display: block;
+    }
   }
 
   &__option-number {
@@ -71,6 +76,10 @@
       font-size: 1.1rem;
       width: 35px;
       height: 35px;
+    }
+
+    &__option-name {
+      display: block;
     }
   }
 }
