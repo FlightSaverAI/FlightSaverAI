@@ -1,14 +1,12 @@
 import { CanDeactivateFn } from '@angular/router';
-import { FlightFormComponent } from '@flight-saver/flight-creation/ui';
+import { StepFlightComponent } from '@flight-saver/flight-creation/features';
 
-export const flightFormGuard: CanDeactivateFn<FlightFormComponent> = (
+export const stepFlightGuard: CanDeactivateFn<StepFlightComponent> = (
   component,
   currentRoute,
   currentState,
   nextState
 ) => {
-  console.log(nextState);
-
   if (
     nextState.url.includes('flight-creation') &&
     component.flightDetailsForm.invalid &&
