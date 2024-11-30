@@ -1,14 +1,13 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  FlightFormComponent,
-  StepperComponent,
-  TicketFormComponent,
-} from '@flight-saver/flight-creation/ui';
+import { StepperComponent } from '@flight-saver/flight-creation/ui';
 import { ButtonComponent } from '@shared/ui-components';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FlightCreationConstants } from './constants/flight-creation.constants';
+import { StepFlightComponent } from './step-flight/step-flight.component';
+import { StepTicketComponent } from './step-ticket/step-ticket.component';
+import { StepRateAndReviewComponent } from './step-rate-and-review/step-rate-and-review.component';
 
 export const MAX_STEPS = 3;
 
@@ -31,11 +30,15 @@ export const MAX_STEPS = 3;
         [imgConf]="prevBtnConfig()"
         (emitEvent)="navigateToPreviousStep()"
       ></shared-button>
+      @if(currentStep < 3){
       <shared-button
         content="Next"
         [imgConf]="nextBtnConfig()"
         (emitEvent)="navigateToNextStep()"
       ></shared-button>
+      } @else{
+      <shared-button content="Save" [imgConf]="nextBtnConfig()"></shared-button>
+      }
     </div>
   </div>`,
   styleUrl: './flight-creation-container.component.scss',
@@ -99,13 +102,20 @@ export class FlightCreationContainerComponent {
   }
 
   private _getStepComponentForm(component: unknown) {
-    if (component instanceof FlightFormComponent) {
+    if (component instanceof StepFlightComponent) {
       this.forms.flightDetailsForm = component.flightDetailsForm.getRawValue();
       this.forms.aircraftDetailsForm = component.aircraftDetailsForm.getRawValue();
+      return;
     }
 
-    if (component instanceof TicketFormComponent) {
+    if (component instanceof StepTicketComponent) {
       this.forms.ticketForm = component.ticketForm.getRawValue();
+      return;
+    }
+
+    if (component instanceof StepRateAndReviewComponent) {
+      this.forms.rateAndReviewForm = component.rateAndReviewForm.getRawValue();
+      return;
     }
   }
 }
