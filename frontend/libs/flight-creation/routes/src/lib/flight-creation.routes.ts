@@ -1,12 +1,12 @@
 import { Route } from '@angular/router';
-import { FlightCreationContainerComponent } from '@flight-saver/flight-creation/features';
 import {
-  FlightFormComponent,
-  RateAndReviewComponent,
-  TicketFormComponent,
-} from '@flight-saver/flight-creation/ui';
-import { flightFormGuard } from './flight-form.guard';
-import { ticketFormGuard } from './ticket-form.guard';
+  FlightCreationContainerComponent,
+  StepFlightComponent,
+  StepRateAndReviewComponent,
+  StepTicketComponent,
+} from '@flight-saver/flight-creation/features';
+import { stepFlightGuard } from './step-flight.guard';
+import { stepTicketGuard } from './step-ticket.guard';
 import { flightCreationGuard } from './flight-creation.guard';
 
 export const flightCreationRoutes: Route[] = [
@@ -17,17 +17,17 @@ export const flightCreationRoutes: Route[] = [
     children: [
       {
         path: 'flight',
-        component: FlightFormComponent,
-        canDeactivate: [flightFormGuard],
+        component: StepFlightComponent,
+        canDeactivate: [stepFlightGuard],
       },
       {
         path: 'ticket',
-        component: TicketFormComponent,
-        canDeactivate: [ticketFormGuard],
+        component: StepTicketComponent,
+        canDeactivate: [stepTicketGuard],
       },
       {
         path: 'rate-and-review',
-        component: RateAndReviewComponent,
+        component: StepRateAndReviewComponent,
       },
     ],
   },
