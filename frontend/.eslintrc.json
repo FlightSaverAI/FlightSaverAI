@@ -13,16 +13,12 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "type:app",
-                "onlyDependOnLibsWithTags": [
-                  "type:routes",
-                  "type:feature",
-                  "type:ui",
-                  "type:data-access",
-                  "type:utils",
-                  "type:models",
-                  "domain:shared"
-                ]
+                "sourceTag": "type:app-flight-saver",
+                "onlyDependOnLibsWithTags": ["domain:shared"]
+              },
+              {
+                "sourceTag": "type:app-community",
+                "onlyDependOnLibsWithTags": ["domain:community", "domain:shared"]
               },
               {
                 "sourceTag": "*",

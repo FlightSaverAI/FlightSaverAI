@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/flight-saver/src",
-  "tags": ["type:app"],
+  "tags": ["type:app-flight-saver"],
   "targets": {
     "build": {
       "executor": "@angular-architects/native-federation:build",
