@@ -1,0 +1,26 @@
+@use '@global/styles/styles.scss' as *;
+
+.travel-board {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin: 10px;
+}
+
+@include mobile-large {
+  .travel-board {
+    margin: 10px 30px;
+  }
+}
+
+@include laptop {
+  .travel-board {
+    margin: 10px 100px;
+  }
+}
+
+@include laptop {
+  .travel-board {
+    margin: 10px 200px;
+  }
+}
