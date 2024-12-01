@@ -1,0 +1,138 @@
+@use '@global/styles/styles.scss' as *;
+
+.post {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+  padding: 25px;
+  color: white;
+
+  &__user {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__user-photo {
+    border-radius: 8px;
+  }
+
+  &__user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__user-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  &__user-location {
+    color: #b7c2e8;
+  }
+
+  &__content {
+    padding: 15px 0;
+  }
+
+  &__content-description {
+    padding-bottom: 15px;
+  }
+
+  &__content-flight-details {
+    color: #b7c2e8;
+    padding-bottom: 15px;
+  }
+
+  &__content-image {
+    width: 100%;
+    border-radius: 16px;
+    max-height: 550px;
+  }
+
+  &__interaction {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  &__interaction-likes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    & > img {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  &__interaction-comments {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  &__comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+  }
+}
+
+@include mobile-large {
+  .post__interaction {
+    display: flex;
+    flex-direction: row;
+    align-items: unset;
+    justify-content: space-between;
+  }
+}
+
+// ********************************
+
+.container {
+  display: flex;
+  gap: 15px;
+}
+
+.container > img {
+  border-radius: 8px;
+}
+
+.hehe {
+  display: flex;
+  align-items: center;
+  background-color: #b7c2e854;
+  width: 100%;
+  border-radius: 16px;
+}
+
+textarea {
+  margin: 10px;
+  height: 20px;
+  background-color: transparent;
+  color: white;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+}
+
+textarea::placeholder {
+  color: #c4c4c4;
+}
+
+.icons {
+  display: flex;
+}
+
+.icons > img {
+  margin: 0 5px;
+  cursor: pointer;
+}

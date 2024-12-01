@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/community/src",
-  "tags": [],
+  "tags": ["type:app-community"],
   "targets": {
     "build": {
       "executor": "@angular-architects/native-federation:build",
@@ -40,9 +40,7 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/community/jest.config.ts"
       }
@@ -58,26 +56,24 @@
     },
     "esbuild": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/community",
         "index": "apps/community/src/index.html",
         "browser": "apps/community/src/main.ts",
-        "polyfills": [
-          "zone.js",
-          "es-module-shims"
-        ],
+        "polyfills": ["zone.js", "es-module-shims"],
         "tsConfig": "apps/community/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/community/src/favicon.ico",
-          "apps/community/src/assets"
+          "apps/community/src/assets",
+          {
+            "glob": "**/*",
+            "input": "apps/global/assets",
+            "output": "global/assets/"
+          }
         ],
-        "styles": [
-          "apps/community/src/styles.scss"
-        ],
+        "styles": ["apps/community/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
