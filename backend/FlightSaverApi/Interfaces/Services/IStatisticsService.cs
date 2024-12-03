@@ -16,10 +16,10 @@ public interface IStatisticsService
     Dictionary<Reason, int> GetReasonDistributionAsync(List<Flight> flights);
     Dictionary<FlightType, int> GetFlightDistributionAsync(List<Flight> flights);
     Task<Dictionary<Continent, int>> GetContinentsAsync(List<Flight> flights);
-    Dictionary<Airport, int> GetTopAirportsAsync(List<Flight> flights);
-    Dictionary<Airline, int> GetTopAirlinesAsync(List<Flight> flights);
-    Dictionary<Aircraft, int> GetTopAircraftAsync(List<Flight> flights);
-    Dictionary<FlightRoute, int> GetTopFlightRoutesAsync(List<Flight> flights);
+    Dictionary<string, int> GetTopAirportsAsync(List<Flight> flights);
+    Dictionary<string, int> GetTopAirlinesAsync(List<Flight> flights);
+    Dictionary<string, int> GetTopAircraftAsync(List<Flight> flights);
+    Dictionary<string, int> GetTopFlightRoutesAsync(List<Flight> flights);
     Dictionary<Month, int> GetFlightsPerMonthAsync(List<Flight> flights, int? year = null);
     Dictionary<DayOfWeek, int> GetFlightsPerWeekAsync(List<Flight> flights, int? weekNumber = null);
     Distance GetDistanceAsync(List<Flight> flights);

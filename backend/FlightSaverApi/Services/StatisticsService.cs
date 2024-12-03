@@ -35,13 +35,13 @@ public class StatisticsService : IStatisticsService
             SeatDistribution = GetSeatDistributionAsync(flights),
             ReasonDistribution = GetReasonDistributionAsync(flights),
             FlightDistribution = GetFlightDistributionAsync(flights),
-            Continents = new Dictionary<Continent, int>(),//await GetContinentsAsync(flights),
-            TopAirports = new Dictionary<Airport, int>(), //GetTopAirportsAsync(flights),
-            TopAirlines = new Dictionary<Airline, int>(), //GetTopAirlinesAsync(flights),
-            TopAircrafts = new Dictionary<Aircraft, int>(), //GetTopAircraftAsync(flights),
-            FlightRoutes = new Dictionary<FlightRoute, int>(), //GetTopFlightRoutesAsync(flights),
-            FlightsPerMonth = new Dictionary<Month, int>(), //GetFlightsPerMonthAsync(flights),
-            FlightsPerWeek = new Dictionary<DayOfWeek, int>(), //GetFlightsPerWeekAsync(flights),
+            Continents = await GetContinentsAsync(flights),
+            TopAirports = GetTopAirportsAsync(flights),
+            TopAirlines = GetTopAirlinesAsync(flights),
+            TopAircrafts = GetTopAircraftAsync(flights),
+            FlightRoutes = GetTopFlightRoutesAsync(flights),
+            FlightsPerMonth = GetFlightsPerMonthAsync(flights),
+            FlightsPerWeek = GetFlightsPerWeekAsync(flights),
             Distance = GetDistanceAsync(flights),
             TotalFlightTime = GetTotalFlightTimeAsync(flights)
         };
@@ -119,34 +119,21 @@ public class StatisticsService : IStatisticsService
 
     public async Task<Dictionary<Continent, int>> GetContinentsAsync(List<Flight> flights)
     {
-        var countryToContinent = await _countryContinentService.FetchCountryToContinentMappingAsync();
         var continentCounts = new Dictionary<Continent, int>();
 
         foreach (var flight in flights)
         {
-            if (countryToContinent.TryGetValue(flight.DepartureAirport.Country, out var departureContinent))
-            {
-                continentCounts.TryAdd(departureContinent, 0);
+            // Get continents for departure and arrival airports
+            var arrivalContinent = await _countryContinentService.GetContinentByCountryNameAsync(flight.ArrivalAirport.Country);
 
-                continentCounts[departureContinent]++;
+            if (Enum.TryParse(arrivalContinent, out Continent arrivalEnum))
+            {
+                continentCounts.TryAdd(arrivalEnum, 0);
+                continentCounts[arrivalEnum]++;
             }
             else
             {
                 continentCounts.TryAdd(Continent.Unknown, 0);
-
-                continentCounts[Continent.Unknown]++;
-            }
-
-            if (countryToContinent.TryGetValue(flight.ArrivalAirport.Country, out var arrivalContinent))
-            {
-                continentCounts.TryAdd(arrivalContinent, 0);
-
-                continentCounts[arrivalContinent]++;
-            }
-            else
-            {
-                continentCounts.TryAdd(Continent.Unknown, 0);
-
                 continentCounts[Continent.Unknown]++;
             }
         }
@@ -154,68 +141,68 @@ public class StatisticsService : IStatisticsService
         return continentCounts;
     }
 
-    public Dictionary<Airport, int> GetTopAirportsAsync(List<Flight> flights)
+    public Dictionary<string, int> GetTopAirportsAsync(List<Flight> flights)
     {
-        var topAirports =  flights
-            .SelectMany(flight => new [] { flight.DepartureAirport, flight.ArrivalAirport})
-            .GroupBy(airport => airport)
+        var topAirports = flights
+            .SelectMany(flight => new[] { flight.DepartureAirport, flight.ArrivalAirport })
+            .GroupBy(airport => airport.IataCode)
             .Select(group => new
             {
-                Airport = group.Key,
+                AirportCode = group.Key,
                 Count = group.Count()
             })
             .OrderByDescending(x => x.Count)
             .Take(5)
-            .ToDictionary(airport => airport.Airport, airport => airport.Count);
-        
+            .ToDictionary(x => x.AirportCode, x => x.Count);
+
         return topAirports;
     }
 
-    public Dictionary<Airline, int> GetTopAirlinesAsync(List<Flight> flights)
+    public Dictionary<string, int> GetTopAirlinesAsync(List<Flight> flights)
     {
         var topAirlines = flights
-            .GroupBy(x => x.Airline)
+            .GroupBy(x => x.Airline.IataCode)
             .Select(group => new
             {
-                Airline = group.Key,
+                AirlineCode = group.Key,
                 Count = group.Count()
             })
             .OrderByDescending(x => x.Count)
             .Take(5)
-            .ToDictionary(airline => airline.Airline, airline => airline.Count);
+            .ToDictionary(airline => airline.AirlineCode, airline => airline.Count);
         
         return topAirlines;
     }
 
-    public Dictionary<Aircraft, int> GetTopAircraftAsync(List<Flight> flights)
+    public Dictionary<string, int> GetTopAircraftAsync(List<Flight> flights)
     {
         var topAircrafts = flights
-            .GroupBy(x => x.Aircraft)
+            .GroupBy(x => x.Aircraft.IcaoCode)
             .Select(group => new
             {
-                Aircraft = group.Key,
+                AircraftCode = group.Key,
                 Count = group.Count()
             })
             .OrderByDescending(x => x.Count)
             .Take(5)
-            .ToDictionary(airline => airline.Aircraft, airline => airline.Count);
+            .ToDictionary(airline => airline.AircraftCode, airline => airline.Count);
         
         return topAircrafts;
     }
 
-    public Dictionary<FlightRoute, int> GetTopFlightRoutesAsync(List<Flight> flights)
+    public Dictionary<string, int> GetTopFlightRoutesAsync(List<Flight> flights)
     {
         var flightRoutes = flights
-            .GroupBy(x => new { x.DepartureAirport, x.ArrivalAirport })
+            .GroupBy(x => $"{x.DepartureAirport.IataCode} - {x.ArrivalAirport.IataCode}")
             .Select(group => new
             {
-                FlightRoute = new FlightRoute(group.Key.DepartureAirport, group.Key.ArrivalAirport),
+                Route = group.Key,
                 Count = group.Count()
             })
             .OrderByDescending(x => x.Count)
             .Take(5)
-            .ToDictionary(x => x.FlightRoute, x => x.Count);
-        
+            .ToDictionary(x => x.Route, x => x.Count);
+
         return flightRoutes;
     }
 

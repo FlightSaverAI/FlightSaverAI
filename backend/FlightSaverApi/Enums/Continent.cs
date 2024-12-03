@@ -5,8 +5,7 @@ public enum Continent
     Europe,
     Asia,
     Antarctic,
-    NorthAmerica,
-    SouthAmerica,
+    Americas,
     Oceania,
     Africa,
     Unknown

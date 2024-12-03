@@ -6,83 +6,67 @@ namespace FlightSaverApi.Services
     public class CountryContinentService
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger<CountryContinentService> _logger;
 
-        public CountryContinentService(HttpClient httpClient, ILogger<CountryContinentService> logger)
+        public CountryContinentService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _logger = logger;
+        }
+        
+        private readonly Dictionary<string, string> _countryContinentCache = new();
+
+        public async Task<string?> GetContinentByCountryNameAsync(string countryName, CancellationToken cancellationToken = default)
+        {
+            if (_countryContinentCache.TryGetValue(countryName, out var cachedContinent))
+                return cachedContinent;
+
+            var continent = await FetchContinentFromApiAsync(countryName, cancellationToken);
+            if (!string.IsNullOrEmpty(continent))
+                _countryContinentCache[countryName] = continent;
+
+            return continent;
         }
 
-        public async Task<Dictionary<string, Continent>> FetchCountryToContinentMappingAsync(CancellationToken cancellationToken = default)
+        public async Task<string?> FetchContinentFromApiAsync(string countryName, CancellationToken cancellationToken = default)
         {
-            const string url = "https://restcountries.com/v3.1/all";
+            if (string.IsNullOrWhiteSpace(countryName))
+                throw new ArgumentException("Country name cannot be null or empty.", nameof(countryName));
 
             try
             {
-                _logger.LogInformation("Fetching country data from {Url}", url);
+                var url = $"https://restcountries.com/v3.1/name/{countryName}";
 
-                // Stream response to handle large payloads
-                using var responseStream = await _httpClient.GetStreamAsync(url, cancellationToken);
-                var countries = await JsonSerializer.DeserializeAsync<List<RestCountry>>(responseStream, cancellationToken: cancellationToken);
+                var response = await _httpClient.GetAsync(url, cancellationToken);
 
-                if (countries == null)
-                {
-                    _logger.LogWarning("Deserialization returned null for country data.");
-                    return new Dictionary<string, Continent>();
-                }
+                response.EnsureSuccessStatusCode();
 
-                var mapping = countries
-                    .Where(country => !string.IsNullOrEmpty(country.Region))
-                    .ToDictionary(
-                        country => country.Name.Common,
-                        country => MapToContinentEnum(country.Region)
-                    );
+                var countryData = await response.Content.ReadFromJsonAsync<List<RestCountryResponse>>(cancellationToken: cancellationToken);
 
-                _logger.LogInformation("Successfully fetched and mapped {Count} countries to continents.", mapping.Count);
-                return mapping;
+                return countryData?.FirstOrDefault()?.Region;  // This should work fine now
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "HTTP error while fetching country data.");
-                throw new Exception("Failed to fetch country data due to network issues.", ex);
+                Console.Error.WriteLine($"Error fetching data for country {countryName}: {ex.Message}");
+                return null;
             }
-            catch (JsonException ex)
-            {
-                _logger.LogError(ex, "Error deserializing country data.");
-                throw new Exception("Failed to deserialize country data.", ex);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Unexpected error occurred.");
-                throw;
-            }
-        }
-
-        private Continent MapToContinentEnum(string region)
-        {
-            return region switch
-            {
-                "Europe" => Continent.Europe,
-                "Asia" => Continent.Asia,
-                "Antarctic" => Continent.Antarctic,
-                "North America" => Continent.NorthAmerica,
-                "South America" => Continent.SouthAmerica,
-                "Oceania" => Continent.Oceania,
-                "Africa" => Continent.Africa,
-                _ => Continent.Unknown // Fallback for unrecognized regions
-            };
         }
     }
 
-    public class RestCountry
+    public class RestCountryResponse
     {
-        public Name Name { get; set; }
+        public CountryName Name { get; set; }
         public string Region { get; set; }
     }
 
-    public class Name
+    public class CountryName
     {
+        public string Common { get; set; }
+        public string Official { get; set; }
+        public Dictionary<string, NativeName> NativeName { get; set; }
+    }
+
+    public class NativeName
+    {
+        public string Official { get; set; }
         public string Common { get; set; }
     }
 }
