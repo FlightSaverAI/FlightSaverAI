@@ -2,18 +2,11 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import { CommonModule } from '@angular/common';
 import { TextareaComponent, StarRatingComponent } from '@shared/ui-components';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'flight-creation-rate-and-review',
   standalone: true,
-  imports: [
-    CommonModule,
-    TextareaComponent,
-    StarRatingComponent,
-    MatIconModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, TextareaComponent, StarRatingComponent, ReactiveFormsModule],
   template: `
     <div class="cards">
       @for(item of rateAndReviewFormConfig(); track item){
