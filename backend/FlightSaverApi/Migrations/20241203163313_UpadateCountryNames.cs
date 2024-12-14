@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlightSaverApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddFlights : Migration
+    public partial class UpadateCountryNames : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -106,8 +106,6 @@ namespace FlightSaverApi.Migrations
                     SeatType = table.Column<int>(type: "integer", nullable: false),
                     SeatNumber = table.Column<string>(type: "text", nullable: false),
                     Reason = table.Column<int>(type: "integer", nullable: false),
-                    DepartureAirportReviewId = table.Column<int>(type: "integer", nullable: true),
-                    AircraftReviewId = table.Column<int>(type: "integer", nullable: true),
                     UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
