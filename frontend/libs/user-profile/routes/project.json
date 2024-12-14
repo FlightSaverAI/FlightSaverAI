@@ -4,7 +4,7 @@
   "sourceRoot": "libs/user-profile/routes/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["domain:user-profile", "type:routes"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

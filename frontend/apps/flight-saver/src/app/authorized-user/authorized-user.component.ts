@@ -39,7 +39,7 @@ export class AuthorizedUserComponent {
     {
       type: 'photo',
       name: '',
-      routerLink: '',
+      routerLink: '/authorized/user-profile',
       image: {
         src: 'global/assets/images/user-photo.png',
         alt: 'User Photo',

@@ -1,1 +1,1 @@
-export * from './lib/features/features.component';
+export * from './lib/user-profile-container.component';

@@ -19,7 +19,11 @@
         [content]="item.name"
         (emitEvent)="navigateToPassedUrl(item.routerLink)"
       ></shared-button>
-      <div *ngIf="item.image && item.type === 'photo'" class="nav__list-photo">
+      <div
+        *ngIf="item.image && item.type === 'photo'"
+        class="nav__list-photo"
+        (click)="navigateToPassedUrl(item.routerLink)"
+      >
         <img
           [ngSrc]="item.image.src"
           [alt]="item.image.alt"

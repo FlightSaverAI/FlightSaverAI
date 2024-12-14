@@ -27,6 +27,11 @@ export const authorizedUserRoutes: Route[] = [
         loadChildren: async () =>
           await import('@flight-saver/flight-creation/routes').then((m) => m.flightCreationRoutes),
       },
+      {
+        path: 'user-profile',
+        loadChildren: async () =>
+          await import('@flight-saver/user-profile/routes').then((m) => m.userProfileRoutes),
+      },
     ],
   },
 ];
