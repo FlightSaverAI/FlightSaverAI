@@ -4,7 +4,7 @@
   "sourceRoot": "libs/user-profile/features/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["domain:user-profile", "type:feature"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
