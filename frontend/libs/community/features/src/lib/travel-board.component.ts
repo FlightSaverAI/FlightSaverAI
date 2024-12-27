@@ -9,7 +9,6 @@ import { PostComponent } from '@flight-saver/community/ui';
   template: `<section class="travel-board">
     @for(post of mockedUsersPosts; track post){
     <community-post
-      class="card"
       [user]="post.user"
       [content]="post.content"
       [flightDetails]="post.content.flightDetails"

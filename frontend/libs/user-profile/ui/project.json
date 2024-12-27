@@ -1,16 +1,16 @@
 {
-  "name": "flight-creation-routes",
+  "name": "user-profile-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/flight-creation/routes/src",
-  "prefix": "lib",
+  "sourceRoot": "libs/user-profile/ui/src",
+  "prefix": "user-profile",
   "projectType": "library",
-  "tags": ["domain:flight-creation", "type:routes"],
+  "tags": ["domain:user-profile", "type:ui"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/flight-creation/routes/jest.config.ts"
+        "jestConfig": "libs/user-profile/ui/jest.config.ts"
       }
     },
     "lint": {
