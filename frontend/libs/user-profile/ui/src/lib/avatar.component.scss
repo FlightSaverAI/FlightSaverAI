@@ -1,0 +1,151 @@
+@use '@global/styles/styles.scss' as *;
+
+.container {
+  position: relative;
+}
+
+.avatar {
+  position: relative;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  height: 175px;
+  width: 175px;
+
+  & > img {
+    width: 175px;
+    height: 175px;
+  }
+}
+
+img {
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+  object-position: center;
+}
+
+.add-post {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-50%, 50%);
+  min-width: 125px;
+}
+
+.edit-profile {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(50%, 50%);
+  min-width: 125px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 25px;
+  color: white;
+  line-height: 1.7;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+  border-radius: 30px;
+  position: relative;
+  width: 100%;
+  margin-top: 225px;
+
+  &__flights {
+    display: flex;
+    align-items: center;
+
+    & > img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  &__stats {
+    margin: 0 25px;
+
+    & > p:first-child {
+      font-size: 1.1rem;
+    }
+
+    & > p {
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+  }
+}
+
+@include mobile-medium {
+  .summary {
+    width: 300px;
+  }
+
+  .summary__stats {
+    & > p:first-child {
+      font-size: 1.2rem;
+    }
+
+    & > p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .summary__flights > img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@include mobile-large {
+  .avatar {
+    width: 250px;
+    height: 250px;
+
+    & > img {
+      width: 250px;
+      height: 250px;
+    }
+  }
+}
+
+@include tablet {
+  .summary {
+    display: flex;
+    flex-direction: row;
+    max-width: 85vw;
+    width: unset;
+  }
+}
+
+@include laptop {
+  .summary {
+    width: 100%;
+    max-width: 70vw;
+  }
+
+  .summary__stats {
+    & > p:first-child {
+      font-size: 1.4rem;
+    }
+
+    & > p {
+      font-size: 1rem;
+    }
+  }
+
+  .summary__flights > img {
+    width: 50px;
+    height: 50px;
+  }
+}

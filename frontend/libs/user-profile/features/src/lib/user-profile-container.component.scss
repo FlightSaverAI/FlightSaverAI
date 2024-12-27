@@ -1,0 +1,31 @@
+@use '@global/styles/styles.scss' as *;
+
+.travel {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+@include mobile-large {
+  .posts-container {
+    margin: 10px 30px;
+  }
+}
+
+@include laptop {
+  .posts-container {
+    margin: 10px 100px;
+  }
+}
+
+@include laptop {
+  .posts-container {
+    margin: 10px 200px;
+  }
+}
