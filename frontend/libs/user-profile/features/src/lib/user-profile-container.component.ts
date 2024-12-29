@@ -6,7 +6,7 @@ import { AvatarComponent } from '@flight-saver/user-profile/ui';
 @Component({
   standalone: true,
   imports: [CommonModule, PostComponent, AvatarComponent],
-  template: ` <div class="travel">
+  template: `<div class="travel">
     <user-profile-avatar></user-profile-avatar>
     <div class="posts-container">
       @for(post of mockedUsersPosts; track post){
