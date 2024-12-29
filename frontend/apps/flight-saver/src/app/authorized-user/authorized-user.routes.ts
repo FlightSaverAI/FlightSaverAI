@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { AuthorizedUserComponent } from './authorized-user.component';
 import { loadRemoteModule } from '@angular-architects/native-federation';
+import { PageNotFoundComponent } from '@shared/ui-components';
 
 export const authorizedUserRoutes: Route[] = [
   {
@@ -32,6 +33,7 @@ export const authorizedUserRoutes: Route[] = [
         loadChildren: async () =>
           await import('@flight-saver/user-profile/routes').then((m) => m.userProfileRoutes),
       },
+      { path: '**', component: PageNotFoundComponent },
     ],
   },
 ];
