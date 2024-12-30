@@ -1,19 +1,20 @@
 import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LoginFormData, RegistrationFormData } from '@flight-saver/authentication/models';
-import { loginActions, registerActions } from './store/auth.actions';
+import { authActions } from './store/auth.actions';
+import { AuthState } from './state/auth.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthFacadeService {
-  private _store = inject(Store);
+  private _store = inject(Store<AuthState>);
 
   login(loginFormData: LoginFormData) {
-    this._store.dispatch(loginActions.login({ loginFormData }));
+    this._store.dispatch(authActions.login({ loginFormData }));
   }
 
   registration(registerFormData: RegistrationFormData) {
-    this._store.dispatch(registerActions.register({ registerFormData }));
+    this._store.dispatch(authActions.register({ registerFormData }));
   }
 }

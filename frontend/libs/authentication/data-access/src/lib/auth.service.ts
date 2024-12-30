@@ -1,30 +1,19 @@
-import { Injectable } from '@angular/core';
-import { of, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@environments/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  authentication<T>(formData: T) {
-    if (!formData) {
-      const errorResponse = new HttpErrorResponse({
-        status: 401,
-        statusText: 'Unauthorized',
-        error: {
-          message: 'Invalid email or password',
-        },
-      });
+  private _url = environment.url;
+  private _httpClient = inject(HttpClient);
 
-      return throwError(() => errorResponse);
-    }
+  authentication(formData: any) {
+    return this._httpClient.post<{ token: string }>(`${this._url}/Auth/Login`, formData);
+  }
 
-    return of({
-      id: 12345,
-      username: 'John Doe',
-      email: 'john.doe@example.com',
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
-      userRole: 'admin',
-    });
+  registration(formData: any) {
+    return this._httpClient.post<{ token: string }>(`${this._url}/Auth/Register`, formData);
   }
 }
