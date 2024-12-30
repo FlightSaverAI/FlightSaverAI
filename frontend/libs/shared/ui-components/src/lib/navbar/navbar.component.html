@@ -9,20 +9,26 @@
     <div class="nav__burger-line" [ngClass]="{ 'nav__burger-line--open': isNavbarOpen }"></div>
   </div>
   <ul class="nav__list" [ngClass]="{ 'nav__list--open': isNavbarOpen }">
-    <ng-container *ngFor="let item of navConfig()">
-      <li *ngIf="item.type === 'list'" class="nav__list-item" [routerLink]="item.routerLink">
+    <ng-container *ngFor="let item of navConfig(); let index = index">
+      <li
+        *ngIf="item.type === 'list'"
+        class="nav__list-item"
+        [class.active]="activeIndex === index"
+        [routerLink]="item.routerLink"
+        (click)="activeIndex = index"
+      >
         {{ item.name }}
       </li>
       <shared-button
         *ngIf="item.type === 'button'"
         class="nav__list-btn"
         [content]="item.name"
-        (emitEvent)="navigateToPassedUrl(item.routerLink)"
+        (emitEvent)="navigateToPassedUrl(item.routerLink, index)"
       ></shared-button>
       <div
         *ngIf="item.image && item.type === 'photo'"
         class="nav__list-photo"
-        (click)="navigateToPassedUrl(item.routerLink)"
+        (click)="navigateToPassedUrl(item.routerLink, index)"
       >
         <img
           [ngSrc]="item.image.src"
