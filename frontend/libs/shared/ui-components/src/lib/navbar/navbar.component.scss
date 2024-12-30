@@ -79,8 +79,38 @@
   }
 
   &__list-item {
+    position: relative;
     font-size: 1rem;
     margin: 15px;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      border-radius: 5px;
+      background-color: #fff;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    &::after {
+      transform-origin: left;
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
+    }
+
+    &.active::before,
+    &.active::after {
+      transform: scaleX(1);
+    }
   }
 
   &__list-btn {

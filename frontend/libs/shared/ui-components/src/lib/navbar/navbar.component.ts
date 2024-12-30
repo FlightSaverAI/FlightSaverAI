@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { RouterModule } from '@angular/router';
@@ -28,18 +28,29 @@ export interface ImageNavConfig {
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   navConfig = input.required<NavConfig[]>();
 
+  activeIndex = 0;
   isNavbarOpen!: boolean;
 
   private _router = inject(Router);
+
+  public ngOnInit(): void {
+    this.activeIndex = this._findActiveNavIndex();
+  }
+
+  private _findActiveNavIndex() {
+    const url = this._router.url;
+    return this.navConfig().findIndex(({ name }) => url.includes(name.toLowerCase()));
+  }
 
   public openNavbar() {
     this.isNavbarOpen = !this.isNavbarOpen;
   }
 
-  public navigateToPassedUrl(url: string) {
+  public navigateToPassedUrl(url: string, index: number) {
+    this.activeIndex = index;
     this._router.navigateByUrl(url);
   }
 }

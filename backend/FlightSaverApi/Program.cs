@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using FlightSaverApi.Enums;
 using FlightSaverApi.Filters;
+using FlightSaverApi.Interfaces.Services;
 using FlightSaverApi.Services;
 using Microsoft.Extensions.Options;
 
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<FlightSaverContext>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+builder.Services.AddScoped<IFlightsService, FlightsService>();
+builder.Services.AddHttpClient<CountryContinentService>();
 
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
@@ -115,6 +119,16 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("http://localhost:4201")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -128,6 +142,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();

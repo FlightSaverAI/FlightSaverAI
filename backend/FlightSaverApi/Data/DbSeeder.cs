@@ -37,7 +37,7 @@ public class DbSeeder
             var airports = new Airport[]
             {
                 new Airport { IcaoCode = "KJFK", IataCode = "JFK", Name = "John F. Kennedy International Airport", City = "New York", Country = "USA", Latitude = 40.6413, Longitude = -73.7781 },
-                new Airport { IcaoCode = "EGLL", IataCode = "LHR", Name = "London Heathrow Airport", City = "London", Country = "UK", Latitude = 51.4700, Longitude = -0.4543 }
+                new Airport { IcaoCode = "EGLL", IataCode = "LHR", Name = "London Heathrow Airport", City = "London", Country = "GB", Latitude = 51.4700, Longitude = -0.4543 }
             };
             foreach (var a in airports)
             {
@@ -52,7 +52,7 @@ public class DbSeeder
             var airlines = new Airline[]
             {
                 new Airline { Name = "American Airlines", IataCode = "AA", IcaoCode = "AAL", Country = "USA" },
-                new Airline { Name = "British Airways", IataCode = "BA", IcaoCode = "BAW", Country = "UK" }
+                new Airline { Name = "British Airways", IataCode = "BA", IcaoCode = "BAW", Country = "GB" }
             };
 
             foreach (var a in airlines)

@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
   imports: [],
   template: `<div class="validator">
     @if(hasValidator && !this.formField().pristine && formField().status === 'INVALID'){
-    <img width="20" height="20" src="global/assets/error.svg" alt="Error Icon" />
+    <img width="25" height="25" src="global/assets/error.svg" alt="Error Icon" />
     } @if(hasValidator && !this.formField().pristine && formField().status === 'VALID'){
     <img width="25" height="25" src="global/assets/pass.svg" alt="Complete Icon" />
     }

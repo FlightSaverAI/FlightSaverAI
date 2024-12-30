@@ -4,11 +4,13 @@ import { appRoutes } from './app.routes';
 import { provideStore } from '@ngrx/store';
 import { AuthEffects, authReducer } from '@flight-saver/authentication/data-access';
 import { provideEffects } from '@ngrx/effects';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideStore({ auth: authReducer.reducer }),
     provideEffects(AuthEffects),
-  ]
+    provideHttpClient(),
+  ],
 };

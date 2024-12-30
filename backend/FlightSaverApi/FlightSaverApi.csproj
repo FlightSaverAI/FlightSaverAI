@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\FlightModel\" />
-    <Folder Include="Enums\FlightEnums\" />
     <Folder Include="Models\AirportModel\" />
     <Folder Include="Models\FlightModel\" />
     <Folder Include="Models\ReviewModel\" />

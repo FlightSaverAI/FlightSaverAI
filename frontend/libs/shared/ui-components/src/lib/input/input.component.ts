@@ -10,7 +10,9 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, NgOptimizedImage, ValidationSignComponent, NgClass, FormsModule],
   template: `
+    @if(label() ){
     <label for="input">{{ label() }}</label>
+    }
     <div
       id="input"
       class="input-container"
@@ -42,11 +44,14 @@ import { FormsModule } from '@angular/forms';
       }
     </div>
 
-    @if(hasValidator && !formField.pristine && formField.status === 'INVALID'){
-    <div class="error-message">
-      <p>Field {{ label() }} {{ valueChangeListener() ? 'is invalid' : 'is required' }}</p>
-    </div>
-    }
+    <p
+      class="error-message"
+      [style.visibility]="
+        hasValidator && !formField.pristine && formField.status === 'INVALID' ? 'visible' : 'hidden'
+      "
+    >
+      Field {{ label() }} {{ valueChangeListener() ? 'is invalid' : 'is required' }}
+    </p>
   `,
   styleUrl: './input.component.scss',
   providers: [

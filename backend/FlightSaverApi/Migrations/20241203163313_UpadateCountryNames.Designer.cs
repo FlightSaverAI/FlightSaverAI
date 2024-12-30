@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlightSaverApi.Migrations
 {
     [DbContext(typeof(FlightSaverContext))]
-    [Migration("20241107142742_RemoveUnnecessaryColumnFromFlightTable")]
-    partial class RemoveUnnecessaryColumnFromFlightTable
+    [Migration("20241203163313_UpadateCountryNames")]
+    partial class UpadateCountryNames
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

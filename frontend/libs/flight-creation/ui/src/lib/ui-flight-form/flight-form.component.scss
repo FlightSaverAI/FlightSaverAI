@@ -21,7 +21,8 @@ form {
 }
 
 .colon {
-  padding: 6px;
+  padding: 0 10px;
+  align-self: center;
   font-size: 3rem;
   font-weight: bold;
   color: white;
@@ -47,12 +48,8 @@ shared-input {
     gap: 50px;
   }
 
-  .colon {
-    padding: 10px;
-  }
-
   shared-input {
-    margin: 15px 0;
+    margin: 5px 0;
     flex: none;
   }
 
