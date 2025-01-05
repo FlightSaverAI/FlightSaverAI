@@ -1,9 +1,10 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
+import { ProfileDropdownDirective } from '../profile-dropdown/profile-dropdown.directive';
 
 export type NavTypes = 'button' | 'list' | 'photo';
 
@@ -24,7 +25,14 @@ export interface ImageNavConfig {
 @Component({
   selector: 'shared-navbar',
   standalone: true,
-  imports: [NgClass, ButtonComponent, NgFor, RouterModule, NgIf, NgOptimizedImage],
+  imports: [
+    NgClass,
+    ButtonComponent,
+    RouterModule,
+    NgIf,
+    NgOptimizedImage,
+    ProfileDropdownDirective,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -41,8 +49,7 @@ export class NavbarComponent implements OnInit {
   }
 
   private _findActiveNavIndex() {
-    const url = this._router.url;
-    return this.navConfig().findIndex(({ name }) => url.includes(name.toLowerCase()));
+    return this.navConfig().findIndex(({ name }) => this._router.url.includes(name.toLowerCase()));
   }
 
   public openNavbar() {
