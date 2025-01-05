@@ -23,10 +23,10 @@ public class TokenService : ITokenService
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role.ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            new Claim("name", user.Username),
+            new Claim("email", user.Email),
+            new Claim("role", user.Role.ToString()),
+            new Claim("id", user.Id.ToString()),
         };
         
         var jwtSettings = _configuration.GetSection("JwtSettings");

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlightSaverApi.Controllers;
 
-[Route("Flights")]
+[Route("/Flights")]
 [ApiController]
 [Authorize]
 public class FlightsController : ControllerBase
@@ -35,9 +35,7 @@ public class FlightsController : ControllerBase
     {
         var query = new GetFlightQuery(id);
         var flight = await _mediator.Send(query, cancellationToken);
-        
-        if (flight == null) return NotFound();
-        
+
         return Ok(flight);
     }
     

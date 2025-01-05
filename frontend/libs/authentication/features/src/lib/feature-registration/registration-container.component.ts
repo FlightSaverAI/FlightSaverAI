@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AuthFacadeService } from '@flight-saver/authentication/data-access';
 import { RegistrationComponent } from '@flight-saver/authentication/ui';
 import { registrationForm } from '@flight-saver/authentication/utils';
@@ -12,10 +12,10 @@ import { registrationForm } from '@flight-saver/authentication/utils';
       (confirmRegistration)="confirmRegistration()"
     ></auth-registration>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationContainerComponent {
   readonly registrationForm = registrationForm();
-
   private _authFacade = inject(AuthFacadeService);
 
   confirmRegistration() {

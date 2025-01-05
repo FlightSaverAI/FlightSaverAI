@@ -3,7 +3,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin: 30px 50px;
+  margin: 30px;
   gap: 15px;
 }
 
@@ -21,20 +21,20 @@
 
 @include tablet {
   .container {
-    margin: 30px 75px;
+    max-width: 90vw;
+    margin: 30px auto;
     gap: 30px;
   }
 }
 
 @include laptop {
   .container {
-    margin: 30px 100px;
-    gap: 30px;
+    max-width: 80vw;
   }
 }
 
 @include laptop-large {
   .container {
-    margin: 30px 200px;
+    max-width: 70vw;
   }
 }

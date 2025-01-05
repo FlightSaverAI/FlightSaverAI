@@ -2,11 +2,13 @@ import { Route } from '@angular/router';
 import { AuthorizedUserComponent } from './authorized-user.component';
 import { loadRemoteModule } from '@angular-architects/native-federation';
 import { PageNotFoundComponent } from '@shared/ui-components';
+import { authorizedUserGuard } from './authorized-user.guard';
 
 export const authorizedUserRoutes: Route[] = [
   {
     path: '',
     component: AuthorizedUserComponent,
+    canActivate: [authorizedUserGuard],
     children: [
       {
         path: 'home',

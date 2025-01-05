@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent, NavConfig } from '@shared/ui-components';
 
 @Component({
-  selector: 'app-authorized-user',
   standalone: true,
   imports: [RouterModule, NavbarComponent],
   template: `
@@ -12,7 +11,6 @@ import { NavbarComponent, NavConfig } from '@shared/ui-components';
       <router-outlet></router-outlet>
     </main>
   `,
-  styleUrl: './authorized-user.component.scss',
 })
 export class AuthorizedUserComponent {
   navConfig: NavConfig[] = [
