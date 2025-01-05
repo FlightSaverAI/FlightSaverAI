@@ -28,17 +28,19 @@ export class ProfileDropdownDirective {
 
   @HostListener('click')
   toggleDropdown() {
-    const positionStrategy = this._overlay
-      .position()
-      .flexibleConnectedTo(this._elementRef)
-      .withPositions(this.positions);
+    if (!this._overlayRef) {
+      const positionStrategy = this._overlay
+        .position()
+        .flexibleConnectedTo(this._elementRef)
+        .withPositions(this.positions);
 
-    this._overlayRef = this._overlay.create({ positionStrategy });
+      this._overlayRef = this._overlay.create({ positionStrategy });
 
-    const portal = new ComponentPortal(ProfileDropdownComponent);
-    const componentRef = this._overlayRef.attach(portal);
+      const portal = new ComponentPortal(ProfileDropdownComponent);
+      const componentRef = this._overlayRef.attach(portal);
 
-    componentRef.instance.selectOption.subscribe((url) => this.selectOption.emit(url));
+      componentRef.instance.selectOption.subscribe((url) => this.selectOption.emit(url));
+    }
   }
 
   @HostListener('document:click', ['$event.target'])
