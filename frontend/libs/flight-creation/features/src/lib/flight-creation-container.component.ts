@@ -68,7 +68,9 @@ export class FlightCreationContainerComponent {
   public handleComponentDeactivation() {
     this._getStepComponentForm(this.activeComponent);
 
-    sessionStorage.setItem('formsState', JSON.stringify(this.forms));
+    if (this._router.url.includes('flight-creation')) {
+      sessionStorage.setItem('formsState', JSON.stringify(this.forms));
+    }
   }
 
   public navigateToPreviousStep() {
