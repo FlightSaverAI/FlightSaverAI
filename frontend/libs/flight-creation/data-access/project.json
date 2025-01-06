@@ -1,16 +1,16 @@
 {
-  "name": "auth-data-access",
+  "name": "flight-creation-data-access",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/authentication/data-access/src",
+  "sourceRoot": "libs/flight-creation/data-access/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["type:data-access", "domain:auth"],
+  "tags": [],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/authentication/data-access/jest.config.ts"
+        "jestConfig": "libs/flight-creation/data-access/jest.config.ts"
       }
     },
     "lint": {
