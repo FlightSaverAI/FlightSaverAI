@@ -73,6 +73,24 @@ export class FlightCreationContainerComponent {
     }
   }
 
+  private _getStepComponentForm(component: unknown) {
+    if (component instanceof StepFlightComponent) {
+      this.forms.flightDetailsForm = component.flightDetailsForm.getRawValue();
+      this.forms.aircraftDetailsForm = component.aircraftDetailsForm.getRawValue();
+      return;
+    }
+
+    if (component instanceof StepTicketComponent) {
+      this.forms.ticketForm = component.ticketForm.getRawValue();
+      return;
+    }
+
+    if (component instanceof StepRateAndReviewComponent) {
+      this.forms.rateAndReviewForm = component.rateAndReviewForm.getRawValue();
+      return;
+    }
+  }
+
   public navigateToPreviousStep() {
     if (this.currentStep <= 1) {
       return;
@@ -101,23 +119,5 @@ export class FlightCreationContainerComponent {
       queryParams: { stepNumber: step },
       queryParamsHandling: 'merge',
     });
-  }
-
-  private _getStepComponentForm(component: unknown) {
-    if (component instanceof StepFlightComponent) {
-      this.forms.flightDetailsForm = component.flightDetailsForm.getRawValue();
-      this.forms.aircraftDetailsForm = component.aircraftDetailsForm.getRawValue();
-      return;
-    }
-
-    if (component instanceof StepTicketComponent) {
-      this.forms.ticketForm = component.ticketForm.getRawValue();
-      return;
-    }
-
-    if (component instanceof StepRateAndReviewComponent) {
-      this.forms.rateAndReviewForm = component.rateAndReviewForm.getRawValue();
-      return;
-    }
   }
 }
