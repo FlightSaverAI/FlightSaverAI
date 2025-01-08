@@ -35,7 +35,7 @@ public class FlightsController : ControllerBase
     {
         var query = new GetFlightQuery(id);
         var flight = await _mediator.Send(query, cancellationToken);
-
+        
         return Ok(flight);
     }
     
@@ -44,7 +44,7 @@ public class FlightsController : ControllerBase
     [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PutFlight(int id, UpdateFlightCommand command, CancellationToken cancellationToken)
     {
-        if (id != command.Id) return BadRequest();
+        if (id != command.Id || !ModelState.IsValid) return BadRequest();
         
         await _mediator.Send(command, cancellationToken);
         
@@ -57,6 +57,9 @@ public class FlightsController : ControllerBase
     public async Task<ActionResult<FlightDTO>> PostFlight(CreateFlightCommand command,
         CancellationToken cancellationToken)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var createdFlight = await _mediator.Send(command, cancellationToken);
         
         return CreatedAtAction(nameof(GetFlight), new { id = createdFlight.Id }, createdFlight);
@@ -72,5 +75,28 @@ public class FlightsController : ControllerBase
         await _mediator.Send(command, cancellationToken);
         
         return NoContent();
+    }
+    
+    // GET: /Flights/User/{userId?}
+    [HttpGet("User")]
+    public async Task<ActionResult<IEnumerable<FlightDTO>>> GetFlightsByUser(CancellationToken cancellationToken, int? userId = null)
+    {
+        try
+        {
+            userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            
+            var query = new GetFlightsByUserQuery(userId.Value);
+            var flights = await _mediator.Send(query, cancellationToken);
+            
+            return Ok(flights);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
