@@ -29,6 +29,29 @@ public class FlightsController : ControllerBase
         return Ok(flights);
     }
     
+    // GET: /Flights/User/{userId?}
+    [HttpGet("User")]
+    public async Task<ActionResult<IEnumerable<FlightDTO>>> GetFlightsByUser(CancellationToken cancellationToken, int? userId = null)
+    {
+        try
+        {
+            userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            
+            var query = new GetFlightsByUserQuery(userId.Value);
+            var flights = await _mediator.Send(query, cancellationToken);
+            
+            return Ok(flights);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
     // GET: /Flights/{id}
     [HttpGet("{id:int}")]
     public async Task<ActionResult<FlightDTO>> GetFlight(int id, CancellationToken cancellationToken)
@@ -75,28 +98,5 @@ public class FlightsController : ControllerBase
         await _mediator.Send(command, cancellationToken);
         
         return NoContent();
-    }
-    
-    // GET: /Flights/User/{userId?}
-    [HttpGet("User")]
-    public async Task<ActionResult<IEnumerable<FlightDTO>>> GetFlightsByUser(CancellationToken cancellationToken, int? userId = null)
-    {
-        try
-        {
-            userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
-            
-            var query = new GetFlightsByUserQuery(userId.Value);
-            var flights = await _mediator.Send(query, cancellationToken);
-            
-            return Ok(flights);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return Unauthorized(ex.Message);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
     }
 }
