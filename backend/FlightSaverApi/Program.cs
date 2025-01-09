@@ -1,4 +1,6 @@
 // Program.cs
+
+using System.Reflection;
 using FlightSaverApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,14 +34,16 @@ builder.Services.AddMediatR(cfg => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
-    //setup.DocumentFilter<SwaggerExcludeFilter>();
-    
     setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "Flight Saver API",
         Version = "v1",
-        Description = "API for managing aircraft data in Flight Saver application."
+        Description = "API for managing flights data in Flight Saver application."
     });
+    
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    setup.IncludeXmlComments(xmlPath);
 
     var securityScheme = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {

@@ -19,12 +19,25 @@ public class StatisticsController : ControllerBase
     
     //GET: /statistics
     [HttpGet]
-    public async Task<ActionResult<FlightStatistics>> GetStatistics(int userId, CancellationToken cancellationToken)
+    public async Task<ActionResult<FlightStatistics>> GetStatistics(CancellationToken cancellationToken, int? userId = null)
     {
-        var query = new GetStatisticsQuery(userId);
+        try
+        {
+            userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            
+            var query = new GetStatisticsQuery(userId.Value);
         
-        var statistics = await _mediator.Send(query, cancellationToken);
+            var statistics = await _mediator.Send(query, cancellationToken);
         
-        return Ok(statistics);
+            return Ok(statistics);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
