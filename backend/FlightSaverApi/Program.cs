@@ -5,13 +5,10 @@ using FlightSaverApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Text.Json.Serialization;
 using FlightSaverApi.Enums;
-using FlightSaverApi.Filters;
 using FlightSaverApi.Interfaces.Services;
 using FlightSaverApi.Services;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 

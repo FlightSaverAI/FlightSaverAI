@@ -1,5 +1,4 @@
 using FlightSaverApi.Attributes;
-using FlightSaverApi.DTOs;
 using FlightSaverApi.DTOs.User;
 using MediatR;
 

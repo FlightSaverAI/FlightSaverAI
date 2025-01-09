@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FlightSaverApi.Attributes;
-
-namespace FlightSaverApi.Models.ReviewModel
+﻿namespace FlightSaverApi.Models.Review
 {
     public class AirlineReview : Review
     {

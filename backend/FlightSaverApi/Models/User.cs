@@ -1,5 +1,5 @@
 ﻿using FlightSaverApi.Enums;
-using FlightSaverApi.Models.ReviewModel;
+using FlightSaverApi.Models.Review;
 
 namespace FlightSaverApi.Models
 {

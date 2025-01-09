@@ -36,11 +36,6 @@ public class AirlinesController : ControllerBase
         var query = new GetAirlineQuery(id);
         var airline = await _mediator.Send(query, cancellationToken);
 
-        if (airline == null)
-        {
-            return NotFound();
-        }
-        
         return Ok(airline);
     }
     

@@ -1,5 +1,7 @@
 using System.Security.Claims;
 
+namespace FlightSaverApi.Helpers;
+
 public static class ClaimsHelper
 {
     /// <summary>

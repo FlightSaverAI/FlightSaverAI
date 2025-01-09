@@ -1,5 +1,5 @@
 ﻿using FlightSaverApi.Models;
-using FlightSaverApi.Models.ReviewModel;
+using FlightSaverApi.Models.Review;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Data

@@ -10,7 +10,7 @@ public class SwaggerExcludeFilter : IDocumentFilter
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
         var schemasToRemove = context.SchemaRepository.Schemas
-            .Where(schema => ShouldExcludeSchema(schema.Key, context))
+            .Where(schema => ShouldExcludeSchema(schema.Key))
             .Select(schema => schema.Key)
             .ToList();
         
@@ -20,7 +20,7 @@ public class SwaggerExcludeFilter : IDocumentFilter
         }
     }
     
-    private bool ShouldExcludeSchema(string schemaName, DocumentFilterContext context)
+    private bool ShouldExcludeSchema(string schemaName)
     {
         var schemaType = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(a => a.GetTypes())

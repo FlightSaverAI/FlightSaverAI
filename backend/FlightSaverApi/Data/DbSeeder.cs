@@ -1,7 +1,7 @@
 using FlightSaverApi.Enums;
 using FlightSaverApi.Enums.FlightEnums;
 using FlightSaverApi.Models;
-using FlightSaverApi.Models.ReviewModel;
+using FlightSaverApi.Models.Review;
 
 namespace FlightSaverApi.Data;
 
@@ -15,7 +15,7 @@ public class DbSeeder
         // Add Users if not already present
         if (!context.Users.Any())
         {
-            var users = new User[]
+            var users = new[]
             {
                 new User { Username = "admin", Email = "admin@example.com", Role = UserRole.Admin, PasswordHash = new byte[] { 1, 2, 3 }, PasswordSalt = new byte[] { 4, 5, 6 }},
                 new User { Username = "john_doe", Email = "john@example.com", Role = UserRole.User, PasswordHash = new byte[] { 7, 8, 9 }, PasswordSalt = new byte[] { 10, 11, 12 }}
@@ -30,7 +30,7 @@ public class DbSeeder
         // Add Airports if not already present
         if (!context.Airports.Any())
         {
-            var airports = new Airport[]
+            var airports = new[]
             {
                 new Airport { IcaoCode = "KJFK", IataCode = "JFK", Name = "John F. Kennedy International Airport", City = "New York", Country = "USA", Latitude = 40.6413, Longitude = -73.7781 },
                 new Airport { IcaoCode = "EGLL", IataCode = "LHR", Name = "London Heathrow Airport", City = "London", Country = "GB", Latitude = 51.4700, Longitude = -0.4543 },
@@ -47,7 +47,7 @@ public class DbSeeder
         // Add Airlines if not already present
         if (!context.Airlines.Any())
         {
-            var airlines = new Airline[]
+            var airlines = new[]
             {
                 new Airline { Name = "American Airlines", IataCode = "AA", IcaoCode = "AAL", Country = "USA" },
                 new Airline { Name = "British Airways", IataCode = "BA", IcaoCode = "BAW", Country = "GB" },
@@ -67,7 +67,7 @@ public class DbSeeder
         if (!context.Aircrafts.Any())
         {
             var airlines = context.Airlines.ToList(); // Ensure Airlines are loaded and have valid Ids
-            var aircrafts = new Aircraft[]
+            var aircrafts = new[]
             {
                 new Aircraft { Name = "Boeing 777", IataCode = "777", IcaoCode = "B77W", RegNumber = "N12345", AirlineId = airlines.FirstOrDefault(a => a.IataCode == "AA")?.Id ?? 1 },
                 new Aircraft { Name = "Airbus A380", IataCode = "380", IcaoCode = "A38X", RegNumber = "G54321", AirlineId = airlines.FirstOrDefault(a => a.IataCode == "BA")?.Id ?? 2 },
@@ -85,7 +85,7 @@ public class DbSeeder
         // Add Flights if not already present
         if (!context.Flights.Any())
         {
-            var flights = new Flight[]
+            var flights = new[]
             {
                 new Flight { 
                     FlightNumber = "AA100", 

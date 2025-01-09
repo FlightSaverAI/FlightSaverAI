@@ -3,7 +3,6 @@ using FlightSaverApi.Commands.Airline;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs;
 using MediatR;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace FlightSaverApi.Handlers.Airline;
 

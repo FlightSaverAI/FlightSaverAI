@@ -1,10 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FlightSaverApi.Attributes;
-using FlightSaverApi.Enums;
-using Newtonsoft.Json;
+﻿using FlightSaverApi.Enums;
 
-namespace FlightSaverApi.Models.ReviewModel
+namespace FlightSaverApi.Models.Review
 { 
     public class AirportReview : Review
     {

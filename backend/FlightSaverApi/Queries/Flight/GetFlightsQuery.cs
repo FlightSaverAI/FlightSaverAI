@@ -1,4 +1,3 @@
-using FlightSaverApi.DTOs;
 using FlightSaverApi.DTOs.Flight;
 using MediatR;
 

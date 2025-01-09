@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using FlightSaverApi.Data;
 using FlightSaverApi.Commands.Airline;

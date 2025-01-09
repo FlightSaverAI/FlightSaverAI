@@ -1,16 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FlightSaverApi.Data;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using FlightSaverApi.Commands.Auth;
-using FlightSaverApi.DTOs;
 using FlightSaverApi.DTOs.User;
 using Microsoft.AspNetCore.Authorization;
-using NuGet.Protocol;
 using MediatR;
 
 namespace FlightSaverApi.Controllers
@@ -35,7 +26,7 @@ namespace FlightSaverApi.Controllers
             {
                 var command = new RegisterUserCommand { UserRegisterDTO = request };
                 var token = await _mediator.Send(command);
-                return Ok(new { token = token });
+                return Ok(new { token });
             }
             catch (Exception ex)
             {
@@ -51,7 +42,7 @@ namespace FlightSaverApi.Controllers
             {
                 var command = new LoginUserCommand { UserLoginDTO = request };
                 var token = await _mediator.Send(command);
-                return Ok(new { token = token });
+                return Ok(new { token });
             }
             catch (Exception ex)
             {

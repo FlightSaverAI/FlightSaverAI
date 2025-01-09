@@ -5,7 +5,7 @@ using FlightSaverApi.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlightSaverApi.Handlers;
+namespace FlightSaverApi.Handlers.Aircraft;
 
 public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftCommand, AircraftDTO>
 {
@@ -31,6 +31,6 @@ public class UpdateAircraftCommandHandler : IRequestHandler<UpdateAircraftComman
         
         await _context.SaveChangesAsync(cancellationToken);
         
-        return _mapper.Map<AircraftDTO>(aircraft);;
+        return _mapper.Map<AircraftDTO>(aircraft);
     }
 }

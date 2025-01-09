@@ -1,10 +1,8 @@
-using FlightSaverApi.Data;
 using FlightSaverApi.Enums;
 using FlightSaverApi.Enums.FlightEnums;
 using FlightSaverApi.Helpers;
 using FlightSaverApi.Interfaces.Services;
 using FlightSaverApi.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Services;
 
@@ -208,7 +206,7 @@ public class StatisticsService : IStatisticsService
     
         var flightsPerMonth = Enum.GetValues(typeof(Month))
             .Cast<Month>()
-            .ToDictionary(m => m, m => 0);
+            .ToDictionary(m => m, _ => 0);
     
         var groupedFlights = flights
             .Where(x => x.ArrivalTime.Year == year)

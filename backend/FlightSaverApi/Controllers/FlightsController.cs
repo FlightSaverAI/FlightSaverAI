@@ -1,7 +1,6 @@
-using System.Security.Claims;
 using FlightSaverApi.Commands.Flight;
-using FlightSaverApi.DTOs;
 using FlightSaverApi.DTOs.Flight;
+using FlightSaverApi.Helpers;
 using FlightSaverApi.Queries.Flight;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

@@ -35,9 +35,7 @@ public class AirportController : ControllerBase
     {
         var query = new GetAirportQuery(id);
         var airport = await _mediator.Send(query, cancellationToken);
-        
-        if(airport == null) return NotFound();
-        
+
         return Ok(airport);
     }
     

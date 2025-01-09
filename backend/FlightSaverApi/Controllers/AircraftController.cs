@@ -1,7 +1,5 @@
 ﻿using FlightSaverApi.Commands.Aircraft;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FlightSaverApi.Data;
 using FlightSaverApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using FlightSaverApi.Queries.Aircraft;
@@ -39,11 +37,6 @@ namespace FlightSaverApi.Controllers
             var query = new GetAircraftQuery(id);
             var aircraft = await _mediator.Send(query, cancellationToken);
 
-            if (aircraft == null)
-            {
-                return NotFound();
-            }
-            
             return Ok(aircraft);
         }
         

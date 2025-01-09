@@ -1,5 +1,4 @@
 using AutoMapper;
-using FlightSaverApi.Commands.Airline;
 using FlightSaverApi.Commands.Airport;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs;

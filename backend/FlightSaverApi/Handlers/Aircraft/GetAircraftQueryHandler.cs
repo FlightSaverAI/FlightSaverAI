@@ -4,7 +4,7 @@ using FlightSaverApi.DTOs;
 using FlightSaverApi.Queries.Aircraft;
 using MediatR;
 
-namespace FlightSaverApi.Handlers;
+namespace FlightSaverApi.Handlers.Aircraft;
 
 public class GetAircraftQueryHandler : IRequestHandler<GetAircraftQuery, AircraftDTO>
 {

@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace FlightSaverApi.DTOs.Flight;
 
 public class MinimalFlightDTO

@@ -1,13 +1,10 @@
-using System.CodeDom;
 using AutoMapper;
 using FlightSaverApi.Commands.Aircraft;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs;
-using FlightSaverApi.Models;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
-namespace FlightSaverApi.Handlers;
+namespace FlightSaverApi.Handlers.Aircraft;
 
 public class CreateAircraftCommandHandler : IRequestHandler<CreateAircraftCommand, AircraftDTO>
 {
@@ -22,7 +19,7 @@ public class CreateAircraftCommandHandler : IRequestHandler<CreateAircraftComman
 
     public async Task<AircraftDTO> Handle(CreateAircraftCommand request, CancellationToken cancellationToken)
     {
-        var aircraft = new Aircraft
+        var aircraft = new Models.Aircraft
         {
             Name = request.Name,
             IataCode = request.IataCode,

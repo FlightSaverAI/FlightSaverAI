@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FlightSaverApi.Attributes;
-using Newtonsoft.Json;
-
-namespace FlightSaverApi.Models.ReviewModel
+﻿namespace FlightSaverApi.Models.Review
 {
     public abstract class Review
     {
