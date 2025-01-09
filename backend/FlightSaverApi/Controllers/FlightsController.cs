@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlightSaverApi.Controllers;
 
-[Route("/Flights")]
+[Route("/flights")]
 [ApiController]
 [Authorize(Policy = "RequireUserRole")]
 public class FlightsController : ControllerBase
@@ -21,7 +21,7 @@ public class FlightsController : ControllerBase
         _mediator = mediator;
     }
     
-    // GET: /Flights
+    // GET: /flights
     [HttpGet]
     public async Task<ActionResult<IEnumerable<FlightDTO>>> GetFlights(CancellationToken cancellationToken)
     {
@@ -31,7 +31,8 @@ public class FlightsController : ControllerBase
         return Ok(flights);
     }
     
-    [HttpGet("User/Minimal")]
+    // GET: /flights/user/minimal/{userId?}
+    [HttpGet("user/minimal")]
     public async Task<ActionResult<IEnumerable<MinimalFlightDTO>>> GetMinimalFlightsByUser(CancellationToken cancellation, int? userId = null)
     {
         try
@@ -53,8 +54,8 @@ public class FlightsController : ControllerBase
         }
     }
     
-    // GET: /Flights/User/{userId?}
-    [HttpGet("User")]
+    // GET: /flights/user/{userId?}
+    [HttpGet("user")]
     public async Task<ActionResult<IEnumerable<FlightDTO>>> GetFlightsByUser(CancellationToken cancellationToken, int? userId = null, string? include = null)
     {
         try
@@ -76,7 +77,7 @@ public class FlightsController : ControllerBase
         }
     }
     
-    // GET: /Flights/{id}
+    // GET: /flights/{id}
     [HttpGet("{id:int}")]
     public async Task<ActionResult<FlightDTO>> GetFlight(int id, CancellationToken cancellationToken)
     {
@@ -86,7 +87,7 @@ public class FlightsController : ControllerBase
         return Ok(flight);
     }
     
-    // PUT: /Flights/{id}
+    // PUT: /flights/{id}
     [HttpPut("{id:int}")]
     public async Task<IActionResult> PutFlight(int id, UpdateFlightCommand command, CancellationToken cancellationToken)
     {
@@ -97,7 +98,7 @@ public class FlightsController : ControllerBase
         return NoContent();
     }
     
-    // POST: /Flights
+    // POST: /flights
     [HttpPost]
     public async Task<ActionResult<FlightDTO>> PostFlight(CreateFlightCommand command,
         CancellationToken cancellationToken)
@@ -110,7 +111,7 @@ public class FlightsController : ControllerBase
         return CreatedAtAction(nameof(GetFlight), new { id = createdFlight.Id }, createdFlight);
     }
     
-    // DELETE: /Flights/{id}
+    // DELETE: /flights/{id}
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<FlightDTO>> DeleteFlight(int id, CancellationToken cancellationToken)
     {

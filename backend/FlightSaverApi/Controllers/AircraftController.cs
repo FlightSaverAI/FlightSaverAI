@@ -9,19 +9,19 @@ using MediatR;
 
 namespace FlightSaverApi.Controllers
 {
-    [Route("/Aircrafts")]
+    [Route("/aircraft")]
     [ApiController]
     [Authorize]
-    public class AircraftsController : ControllerBase
+    public class AircraftController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public AircraftsController(IMediator mediator)
+        public AircraftController(IMediator mediator)
         {
             _mediator = mediator;
         }
         
-        // GET: /Aircrafts
+        // GET: /aircraft
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AircraftDTO>>> GetAircrafts(CancellationToken cancellationToken)
         {
@@ -31,7 +31,7 @@ namespace FlightSaverApi.Controllers
             return Ok(aircrafts);
         }
         
-        // GET: /Aircrafts/{id}
+        // GET: /aircraft/{id}
         [HttpGet("{id:int}")]
         public async Task<ActionResult<AircraftDTO>> GetAircraft([FromRoute] int id,
             CancellationToken cancellationToken)
@@ -47,7 +47,7 @@ namespace FlightSaverApi.Controllers
             return Ok(aircraft);
         }
         
-        // PUT: /Aircrafts/{id}
+        // PUT: /aircraft/{id}
         [HttpPut("{id:int}")]
         [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> PutAircraft(int id, UpdateAircraftCommand command, CancellationToken cancellationToken)
@@ -62,7 +62,7 @@ namespace FlightSaverApi.Controllers
             return NoContent();
         }
         
-        // POST: /Aircrafts
+        // POST: /aircraft
         [HttpPost]
         [Authorize(Policy = "RequireAdminRole")]
         public async Task<ActionResult<AircraftDTO>> PostAircraft(CreateAircraftCommand command,
@@ -73,7 +73,7 @@ namespace FlightSaverApi.Controllers
             return CreatedAtAction(nameof(GetAircraft), new { id = createdAicraft.Id }, createdAicraft);
         }
         
-        // DELETE: /Aircrafts/{id}
+        // DELETE: /aircraft/{id}
         [HttpDelete("{id:int}")]
         [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> DeleteAircraft(int id, CancellationToken cancellationToken)

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlightSaverApi.Controllers;
 
-[Route("/Statistics")]
+[Route("/statistics")]
 [Authorize(Policy = "RequireUserRole")]
 public class StatisticsController : ControllerBase
 {
@@ -17,7 +17,7 @@ public class StatisticsController : ControllerBase
         _mediator = mediator;
     }
     
-    //GET: /Statistics
+    //GET: /statistics
     [HttpGet]
     public async Task<ActionResult<FlightStatistics>> GetStatistics(int userId, CancellationToken cancellationToken)
     {

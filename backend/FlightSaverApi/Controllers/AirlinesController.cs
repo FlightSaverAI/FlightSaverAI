@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlightSaverApi.Controllers;
 
-[Route("/Airlines")]
+[Route("/airlines")]
 [ApiController]
 [Authorize]
 public class AirlinesController : ControllerBase
@@ -19,7 +19,7 @@ public class AirlinesController : ControllerBase
         _mediator = mediator;
     }
     
-    // GET: /Airlines
+    // GET: /airlines
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AirlineDTO>>> GetAirlines(CancellationToken cancellationToken)
     {
@@ -29,7 +29,7 @@ public class AirlinesController : ControllerBase
         return Ok(airlines);
     }
     
-    // GET: /Airlines/{id}
+    // GET: /airlines/{id}
     [HttpGet("{id:int}")]
     public async Task<ActionResult<AirlineDTO>> GetAirline(int id, CancellationToken cancellationToken)
     {
@@ -44,7 +44,7 @@ public class AirlinesController : ControllerBase
         return Ok(airline);
     }
     
-    // PUT: /Airlines/{id}
+    // PUT: /airlines/{id}
     [HttpPut("{id:int}")]
     [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PutAirline(int id, UpdateAirlineCommand command,
@@ -60,7 +60,7 @@ public class AirlinesController : ControllerBase
         return NoContent();
     }
     
-    // POST: /Airlines
+    // POST: /airlines
     [HttpPost]
     [Authorize(Policy = "RequireAdminRole")]
     public async Task<ActionResult<AirlineDTO>> PostAirline(CreateAirlineCommand command,
@@ -71,7 +71,7 @@ public class AirlinesController : ControllerBase
         return CreatedAtAction(nameof(GetAirline), new { id = createdAirline.Id }, createdAirline);
     }
     
-    // DELETE: /Airlines/{id}
+    // DELETE: /airlines/{id}
     [HttpDelete("{id:int}")]
     [Authorize(Policy = "RequireAdminRole")]
     public async Task<ActionResult> DeleteAirline(int id, CancellationToken cancellationToken)

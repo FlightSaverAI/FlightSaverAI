@@ -15,7 +15,7 @@ using MediatR;
 
 namespace FlightSaverApi.Controllers
 {
-    [Route("/Auth")]
+    [Route("/auth")]
     [ApiController]
     [AllowAnonymous]
     public class AuthController : ControllerBase
@@ -27,8 +27,8 @@ namespace FlightSaverApi.Controllers
             _mediator = mediator;
         }
 
-        // POST: /Auth/Register
-        [HttpPost("Register")]
+        // POST: /auth/register
+        [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
             try
@@ -43,8 +43,8 @@ namespace FlightSaverApi.Controllers
             }
         }
 
-        // POST: /Auth/Login
-        [HttpPost("Login")]
+        // POST: /auth/login
+        [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
             try
