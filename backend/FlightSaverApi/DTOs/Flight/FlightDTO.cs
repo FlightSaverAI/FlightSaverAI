@@ -1,8 +1,7 @@
 ﻿using FlightSaverApi.DTOs.Review;
 using FlightSaverApi.Enums.FlightEnums;
-using FlightSaverApi.Models.ReviewModel;
 
-namespace FlightSaverApi.DTOs
+namespace FlightSaverApi.DTOs.Flight
 {
     public class FlightDTO
     {

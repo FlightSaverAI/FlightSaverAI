@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Flight;
 using FlightSaverApi.DTOs.Review;
 using FlightSaverApi.DTOs.User;
 using FlightSaverApi.Enums;
@@ -49,6 +50,17 @@ namespace FlightSaverApi.Mappings
                 .ForMember(dest => dest.AirportReviews, opt => opt.MapFrom(src => src.AirportReviews))
                 .ForMember(dest => dest.AircraftReview, opt => opt.MapFrom(src => src.AircraftReview));
 
+            CreateMap<Flight, MinimalFlightDTO>()
+                .ForMember(dest => dest.DepartureAirportName, opt => opt.MapFrom(src => src.DepartureAirport.Name))
+                .ForMember(dest => dest.DepartureAirportLatitude,
+                    opt => opt.MapFrom(src => src.DepartureAirport.Latitude))
+                .ForMember(dest => dest.DepartureAirportLongitude,
+                    opt => opt.MapFrom(src => src.DepartureAirport.Longitude))
+                .ForMember(dest => dest.ArrivalAirportName, opt => opt.MapFrom(src => src.ArrivalAirport.Name))
+                .ForMember(dest => dest.ArrivalAirportLatitude, opt => opt.MapFrom(src => src.ArrivalAirport.Latitude))
+                .ForMember(dest => dest.ArrivalAirportLongitude,
+                    opt => opt.MapFrom(src => src.ArrivalAirport.Longitude));
+                
             CreateMap<AirportReview, AirportReviewDTO>()
                 .ReverseMap();
 

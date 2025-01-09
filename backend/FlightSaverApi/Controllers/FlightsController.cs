@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using FlightSaverApi.Commands.Flight;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Flight;
 using FlightSaverApi.Queries.Flight;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +11,7 @@ namespace FlightSaverApi.Controllers;
 
 [Route("/Flights")]
 [ApiController]
-[Authorize]
+[Authorize(Policy = "RequireUserRole")]
 public class FlightsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -27,6 +29,28 @@ public class FlightsController : ControllerBase
         var flights = await _mediator.Send(query, cancellationToken);
         
         return Ok(flights);
+    }
+    
+    [HttpGet("User/Minimal")]
+    public async Task<ActionResult<IEnumerable<MinimalFlightDTO>>> GetMinimalFlightsByUser(CancellationToken cancellation, int? userId = null)
+    {
+        try
+        {
+            userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+
+            var query = new GetMinimalFlightsByUserQuery(userId.Value);
+            var minimalFlights = await _mediator.Send(query, cancellation);
+
+            return Ok(minimalFlights);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
     
     // GET: /Flights/User/{userId?}
@@ -64,7 +88,6 @@ public class FlightsController : ControllerBase
     
     // PUT: /Flights/{id}
     [HttpPut("{id:int}")]
-    [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PutFlight(int id, UpdateFlightCommand command, CancellationToken cancellationToken)
     {
         if (id != command.Id || !ModelState.IsValid) return BadRequest();
@@ -76,7 +99,6 @@ public class FlightsController : ControllerBase
     
     // POST: /Flights
     [HttpPost]
-    [Authorize(Policy = "RequireAdminRole")]
     public async Task<ActionResult<FlightDTO>> PostFlight(CreateFlightCommand command,
         CancellationToken cancellationToken)
     {
@@ -90,7 +112,6 @@ public class FlightsController : ControllerBase
     
     // DELETE: /Flights/{id}
     [HttpDelete("{id:int}")]
-    [Authorize(Policy = "RequireAdminRole")]
     public async Task<ActionResult<FlightDTO>> DeleteFlight(int id, CancellationToken cancellationToken)
     {
         var command = new DeleteFlightCommand { Id = id };

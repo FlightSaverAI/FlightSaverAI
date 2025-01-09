@@ -1,11 +1,13 @@
 using FlightSaverApi.Models;
 using FlightSaverApi.Queries.Statistics;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlightSaverApi.Controllers;
 
 [Route("/Statistics")]
+[Authorize(Policy = "RequireUserRole")]
 public class StatisticsController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -2,6 +2,7 @@ using AutoMapper;
 using FlightSaverApi.Commands.Flight;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Flight;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

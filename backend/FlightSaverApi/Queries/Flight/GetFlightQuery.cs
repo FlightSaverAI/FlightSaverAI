@@ -1,4 +1,5 @@
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Flight;
 using FlightSaverApi.Queries.Airport;
 using MediatR;
 
