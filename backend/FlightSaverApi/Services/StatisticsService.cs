@@ -3,11 +3,7 @@ using FlightSaverApi.Enums;
 using FlightSaverApi.Enums.FlightEnums;
 using FlightSaverApi.Helpers;
 using FlightSaverApi.Interfaces.Services;
-using FlightSaverApi.Models.AircraftModel;
-using FlightSaverApi.Models.AirlineModel;
-using FlightSaverApi.Models.AirportModel;
-using FlightSaverApi.Models.FlightModel;
-using FlightSaverApi.Models.StatisticsModel;
+using FlightSaverApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Services;

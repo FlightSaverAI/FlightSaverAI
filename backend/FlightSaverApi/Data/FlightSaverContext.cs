@@ -1,9 +1,5 @@
-﻿using FlightSaverApi.Models.AircraftModel;
-using FlightSaverApi.Models.AirlineModel;
-using FlightSaverApi.Models.AirportModel;
-using FlightSaverApi.Models.FlightModel;
+﻿using FlightSaverApi.Models;
 using FlightSaverApi.Models.ReviewModel;
-using FlightSaverApi.Models.UserModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Data

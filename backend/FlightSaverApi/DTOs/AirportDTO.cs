@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace FlightSaverApi.Models.AirportModel
+﻿namespace FlightSaverApi.DTOs
 {
     public class AirportDTO
     {

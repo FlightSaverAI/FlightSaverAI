@@ -1,5 +1,5 @@
 using FlightSaverApi.Commands.Flight;
-using FlightSaverApi.Models.FlightModel;
+using FlightSaverApi.DTOs;
 using FlightSaverApi.Queries.Flight;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -31,13 +31,13 @@ public class FlightsController : ControllerBase
     
     // GET: /Flights/User/{userId?}
     [HttpGet("User")]
-    public async Task<ActionResult<IEnumerable<FlightDTO>>> GetFlightsByUser(CancellationToken cancellationToken, int? userId = null)
+    public async Task<ActionResult<IEnumerable<FlightDTO>>> GetFlightsByUser(CancellationToken cancellationToken, int? userId = null, string? include = null)
     {
         try
         {
             userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
             
-            var query = new GetFlightsByUserQuery(userId.Value);
+            var query = new GetFlightsByUserQuery(userId.Value, include);
             var flights = await _mediator.Send(query, cancellationToken);
             
             return Ok(flights);

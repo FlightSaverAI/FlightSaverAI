@@ -1,10 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FlightSaverApi.Attributes;
-using FlightSaverApi.Models.FlightModel;
-using FlightSaverApi.Models.ReviewModel;
+﻿using FlightSaverApi.Models.ReviewModel;
 
-namespace FlightSaverApi.Models.AirportModel
+namespace FlightSaverApi.Models
 {
     public class Airport
     {

@@ -1,4 +1,4 @@
-using FlightSaverApi.Models.AirportModel;
+using FlightSaverApi.DTOs;
 using MediatR;
 
 namespace FlightSaverApi.Queries.Airport;

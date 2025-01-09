@@ -1,5 +1,5 @@
 using FlightSaverApi.Attributes;
-using FlightSaverApi.Models.AirportModel;
+using FlightSaverApi.DTOs;
 using MediatR;
 
 namespace FlightSaverApi.Commands.Airport;

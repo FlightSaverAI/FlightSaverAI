@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FlightSaverApi.Data;
+using FlightSaverApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using FlightSaverApi.Models.AircraftModel;
 using FlightSaverApi.Queries.Aircraft;
 using MediatR;
 

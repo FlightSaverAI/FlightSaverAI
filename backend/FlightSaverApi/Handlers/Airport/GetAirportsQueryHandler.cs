@@ -1,6 +1,6 @@
 using AutoMapper;
 using FlightSaverApi.Data;
-using FlightSaverApi.Models.AirportModel;
+using FlightSaverApi.DTOs;
 using FlightSaverApi.Queries.Airport;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

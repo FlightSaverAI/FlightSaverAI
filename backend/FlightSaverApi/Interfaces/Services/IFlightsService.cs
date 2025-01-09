@@ -1,4 +1,4 @@
-using FlightSaverApi.Models.FlightModel;
+using FlightSaverApi.Models;
 
 namespace FlightSaverApi.Interfaces.Services;
 

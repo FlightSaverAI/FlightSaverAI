@@ -2,7 +2,8 @@ using System.CodeDom;
 using AutoMapper;
 using FlightSaverApi.Commands.Aircraft;
 using FlightSaverApi.Data;
-using FlightSaverApi.Models.AircraftModel;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

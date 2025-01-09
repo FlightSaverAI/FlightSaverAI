@@ -6,7 +6,7 @@ using AutoMapper;
 using FlightSaverApi.Commands.Auth;
 using FlightSaverApi.Data;
 using FlightSaverApi.Enums;
-using FlightSaverApi.Models.UserModel;
+using FlightSaverApi.Models;
 using FlightSaverApi.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

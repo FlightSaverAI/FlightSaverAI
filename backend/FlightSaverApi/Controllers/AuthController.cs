@@ -7,9 +7,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using FlightSaverApi.Commands.Auth;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.User;
 using Microsoft.AspNetCore.Authorization;
 using NuGet.Protocol;
-using FlightSaverApi.Models.UserModel;
 using MediatR;
 
 namespace FlightSaverApi.Controllers

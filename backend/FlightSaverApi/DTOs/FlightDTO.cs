@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using FlightSaverApi.DTOs.Review;
 using FlightSaverApi.Enums.FlightEnums;
 using FlightSaverApi.Models.ReviewModel;
 
-namespace FlightSaverApi.Models.FlightModel
+namespace FlightSaverApi.DTOs
 {
     public class FlightDTO
     {
@@ -12,12 +11,20 @@ namespace FlightSaverApi.Models.FlightModel
         public string FlightNumber { get; set; }
 
         public int DepartureAirportId { get; set; }
+        
+        public AirportDTO? DepartureAirport { get; set; }
 
         public int ArrivalAirportId { get; set; }
+        
+        public AirportDTO? ArrivalAirport { get; set; }
 
         public int AirlineId { get; set; }
+        
+        public AirlineDTO? Airline { get; set; }
 
         public int AircraftId { get; set; }
+        
+        public AircraftDTO? Aircraft { get; set; }
 
         public DateTime DepartureTime { get; set; }
 

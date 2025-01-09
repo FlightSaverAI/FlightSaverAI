@@ -1,6 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using FlightSaverApi.Models.UserModel;
+using FlightSaverApi.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FlightSaverApi.Services;

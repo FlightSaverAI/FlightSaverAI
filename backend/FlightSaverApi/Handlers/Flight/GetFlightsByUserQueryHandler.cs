@@ -1,7 +1,7 @@
 using AutoMapper;
 using FlightSaverApi.Data;
+using FlightSaverApi.DTOs;
 using FlightSaverApi.Interfaces.Services;
-using FlightSaverApi.Models.FlightModel;
 using FlightSaverApi.Queries.Flight;
 using FlightSaverApi.Services;
 using MediatR;
@@ -22,12 +22,40 @@ public class GetFlightsByUserQueryHandler : IRequestHandler<GetFlightsByUserQuer
     
     public async Task<IEnumerable<FlightDTO>> Handle(GetFlightsByUserQuery request, CancellationToken cancellationToken)
     {
-        var flights = await _context.Flights
+
+        var query = _context.Flights
             .Where(f => f.UserId == request.UserId)
-            .Include(f => f.AirportReviews)
-            .Include(f => f.AirlineReview)
-            .Include(f => f.AircraftReview)
-            .ToListAsync(cancellationToken);
+            .AsQueryable();
+
+        if (!string.IsNullOrEmpty(request.Includes))
+        {
+            var includes = request.Includes.Split(',');
+
+            foreach (var includeItem in includes)
+            {
+                switch (includeItem.Trim().ToLower())
+                {
+                    case "airports":
+                        query = query.Include(f => f.DepartureAirport);
+                        query = query.Include(f => f.ArrivalAirport);
+                        break;
+                    case "airlines":
+                        query = query.Include(f => f.Airline);
+                        break;
+                    case "aircrafts":
+                        query = query.Include(f => f.Aircraft);
+                        break;
+                    case "reviews":
+                        query = query.Include(f => f.AirportReviews);
+                        query = query.Include(f => f.AircraftReview);
+                        query = query.Include(f => f.AircraftReview);
+                        break;
+                }
+                
+            }
+        }
+        
+        var flights = await query.ToListAsync(cancellationToken);
 
         return _mapper.Map<IEnumerable<FlightDTO>>(flights);
     }

@@ -1,12 +1,11 @@
 ﻿using System;
 using AutoMapper;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Review;
+using FlightSaverApi.DTOs.User;
 using FlightSaverApi.Enums;
-using FlightSaverApi.Models.AircraftModel;
-using FlightSaverApi.Models.AirlineModel;
-using FlightSaverApi.Models.AirportModel;
-using FlightSaverApi.Models.FlightModel;
+using FlightSaverApi.Models;
 using FlightSaverApi.Models.ReviewModel;
-using FlightSaverApi.Models.UserModel;
 
 namespace FlightSaverApi.Mappings
 {

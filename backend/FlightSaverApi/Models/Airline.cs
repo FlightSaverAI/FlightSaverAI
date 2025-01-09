@@ -1,11 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FlightSaverApi.Attributes;
-using FlightSaverApi.Models.AircraftModel;
-using FlightSaverApi.Models.FlightModel;
-using FlightSaverApi.Models.ReviewModel;
+﻿using FlightSaverApi.Models.ReviewModel;
 
-namespace FlightSaverApi.Models.AirlineModel
+namespace FlightSaverApi.Models
 {
     public class Airline
     {

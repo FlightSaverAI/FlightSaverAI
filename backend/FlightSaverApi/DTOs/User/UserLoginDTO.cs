@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FlightSaverApi.Enums;
-
-namespace FlightSaverApi.Models.UserModel
+﻿namespace FlightSaverApi.DTOs.User
 {
     public class UserLoginDTO
     {

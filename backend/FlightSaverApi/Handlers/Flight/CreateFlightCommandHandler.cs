@@ -1,7 +1,7 @@
 using AutoMapper;
 using FlightSaverApi.Commands.Flight;
 using FlightSaverApi.Data;
-using FlightSaverApi.Models.FlightModel;
+using FlightSaverApi.DTOs;
 using MediatR;
 
 namespace FlightSaverApi.Handlers.Flight;
@@ -19,7 +19,7 @@ public class CreateFlightCommandHandler : IRequestHandler<CreateFlightCommand, F
 
     public async Task<FlightDTO> Handle(CreateFlightCommand request, CancellationToken cancellationToken)
     {
-        var flight = _mapper.Map<Models.FlightModel.Flight>(request);
+        var flight = _mapper.Map<Models.Flight>(request);
         
         _context.Flights.Add(flight);
         await _context.SaveChangesAsync();

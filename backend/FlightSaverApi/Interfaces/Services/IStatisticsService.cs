@@ -1,10 +1,6 @@
 using FlightSaverApi.Enums;
 using FlightSaverApi.Enums.FlightEnums;
-using FlightSaverApi.Models.AircraftModel;
-using FlightSaverApi.Models.AirlineModel;
-using FlightSaverApi.Models.AirportModel;
-using FlightSaverApi.Models.FlightModel;
-using FlightSaverApi.Models.StatisticsModel;
+using FlightSaverApi.Models;
 
 namespace FlightSaverApi.Interfaces.Services;
 

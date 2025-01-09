@@ -1,5 +1,5 @@
 using FlightSaverApi.Commands.Airport;
-using FlightSaverApi.Models.AirportModel;
+using FlightSaverApi.DTOs;
 using FlightSaverApi.Queries.Airport;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

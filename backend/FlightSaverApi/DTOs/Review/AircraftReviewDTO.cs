@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace FlightSaverApi.Models.ReviewModel
+﻿namespace FlightSaverApi.DTOs.Review
 {
     public class AircraftReviewDTO : ReviewDTO
     {

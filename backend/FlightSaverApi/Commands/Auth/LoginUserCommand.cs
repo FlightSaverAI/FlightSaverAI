@@ -1,5 +1,6 @@
 using FlightSaverApi.Attributes;
-using FlightSaverApi.Models.UserModel;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.User;
 using MediatR;
 
 namespace FlightSaverApi.Commands.Auth;

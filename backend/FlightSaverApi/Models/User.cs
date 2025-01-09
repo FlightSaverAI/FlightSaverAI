@@ -1,11 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FlightSaverApi.Attributes;
-using FlightSaverApi.Enums;
-using FlightSaverApi.Models.FlightModel;
+﻿using FlightSaverApi.Enums;
 using FlightSaverApi.Models.ReviewModel;
 
-namespace FlightSaverApi.Models.UserModel
+namespace FlightSaverApi.Models
 {
     public class User
     {

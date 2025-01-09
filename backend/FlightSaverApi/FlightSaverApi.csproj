@@ -41,12 +41,7 @@
     <None Remove="Mappings\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\FlightModel\" />
-    <Folder Include="Models\AirportModel\" />
-    <Folder Include="Models\FlightModel\" />
-    <Folder Include="Models\ReviewModel\" />
-    <Folder Include="Models\UserModel\" />
-    <Folder Include="Models\AirlineModel\" />
+    <Folder Include="Models\Review\" />
     <Folder Include="Mappings\" />
   </ItemGroup>
 </Project>
