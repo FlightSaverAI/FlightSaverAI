@@ -110,7 +110,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdminRole", policy => policy.RequireRole(UserRole.Admin.ToString()));
-    options.AddPolicy("RequireUserRole", policy => policy.RequireRole(UserRole.User.ToString()));
+    options.AddPolicy("RequireUserRole", policy => policy.RequireRole(UserRole.User.ToString(), UserRole.Admin.ToString()));
 });
 
 builder.Services.AddControllers()
