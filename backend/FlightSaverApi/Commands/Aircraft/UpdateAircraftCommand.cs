@@ -1,5 +1,6 @@
 using FlightSaverApi.Attributes;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Aircraft;
 using MediatR;
 
 namespace FlightSaverApi.Commands.Aircraft;

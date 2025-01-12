@@ -2,6 +2,7 @@ using AutoMapper;
 using FlightSaverApi.Commands.Airline;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Airline;
 using MediatR;
 
 namespace FlightSaverApi.Handlers.Airline;

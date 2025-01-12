@@ -1,4 +1,7 @@
-﻿using FlightSaverApi.DTOs.Review;
+﻿using FlightSaverApi.DTOs.Aircraft;
+using FlightSaverApi.DTOs.Airline;
+using FlightSaverApi.DTOs.Airport;
+using FlightSaverApi.DTOs.Review;
 using FlightSaverApi.Enums.FlightEnums;
 
 namespace FlightSaverApi.DTOs.Flight

@@ -1,5 +1,6 @@
 using FlightSaverApi.Commands.Airline;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Airline;
 using FlightSaverApi.Queries.Airline;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +25,32 @@ public class AirlinesController : ControllerBase
     public async Task<ActionResult<IEnumerable<AirlineDTO>>> GetAirlines(CancellationToken cancellationToken)
     {
         var query = new GetAirlinesQuery();
+        var airlines =  await _mediator.Send(query, cancellationToken);
+        
+        return Ok(airlines);
+    }
+    
+    /// <summary>
+    /// Retrieves a list of minimal airline details.
+    /// </summary>
+    /// <remarks>
+    /// This endpoint fetches basic details of airlines, such as their ID and name, 
+    /// for use in scenarios where only minimal data is required (e.g., dropdowns or summaries).
+    /// The method uses a query handler to retrieve the data.
+    /// </remarks>
+    /// <param name="cancellationToken">
+    /// A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+    /// </param>
+    /// <returns>
+    /// A list of minimal airline details, or an appropriate HTTP response if an error occurs.
+    /// </returns>
+    /// <response code="200">Returns the list of minimal airline details.</response>
+    /// <response code="401">If the user is not authorized to access this resource.</response>
+    /// <response code="500">If an internal server error occurs while processing the request.</response>
+    [HttpGet("minimal")]
+    public async Task<ActionResult<MinimalAirlineDTO>> GetMinimalAirlines(CancellationToken cancellationToken)
+    {
+        var query = new GetMinimalAirlinesQuery();
         var airlines =  await _mediator.Send(query, cancellationToken);
         
         return Ok(airlines);

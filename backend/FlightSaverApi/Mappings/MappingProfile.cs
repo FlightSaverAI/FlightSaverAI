@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Aircraft;
+using FlightSaverApi.DTOs.Airline;
+using FlightSaverApi.DTOs.Airport;
 using FlightSaverApi.DTOs.Flight;
 using FlightSaverApi.DTOs.Review;
 using FlightSaverApi.DTOs.User;
@@ -31,11 +34,20 @@ namespace FlightSaverApi.Mappings
 
             CreateMap<AirlineDTO, Airline>()
                 .ReverseMap();
+            
+            CreateMap<MinimalAirlineDTO, Airline>()
+                .ReverseMap();
 
             CreateMap<AirportDTO, Airport>()
                 .ReverseMap();
+            
+            CreateMap<MinimalAirportDTO, Airport>()
+                .ReverseMap();
 
             CreateMap<AircraftDTO, Aircraft>()
+                .ReverseMap();
+            
+            CreateMap<MinimalAircraftDTO, Aircraft>()
                 .ReverseMap();
                 
 

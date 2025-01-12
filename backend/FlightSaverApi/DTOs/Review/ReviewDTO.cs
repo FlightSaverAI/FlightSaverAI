@@ -1,4 +1,4 @@
-﻿namespace FlightSaverApi.DTOs
+﻿namespace FlightSaverApi.DTOs.Review
 {
     public abstract class ReviewDTO
     {

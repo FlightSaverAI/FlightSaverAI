@@ -1,4 +1,4 @@
-﻿namespace FlightSaverApi.DTOs
+﻿namespace FlightSaverApi.DTOs.Aircraft
 {
     public class AircraftDTO
     {

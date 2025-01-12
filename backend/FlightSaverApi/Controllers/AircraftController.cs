@@ -1,6 +1,7 @@
 ﻿using FlightSaverApi.Commands.Aircraft;
 using Microsoft.AspNetCore.Mvc;
 using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Aircraft;
 using Microsoft.AspNetCore.Authorization;
 using FlightSaverApi.Queries.Aircraft;
 using MediatR;
@@ -24,6 +25,32 @@ namespace FlightSaverApi.Controllers
         public async Task<ActionResult<IEnumerable<AircraftDTO>>> GetAircrafts(CancellationToken cancellationToken)
         {
             var query = new GetAircraftsQuery();
+            var aircrafts = await _mediator.Send(query, cancellationToken);
+            
+            return Ok(aircrafts);
+        }
+        
+        /// <summary>
+        /// Retrieves a list of minimal aircraft details.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint fetches basic details of aircraft, such as their ID and name, 
+        /// for use in scenarios where only minimal data is required (e.g., dropdowns or summaries).
+        /// The method uses a query handler to retrieve the data.
+        /// </remarks>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+        /// </param>
+        /// <returns>
+        /// A list of minimal aircraft details, or an appropriate HTTP response if an error occurs.
+        /// </returns>
+        /// <response code="200">Returns the list of minimal aircraft details.</response>
+        /// <response code="401">If the user is not authorized to access this resource.</response>
+        /// <response code="500">If an internal server error occurs while processing the request.</response>
+        [HttpGet("minimal")]
+        public async Task<ActionResult<IEnumerable<MinimalAircraftDTO>>> GetMinimalAircrafts(CancellationToken cancellationToken)
+        {
+            var query = new GetMinimalAircraftsQuery();
             var aircrafts = await _mediator.Send(query, cancellationToken);
             
             return Ok(aircrafts);
