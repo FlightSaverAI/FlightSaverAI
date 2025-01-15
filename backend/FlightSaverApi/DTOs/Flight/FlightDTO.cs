@@ -10,7 +10,7 @@ namespace FlightSaverApi.DTOs.Flight
     {
         public int Id { get; set; }
 
-        public string FlightNumber { get; set; }
+        public string? FlightNumber { get; set; }
 
         public int DepartureAirportId { get; set; }
         
@@ -20,11 +20,11 @@ namespace FlightSaverApi.DTOs.Flight
         
         public AirportDTO? ArrivalAirport { get; set; }
 
-        public int AirlineId { get; set; }
+        public int? AirlineId { get; set; }
         
         public AirlineDTO? Airline { get; set; }
 
-        public int AircraftId { get; set; }
+        public int? AircraftId { get; set; }
         
         public AircraftDTO? Aircraft { get; set; }
 
@@ -40,7 +40,7 @@ namespace FlightSaverApi.DTOs.Flight
 
         public Reason Reason { get; set; }
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         public List<AirportReviewDTO>? AirportReviews { get; set; }
 

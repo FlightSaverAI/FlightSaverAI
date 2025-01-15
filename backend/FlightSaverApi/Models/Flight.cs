@@ -7,7 +7,7 @@ namespace FlightSaverApi.Models
     {
         public int Id { get; set; }
 
-        public string FlightNumber { get; set; }
+        public string? FlightNumber { get; set; }
 
         public int DepartureAirportId { get; set; }
 
@@ -17,13 +17,13 @@ namespace FlightSaverApi.Models
 
         public virtual Airport ArrivalAirport { get; set; }
 
-        public int AirlineId { get; set; }
+        public int? AirlineId { get; set; }
 
-        public virtual Airline Airline { get; set; }
+        public virtual Airline? Airline { get; set; }
 
-        public int AircraftId { get; set; }
+        public int? AircraftId { get; set; }
 
-        public virtual Aircraft Aircraft { get; set; }
+        public virtual Aircraft? Aircraft { get; set; }
 
         public DateTime DepartureTime { get; set; }
 
@@ -39,7 +39,7 @@ namespace FlightSaverApi.Models
 
         public Reason Reason { get; set; }
 
-        public virtual List<AirportReview> AirportReviews { get; set; }
+        public virtual List<AirportReview>? AirportReviews { get; set; }
 
         public virtual AirlineReview? AirlineReview { get; set; }
 

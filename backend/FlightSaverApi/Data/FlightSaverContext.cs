@@ -271,7 +271,7 @@ namespace FlightSaverApi.Data
             modelBuilder.Entity<Flight>(entity =>
             {
                 entity.Property(f => f.FlightNumber)
-                    .IsRequired()
+                    .IsRequired(false)
                     .HasMaxLength(50);
                 
                 entity.Property(f => f.DepartureTime)
@@ -308,13 +308,13 @@ namespace FlightSaverApi.Data
                     .HasOne(f => f.Airline)
                     .WithMany(a => a.Flights)
                     .HasForeignKey(f => f.AirlineId)
-                    .IsRequired();
+                    .IsRequired(false);
                 
                 entity
                     .HasOne(f => f.Aircraft)
                     .WithMany(a => a.Flights)
                     .HasForeignKey(f => f.AircraftId)
-                    .IsRequired();
+                    .IsRequired(false);
 
                 entity.HasMany(f => f.AirportReviews)
                     .WithOne(r => r.Flight)
