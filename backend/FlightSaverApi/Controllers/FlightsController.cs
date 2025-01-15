@@ -140,17 +140,55 @@ public class FlightsController : ControllerBase
         return NoContent();
     }
     
-    // POST: /flights
+    /// <summary>
+    /// Creates a new flight for the authenticated user with the provided details.
+    /// </summary>
+    /// <remarks>
+    /// This endpoint allows an authenticated user to create a new flight record by submitting flight details such as departure and arrival airports, flight number, aircraft information, ticket type, and more.
+    ///     The `userId` will automatically be assigned from the authenticated user's claims.
+    ///     If the input data is invalid, the request will return an error.
+    /// </remarks>
+    /// <param name="cancellationToken">
+    ///     A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+    /// </param>
+    /// <param name="command">
+    ///     The command includes all relevant information such as flight details, airline, aircraft, and ticket information.
+    /// </param>
+    /// <returns>
+    /// A newly created flight object with all the details provided, or an appropriate HTTP response in case of an error.
+    /// </returns>
+    /// <response code="201">Returns the created flight details.</response>
+    /// <response code="400">If the request body is invalid (e.g., missing required fields).</response>
+    /// <response code="401">If the user is not authorized to create a flight.</response>
+    /// <response code="500">If an unexpected server error occurs during the creation process.</response>
+    /// <notes>
+    /// <note>
+    /// The user ID will be automatically included from the authenticated user's claims.
+    /// </note>
+    /// <note>
+    /// Ensure that the flight details are provided correctly as per the model specification.
+    /// </note>
+    /// </notes>
     [HttpPost]
-    public async Task<ActionResult<FlightDTO>> PostFlight(CreateFlightCommand command,
+    public async Task<ActionResult<NewFlightDTO>> PostFlight(CreateFlightCommand command,
         CancellationToken cancellationToken)
     {
-        if(!ModelState.IsValid)
-            return BadRequest(ModelState);
-        
-        var createdFlight = await _mediator.Send(command, cancellationToken);
-        
-        return CreatedAtAction(nameof(GetFlight), new { id = createdFlight.Id }, createdFlight);
+        try
+        {
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            command.NewFlightDTO.UserId = userId;
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var createdFlight = await _mediator.Send(command, cancellationToken);
+
+            return Ok(createdFlight);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
     
     // DELETE: /flights/{id}

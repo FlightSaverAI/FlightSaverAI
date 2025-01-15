@@ -169,22 +169,26 @@ namespace FlightSaverApi.Data
                 entity
                     .HasMany(u => u.AircraftReviews)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasMany(u => u.AirlineReviews)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasMany(u => u.AirportReviews)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasMany(a => a.Flights)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
             
             modelBuilder.Entity<AircraftReview>(entity =>
@@ -319,19 +323,22 @@ namespace FlightSaverApi.Data
                 entity.HasMany(f => f.AirportReviews)
                     .WithOne(r => r.Flight)
                     .HasForeignKey(r => r.FlightId)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasOne(f => f.AircraftReview)
                     .WithOne(f => f.Flight)
                     .HasForeignKey<AircraftReview>(f => f.FlightId)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasOne(f => f.AirlineReview)
                     .WithOne(f => f.Flight)
                     .HasForeignKey<AirlineReview>(f => f.FlightId)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity
                     .HasOne(f => f.User)

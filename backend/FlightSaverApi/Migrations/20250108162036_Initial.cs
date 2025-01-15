@@ -168,7 +168,8 @@ namespace FlightSaverApi.Migrations
                         name: "FK_AircraftReviews_Flights_FlightId",
                         column: x => x.FlightId,
                         principalTable: "Flights",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AircraftReviews_Users_UserId",
                         column: x => x.UserId,

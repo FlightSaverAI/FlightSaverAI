@@ -46,7 +46,7 @@ public class GetFlightsByUserQueryHandler : IRequestHandler<GetFlightsByUserQuer
                     case "reviews":
                         query = query.Include(f => f.AirportReviews);
                         query = query.Include(f => f.AircraftReview);
-                        query = query.Include(f => f.AircraftReview);
+                        query = query.Include(f => f.AirlineReview);
                         break;
                 }
                 
