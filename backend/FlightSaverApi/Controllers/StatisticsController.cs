@@ -41,4 +41,28 @@ public class StatisticsController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("basic")]
+    public async Task<ActionResult<FlightStatistics>> GetBasicStatistics(CancellationToken cancellationToken,
+        int? userId = null)
+    {
+        try
+        {
+            userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            
+            var query = new GetBasicStatisticsQuery(userId.Value);
+            
+            var statistics = await _mediator.Send(query, cancellationToken);
+            
+            return Ok(statistics);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }
