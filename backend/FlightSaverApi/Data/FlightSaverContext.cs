@@ -165,6 +165,9 @@ namespace FlightSaverApi.Data
 
                 entity.Property(u => u.PasswordSalt)
                     .IsRequired();
+                
+                entity.Property(u => u.ProfilePictureUrl)
+                    .IsRequired(false);
 
                 entity
                     .HasMany(u => u.AircraftReviews)
