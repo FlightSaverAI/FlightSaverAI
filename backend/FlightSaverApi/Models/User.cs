@@ -26,6 +26,10 @@ namespace FlightSaverApi.Models
         public virtual List<AirportReview>? AirportReviews { get; set; }
         
         public virtual List<Flight>? Flights { get; set; }
+        
+        public virtual List<SocialPost>? SocialPosts { get; set; }
+        
+        public virtual List<Comment>? Comments { get; set; }
     }
 }
 

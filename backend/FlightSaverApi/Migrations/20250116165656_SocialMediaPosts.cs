@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlightSaverApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class SocialMediaPosts : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,8 @@ namespace FlightSaverApi.Migrations
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "bytea", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false)
+                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: false),
+                    ProfilePictureUrl = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,16 +91,42 @@ namespace FlightSaverApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SocialPosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    PostedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Location = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Content = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    ImageUrl = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    LikesCount = table.Column<int>(type: "integer", nullable: false),
+                    CommentsCount = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SocialPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SocialPosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Flights",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FlightNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    FlightNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     DepartureAirportId = table.Column<int>(type: "integer", nullable: false),
                     ArrivalAirportId = table.Column<int>(type: "integer", nullable: false),
-                    AirlineId = table.Column<int>(type: "integer", nullable: false),
-                    AircraftId = table.Column<int>(type: "integer", nullable: false),
+                    AirlineId = table.Column<int>(type: "integer", nullable: true),
+                    AircraftId = table.Column<int>(type: "integer", nullable: true),
                     DepartureTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ArrivalTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ClassType = table.Column<int>(type: "integer", nullable: false),
@@ -115,14 +142,12 @@ namespace FlightSaverApi.Migrations
                         name: "FK_Flights_Aircrafts_AircraftId",
                         column: x => x.AircraftId,
                         principalTable: "Aircrafts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Flights_Airlines_AirlineId",
                         column: x => x.AirlineId,
                         principalTable: "Airlines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Flights_Airports_ArrivalAirportId",
                         column: x => x.ArrivalAirportId,
@@ -137,6 +162,35 @@ namespace FlightSaverApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Flights_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    PostedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Content = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    LikesCount = table.Column<int>(type: "integer", nullable: false),
+                    SocialPostId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_SocialPosts_SocialPostId",
+                        column: x => x.SocialPostId,
+                        principalTable: "SocialPosts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -203,7 +257,8 @@ namespace FlightSaverApi.Migrations
                         name: "FK_AirlineReviews_Flights_FlightId",
                         column: x => x.FlightId,
                         principalTable: "Flights",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AirlineReviews_Users_UserId",
                         column: x => x.UserId,
@@ -238,7 +293,8 @@ namespace FlightSaverApi.Migrations
                         name: "FK_AirportReviews_Flights_FlightId",
                         column: x => x.FlightId,
                         principalTable: "Flights",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AirportReviews_Users_UserId",
                         column: x => x.UserId,
@@ -330,6 +386,16 @@ namespace FlightSaverApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_SocialPostId",
+                table: "Comments",
+                column: "SocialPostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Flights_AircraftId",
                 table: "Flights",
                 column: "AircraftId");
@@ -352,6 +418,11 @@ namespace FlightSaverApi.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Flights_UserId",
                 table: "Flights",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SocialPosts_UserId",
+                table: "SocialPosts",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -380,7 +451,13 @@ namespace FlightSaverApi.Migrations
                 name: "AirportReviews");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Flights");
+
+            migrationBuilder.DropTable(
+                name: "SocialPosts");
 
             migrationBuilder.DropTable(
                 name: "Aircrafts");
