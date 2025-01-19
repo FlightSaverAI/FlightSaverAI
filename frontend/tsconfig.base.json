@@ -32,6 +32,7 @@
       "@flight-saver/flight-creation/utils": ["libs/flight-creation/utils/src/index.ts"],
       "@flight-saver/home/features": ["libs/home/features/src/index.ts"],
       "@flight-saver/home/routes": ["libs/home/routes/src/index.ts"],
+      "@flight-saver/home/data-access": ["libs/home/data-access/src/index.ts"],
       "@flight-saver/home/ui": ["libs/home/ui/src/index.ts"],
       "@flight-saver/statistics/features": ["libs/statistics/features/src/index.ts"],
       "@flight-saver/statistics/routes": ["libs/statistics/routes/src/index.ts"],
