@@ -35,6 +35,7 @@ import { FormsModule } from '@angular/forms';
         [style.padding]="!iconSrc() ? '10px' : null"
         [type]="type()"
         [placeholder]="placeholder()"
+        [readOnly]="isReadOnly()"
         (input)="setInput($event.target)"
         (blur)="onTouched()"
       />
@@ -70,6 +71,7 @@ export class InputComponent implements ControlValueAccessor {
   type = input<string>('text');
   parentForm = input.required<FormGroup<any>>();
   fieldName = input.required<string>();
+  isReadOnly = input<boolean>(false);
 
   valueChangeListener = signal('');
   value: any;
