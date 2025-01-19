@@ -1,7 +1,14 @@
-import { Component, forwardRef, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
-import { FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
 import { FormsModule } from '@angular/forms';
 import { DropdownListDirective } from '../dropdown-list/dropdown-list.directive';
@@ -18,7 +25,7 @@ import { DropdownListDirective } from '../dropdown-list/dropdown-list.directive'
     DropdownListDirective,
   ],
   template: ` @if(label() ){
-    <label for="input">{{ label() }}</label>
+    <label for="input">{{ label() }}{{ hasRequiredValidator ? '*' : '' }}</label>
     }
     <div
       id="input"
@@ -82,6 +89,7 @@ import { DropdownListDirective } from '../dropdown-list/dropdown-list.directive'
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent {
   parentForm = input.required<FormGroup<any>>();
@@ -106,6 +114,17 @@ export class SelectComponent {
 
   get hasValidator(): boolean {
     return this.formField && this.formField.validator ? true : false;
+  }
+
+  get hasRequiredValidator() {
+    const validator = this.formField.validator;
+
+    if (!validator) {
+      return false;
+    }
+
+    const validationResult = validator({} as AbstractControl);
+    return validationResult && validationResult['required'] ? true : false;
   }
 
   writeValue(value: any): void {

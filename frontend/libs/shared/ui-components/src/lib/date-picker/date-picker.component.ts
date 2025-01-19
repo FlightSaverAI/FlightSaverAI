@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   forwardRef,
@@ -10,7 +11,7 @@ import {
 } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
-import { FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -30,7 +31,7 @@ import { MatCardModule } from '@angular/material/card';
     MatCardModule,
   ],
   template: `@if(label() ){
-    <label for="input">{{ label() }}</label>
+    <label for="input">{{ label() }}{{ hasRequiredValidator ? '*' : '' }}</label>
     }
     <div
       id="input"
@@ -65,7 +66,7 @@ import { MatCardModule } from '@angular/material/card';
       @if(formField){
       <shared-validation-sign [formField]="formField"></shared-validation-sign>
       }
-      <mat-card class="card" [style.display]="chuj ? 'block' : 'none'">
+      <mat-card class="card" [style.display]="isOpen ? 'block' : 'none'">
         <mat-calendar [(selected)]="value" (selectedChange)="onDateChange($event)"></mat-calendar>
       </mat-card>
     </div>
@@ -87,6 +88,7 @@ import { MatCardModule } from '@angular/material/card';
     },
     provideNativeDateAdapter(),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePickerComponent {
   parentForm = input.required<FormGroup<any>>();
@@ -97,7 +99,7 @@ export class DatePickerComponent {
   type = input<string>('text');
   value: any;
 
-  chuj = false;
+  isOpen = false;
   valueChangeListener = signal('');
 
   elementRef = inject(ElementRef);
@@ -113,10 +115,21 @@ export class DatePickerComponent {
     return this.formField && this.formField.validator ? true : false;
   }
 
+  get hasRequiredValidator() {
+    const validator = this.formField.validator;
+
+    if (!validator) {
+      return false;
+    }
+
+    const validationResult = validator({} as AbstractControl);
+    return validationResult && validationResult['required'] ? true : false;
+  }
+
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
-    if (!this.elementRef.nativeElement.contains(event.target) && this.chuj) {
-      this.chuj = false;
+    if (!this.elementRef.nativeElement.contains(event.target) && this.isOpen) {
+      this.isOpen = false;
     }
   }
 
@@ -143,7 +156,7 @@ export class DatePickerComponent {
   }
 
   openDate() {
-    this.chuj = !this.chuj;
+    this.isOpen = !this.isOpen;
   }
 
   onDateChange(value: any) {
@@ -155,6 +168,6 @@ export class DatePickerComponent {
 
     this.onChange(value.toISOString());
     this.value = formatter.format(value);
-    this.chuj = !this.chuj;
+    this.isOpen = !this.isOpen;
   }
 }
