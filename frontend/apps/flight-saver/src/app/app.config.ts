@@ -9,12 +9,13 @@ import {
 } from '@flight-saver/authentication/data-access';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { loaderInterceptor } from '@shared/data-access';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideStore({ auth: authReducer.reducer }),
     provideEffects(AuthEffects),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor])),
   ],
 };
