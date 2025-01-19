@@ -22,7 +22,7 @@ namespace FlightSaverApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("FlightSaverApi.Models.AircraftModel.Aircraft", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Aircraft", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +67,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("Aircrafts");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.AirlineModel.Airline", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Airline", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +110,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("Airlines");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.AirportModel.Airport", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Airport", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,7 +160,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("Airports");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.FlightModel.Flight", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Flight", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,10 +168,10 @@ namespace FlightSaverApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AircraftId")
+                    b.Property<int?>("AircraftId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("AirlineId")
+                    b.Property<int?>("AirlineId")
                         .HasColumnType("integer");
 
                     b.Property<int>("ArrivalAirportId")
@@ -190,7 +190,6 @@ namespace FlightSaverApi.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FlightNumber")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -222,7 +221,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.ReviewModel.AircraftReview", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Review.AircraftReview", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -230,7 +229,8 @@ namespace FlightSaverApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AircraftId")
+                    b.Property<int?>("AircraftId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<string>("Comment")
@@ -258,7 +258,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("AircraftReviews");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.ReviewModel.AirlineReview", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Review.AirlineReview", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -266,7 +266,8 @@ namespace FlightSaverApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AirlineId")
+                    b.Property<int?>("AirlineId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<string>("Comment")
@@ -294,7 +295,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("AirlineReviews");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.ReviewModel.AirportReview", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Review.AirportReview", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -332,7 +333,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("AirportReviews");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.UserModel.User", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -372,9 +373,9 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.AircraftModel.Aircraft", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Aircraft", b =>
                 {
-                    b.HasOne("FlightSaverApi.Models.AirlineModel.Airline", "Airline")
+                    b.HasOne("FlightSaverApi.Models.Airline", "Airline")
                         .WithMany("Aircrafts")
                         .HasForeignKey("AirlineId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -383,33 +384,29 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("Airline");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.FlightModel.Flight", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Flight", b =>
                 {
-                    b.HasOne("FlightSaverApi.Models.AircraftModel.Aircraft", "Aircraft")
+                    b.HasOne("FlightSaverApi.Models.Aircraft", "Aircraft")
                         .WithMany("Flights")
-                        .HasForeignKey("AircraftId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AircraftId");
 
-                    b.HasOne("FlightSaverApi.Models.AirlineModel.Airline", "Airline")
+                    b.HasOne("FlightSaverApi.Models.Airline", "Airline")
                         .WithMany("Flights")
-                        .HasForeignKey("AirlineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AirlineId");
 
-                    b.HasOne("FlightSaverApi.Models.AirportModel.Airport", "ArrivalAirport")
+                    b.HasOne("FlightSaverApi.Models.Airport", "ArrivalAirport")
                         .WithMany("ArrivingFlights")
                         .HasForeignKey("ArrivalAirportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSaverApi.Models.AirportModel.Airport", "DepartureAirport")
+                    b.HasOne("FlightSaverApi.Models.Airport", "DepartureAirport")
                         .WithMany("DepartingFlights")
                         .HasForeignKey("DepartureAirportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSaverApi.Models.UserModel.User", "User")
+                    b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("Flights")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -426,19 +423,20 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.ReviewModel.AircraftReview", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Review.AircraftReview", b =>
                 {
-                    b.HasOne("FlightSaverApi.Models.AircraftModel.Aircraft", "Aircraft")
+                    b.HasOne("FlightSaverApi.Models.Aircraft", "Aircraft")
                         .WithMany("AircraftReviews")
                         .HasForeignKey("AircraftId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSaverApi.Models.FlightModel.Flight", "Flight")
+                    b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithOne("AircraftReview")
-                        .HasForeignKey("FlightSaverApi.Models.ReviewModel.AircraftReview", "FlightId");
+                        .HasForeignKey("FlightSaverApi.Models.Review.AircraftReview", "FlightId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlightSaverApi.Models.UserModel.User", "User")
+                    b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AircraftReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -451,19 +449,20 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.ReviewModel.AirlineReview", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Review.AirlineReview", b =>
                 {
-                    b.HasOne("FlightSaverApi.Models.AirlineModel.Airline", "Airline")
+                    b.HasOne("FlightSaverApi.Models.Airline", "Airline")
                         .WithMany("AirlineReviews")
                         .HasForeignKey("AirlineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSaverApi.Models.FlightModel.Flight", "Flight")
+                    b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithOne("AirlineReview")
-                        .HasForeignKey("FlightSaverApi.Models.ReviewModel.AirlineReview", "FlightId");
+                        .HasForeignKey("FlightSaverApi.Models.Review.AirlineReview", "FlightId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlightSaverApi.Models.UserModel.User", "User")
+                    b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AirlineReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -476,19 +475,20 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.ReviewModel.AirportReview", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Review.AirportReview", b =>
                 {
-                    b.HasOne("FlightSaverApi.Models.AirportModel.Airport", "Airport")
+                    b.HasOne("FlightSaverApi.Models.Airport", "Airport")
                         .WithMany("AirportReviews")
                         .HasForeignKey("AirportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlightSaverApi.Models.FlightModel.Flight", "Flight")
+                    b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithMany("AirportReviews")
-                        .HasForeignKey("FlightId");
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("FlightSaverApi.Models.UserModel.User", "User")
+                    b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AirportReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -501,14 +501,14 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.AircraftModel.Aircraft", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Aircraft", b =>
                 {
                     b.Navigation("AircraftReviews");
 
                     b.Navigation("Flights");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.AirlineModel.Airline", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Airline", b =>
                 {
                     b.Navigation("Aircrafts");
 
@@ -517,7 +517,7 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("Flights");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.AirportModel.Airport", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Airport", b =>
                 {
                     b.Navigation("AirportReviews");
 
@@ -526,7 +526,7 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("DepartingFlights");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.FlightModel.Flight", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.Flight", b =>
                 {
                     b.Navigation("AircraftReview");
 
@@ -535,7 +535,7 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("AirportReviews");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.UserModel.User", b =>
+            modelBuilder.Entity("FlightSaverApi.Models.User", b =>
                 {
                     b.Navigation("AircraftReviews");
 

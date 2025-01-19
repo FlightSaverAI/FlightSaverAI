@@ -1,14 +1,8 @@
-using FlightSaverApi.Data;
 using FlightSaverApi.Enums;
 using FlightSaverApi.Enums.FlightEnums;
 using FlightSaverApi.Helpers;
 using FlightSaverApi.Interfaces.Services;
-using FlightSaverApi.Models.AircraftModel;
-using FlightSaverApi.Models.AirlineModel;
-using FlightSaverApi.Models.AirportModel;
-using FlightSaverApi.Models.FlightModel;
-using FlightSaverApi.Models.StatisticsModel;
-using Microsoft.EntityFrameworkCore;
+using FlightSaverApi.Models;
 
 namespace FlightSaverApi.Services;
 
@@ -34,7 +28,6 @@ public class StatisticsService : IStatisticsService
             ClassDistribution = GetClassDistributionAsync(flights),
             SeatDistribution = GetSeatDistributionAsync(flights),
             ReasonDistribution = GetReasonDistributionAsync(flights),
-            FlightDistribution = GetFlightDistributionAsync(flights),
             Continents = await GetContinentsAsync(flights),
             TopAirports = GetTopAirportsAsync(flights),
             TopAirlines = GetTopAirlinesAsync(flights),
@@ -42,11 +35,26 @@ public class StatisticsService : IStatisticsService
             FlightRoutes = GetTopFlightRoutesAsync(flights),
             FlightsPerMonth = GetFlightsPerMonthAsync(flights),
             FlightsPerWeek = GetFlightsPerWeekAsync(flights),
-            Distance = GetDistanceAsync(flights),
-            TotalFlightTime = GetTotalFlightTimeAsync(flights)
         };
         
         return flightStatistics;
+    }
+
+    public async Task<BasicFlightStatistics> GetBasicFlightStatisticsAsync(int userId,
+        CancellationToken cancellationToken = default)
+    {
+        var flights = await _flightsService.GetFlightsByUserIdAsync(userId, cancellationToken);
+        
+        if (flights.Count == 0) return new BasicFlightStatistics();
+
+        var basicFlightStatistics = new BasicFlightStatistics()
+        {
+            Distance = GetDistanceAsync(flights),
+            FlightCount = GetFlightCount(flights),
+            TotalFlightTime = GetTotalFlightTimeAsync(flights)
+        };
+        
+        return basicFlightStatistics;
     }
 
     public Dictionary<ClassType, int> GetClassDistributionAsync(List<Flight> flights)
@@ -91,7 +99,7 @@ public class StatisticsService : IStatisticsService
         return reasonDistribution;
     }
 
-    public Dictionary<FlightType, int> GetFlightDistributionAsync(List<Flight> flights)
+    public FlightCount GetFlightCount(List<Flight> flights)
     {
         var flightTypeDistribution = new Dictionary<FlightType, int>
         {
@@ -113,8 +121,14 @@ public class StatisticsService : IStatisticsService
                 flightTypeDistribution[FlightType.International]++;
             }
         }
+        
+        var flightCount = new FlightCount()
+        {
+            Count = flights.Count(),
+            FlightDistribution = flightTypeDistribution
+        };
 
-        return flightTypeDistribution;
+        return flightCount;
     }
 
     public async Task<Dictionary<Continent, int>> GetContinentsAsync(List<Flight> flights)
@@ -212,7 +226,7 @@ public class StatisticsService : IStatisticsService
     
         var flightsPerMonth = Enum.GetValues(typeof(Month))
             .Cast<Month>()
-            .ToDictionary(m => m, m => 0);
+            .ToDictionary(m => m, _ => 0);
     
         var groupedFlights = flights
             .Where(x => x.ArrivalTime.Year == year)
@@ -275,7 +289,7 @@ public class StatisticsService : IStatisticsService
         return distance;
     }
 
-    public TimeSpan GetTotalFlightTimeAsync(List<Flight> flights)
+    public FlightTime GetTotalFlightTimeAsync(List<Flight> flights)
     {
         TimeSpan totalFlightTime = TimeSpan.Zero;
 
@@ -283,7 +297,12 @@ public class StatisticsService : IStatisticsService
         {
             totalFlightTime += flight.ArrivalTime - flight.DepartureTime;
         }
+        
+        var flightTime = new FlightTime()
+        {
+            Time = totalFlightTime,
+        };
 
-        return totalFlightTime;
+        return flightTime;
     }
 }

@@ -1,9 +1,8 @@
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using FlightSaverApi.Data;
 using FlightSaverApi.Commands.Airline;
-using FlightSaverApi.Models.AirlineModel;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Airline;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

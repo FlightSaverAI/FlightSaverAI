@@ -14,13 +14,12 @@
             "depConstraints": [
               {
                 "sourceTag": "type:app-flight-saver",
-                "onlyDependOnLibsWithTags": ["domain:shared", "type:routes"]
+                "onlyDependOnLibsWithTags": ["domain:shared", "type:routes", "domain:auth"]
               },
               {
                 "sourceTag": "type:app-community",
                 "onlyDependOnLibsWithTags": ["domain:community", "domain:shared"]
               },
-              
               {
                 "sourceTag": "*",
                 "onlyDependOnLibsWithTags": ["*"]

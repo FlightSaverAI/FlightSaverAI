@@ -1,9 +1,5 @@
-﻿using FlightSaverApi.Models.AircraftModel;
-using FlightSaverApi.Models.AirlineModel;
-using FlightSaverApi.Models.AirportModel;
-using FlightSaverApi.Models.FlightModel;
-using FlightSaverApi.Models.ReviewModel;
-using FlightSaverApi.Models.UserModel;
+﻿using FlightSaverApi.Models;
+using FlightSaverApi.Models.Review;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Data
@@ -173,22 +169,26 @@ namespace FlightSaverApi.Data
                 entity
                     .HasMany(u => u.AircraftReviews)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasMany(u => u.AirlineReviews)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasMany(u => u.AirportReviews)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasMany(a => a.Flights)
                     .WithOne()
-                    .HasForeignKey(r => r.UserId);
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
             
             modelBuilder.Entity<AircraftReview>(entity =>
@@ -275,7 +275,7 @@ namespace FlightSaverApi.Data
             modelBuilder.Entity<Flight>(entity =>
             {
                 entity.Property(f => f.FlightNumber)
-                    .IsRequired()
+                    .IsRequired(false)
                     .HasMaxLength(50);
                 
                 entity.Property(f => f.DepartureTime)
@@ -312,30 +312,33 @@ namespace FlightSaverApi.Data
                     .HasOne(f => f.Airline)
                     .WithMany(a => a.Flights)
                     .HasForeignKey(f => f.AirlineId)
-                    .IsRequired();
+                    .IsRequired(false);
                 
                 entity
                     .HasOne(f => f.Aircraft)
                     .WithMany(a => a.Flights)
                     .HasForeignKey(f => f.AircraftId)
-                    .IsRequired();
+                    .IsRequired(false);
 
                 entity.HasMany(f => f.AirportReviews)
                     .WithOne(r => r.Flight)
                     .HasForeignKey(r => r.FlightId)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasOne(f => f.AircraftReview)
                     .WithOne(f => f.Flight)
                     .HasForeignKey<AircraftReview>(f => f.FlightId)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Cascade);
                 
                 entity
                     .HasOne(f => f.AirlineReview)
                     .WithOne(f => f.Flight)
                     .HasForeignKey<AirlineReview>(f => f.FlightId)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity
                     .HasOne(f => f.User)

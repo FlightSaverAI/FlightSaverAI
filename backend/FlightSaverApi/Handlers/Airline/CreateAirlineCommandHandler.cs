@@ -1,9 +1,9 @@
 using AutoMapper;
 using FlightSaverApi.Commands.Airline;
-using FlightSaverApi.Models.AirlineModel;
 using FlightSaverApi.Data;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Airline;
 using MediatR;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace FlightSaverApi.Handlers.Airline;
 
@@ -20,7 +20,7 @@ public class CreateAirlineCommandHandler : IRequestHandler<CreateAirlineCommand,
 
     public async Task<AirlineDTO> Handle(CreateAirlineCommand request, CancellationToken cancellationToken)
     {
-        var airline = _mapper.Map<Models.AirlineModel.Airline>(request.AirlineDto);
+        var airline = _mapper.Map<Models.Airline>(request.AirlineDto);
 
         _context.Airlines.Add(airline);
         await _context.SaveChangesAsync(cancellationToken);

@@ -1,6 +1,6 @@
 using FlightSaverApi.Data;
 using FlightSaverApi.Interfaces.Services;
-using FlightSaverApi.Models.FlightModel;
+using FlightSaverApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Services;

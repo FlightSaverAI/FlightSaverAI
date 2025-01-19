@@ -1,5 +1,4 @@
-﻿using System;
-namespace FlightSaverApi.Enums.FlightEnums
+﻿namespace FlightSaverApi.Enums.FlightEnums
 {
     public enum SeatType
     {

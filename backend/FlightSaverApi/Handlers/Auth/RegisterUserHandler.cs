@@ -1,16 +1,13 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
 using FlightSaverApi.Commands.Auth;
 using FlightSaverApi.Data;
 using FlightSaverApi.Enums;
-using FlightSaverApi.Models.UserModel;
+using FlightSaverApi.Models;
 using FlightSaverApi.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FlightSaverApi.Handlers.Auth;
 

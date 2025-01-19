@@ -8,6 +8,9 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -41,12 +44,6 @@
     <None Remove="Mappings\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\FlightModel\" />
-    <Folder Include="Models\AirportModel\" />
-    <Folder Include="Models\FlightModel\" />
-    <Folder Include="Models\ReviewModel\" />
-    <Folder Include="Models\UserModel\" />
-    <Folder Include="Models\AirlineModel\" />
-    <Folder Include="Mappings\" />
+    <Folder Include="Models\Review\" />
   </ItemGroup>
 </Project>

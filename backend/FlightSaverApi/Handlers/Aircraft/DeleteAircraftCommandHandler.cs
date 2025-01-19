@@ -2,7 +2,7 @@ using FlightSaverApi.Commands.Aircraft;
 using FlightSaverApi.Data;
 using MediatR;
 
-namespace FlightSaverApi.Handlers;
+namespace FlightSaverApi.Handlers.Aircraft;
 
 public class DeleteAircraftCommandHandler : IRequestHandler<DeleteAircraftCommand, Unit>
 {

@@ -1,7 +1,5 @@
-using AutoMapper;
-using FlightSaverApi.Data;
 using FlightSaverApi.Interfaces.Services;
-using FlightSaverApi.Models.StatisticsModel;
+using FlightSaverApi.Models;
 using FlightSaverApi.Queries.Statistics;
 using MediatR;
 

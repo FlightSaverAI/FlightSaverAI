@@ -1,11 +1,12 @@
 using AutoMapper;
 using FlightSaverApi.Data;
-using FlightSaverApi.Models.AircraftModel;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Aircraft;
 using FlightSaverApi.Queries.Aircraft;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FlightSaverApi.Handlers;
+namespace FlightSaverApi.Handlers.Aircraft;
 
 public class GetAircraftsQueryHandler : IRequestHandler<GetAircraftsQuery, IEnumerable<AircraftDTO>>
 {

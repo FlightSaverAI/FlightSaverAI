@@ -1,15 +1,14 @@
 // Program.cs
+
+using System.Reflection;
 using FlightSaverApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Text.Json.Serialization;
 using FlightSaverApi.Enums;
-using FlightSaverApi.Filters;
 using FlightSaverApi.Interfaces.Services;
 using FlightSaverApi.Services;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,14 +31,16 @@ builder.Services.AddMediatR(cfg => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
-    //setup.DocumentFilter<SwaggerExcludeFilter>();
-    
     setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "Flight Saver API",
         Version = "v1",
-        Description = "API for managing aircraft data in Flight Saver application."
+        Description = "API for managing flights data in Flight Saver application."
     });
+    
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    setup.IncludeXmlComments(xmlPath);
 
     var securityScheme = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
@@ -109,7 +110,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdminRole", policy => policy.RequireRole(UserRole.Admin.ToString()));
-    options.AddPolicy("RequireUserRole", policy => policy.RequireRole(UserRole.User.ToString()));
+    options.AddPolicy("RequireUserRole", policy => policy.RequireRole(UserRole.User.ToString(), UserRole.Admin.ToString()));
 });
 
 builder.Services.AddControllers()

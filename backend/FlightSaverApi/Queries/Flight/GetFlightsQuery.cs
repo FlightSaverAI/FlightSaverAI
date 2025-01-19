@@ -1,4 +1,4 @@
-using FlightSaverApi.Models.FlightModel;
+using FlightSaverApi.DTOs.Flight;
 using MediatR;
 
 namespace FlightSaverApi.Queries.Flight;

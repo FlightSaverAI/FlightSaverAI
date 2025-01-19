@@ -1,20 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FlightSaverApi.Data;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using FlightSaverApi.Commands.Auth;
+using FlightSaverApi.DTOs.User;
 using Microsoft.AspNetCore.Authorization;
-using NuGet.Protocol;
-using FlightSaverApi.Models.UserModel;
 using MediatR;
 
 namespace FlightSaverApi.Controllers
 {
-    [Route("/Auth")]
+    [Route("/auth")]
     [ApiController]
     [AllowAnonymous]
     public class AuthController : ControllerBase
@@ -26,15 +18,15 @@ namespace FlightSaverApi.Controllers
             _mediator = mediator;
         }
 
-        // POST: /Auth/Register
-        [HttpPost("Register")]
+        // POST: /auth/register
+        [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDTO request)
         {
             try
             {
                 var command = new RegisterUserCommand { UserRegisterDTO = request };
                 var token = await _mediator.Send(command);
-                return Ok(new { token = token });
+                return Ok(new { token });
             }
             catch (Exception ex)
             {
@@ -42,15 +34,15 @@ namespace FlightSaverApi.Controllers
             }
         }
 
-        // POST: /Auth/Login
-        [HttpPost("Login")]
+        // POST: /auth/login
+        [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginDTO request)
         {
             try
             {
                 var command = new LoginUserCommand { UserLoginDTO = request };
                 var token = await _mediator.Send(command);
-                return Ok(new { token = token });
+                return Ok(new { token });
             }
             catch (Exception ex)
             {

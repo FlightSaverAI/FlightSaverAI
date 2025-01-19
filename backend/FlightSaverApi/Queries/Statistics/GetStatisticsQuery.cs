@@ -1,4 +1,4 @@
-using FlightSaverApi.Models.StatisticsModel;
+using FlightSaverApi.Models;
 using MediatR;
 
 namespace FlightSaverApi.Queries.Statistics;

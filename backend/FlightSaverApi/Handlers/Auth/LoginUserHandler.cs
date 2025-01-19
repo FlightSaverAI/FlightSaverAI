@@ -12,13 +12,11 @@ namespace FlightSaverApi.Handlers.Auth;
 public class LoginUserHandler : IRequestHandler<LoginUserCommand, string>
 {
     private readonly FlightSaverContext _context;
-    private readonly IMapper _mapper;
     private readonly ITokenService _tokenService;
 
     public LoginUserHandler(FlightSaverContext context, IMapper mapper, ITokenService tokenService)
     {
         _context = context;
-        _mapper = mapper;
         _tokenService = tokenService;
     }
 

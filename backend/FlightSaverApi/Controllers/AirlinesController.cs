@@ -1,5 +1,6 @@
 using FlightSaverApi.Commands.Airline;
-using FlightSaverApi.Models.AirlineModel;
+using FlightSaverApi.DTOs;
+using FlightSaverApi.DTOs.Airline;
 using FlightSaverApi.Queries.Airline;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlightSaverApi.Controllers;
 
-[Route("/Airlines")]
+[Route("/airlines")]
 [ApiController]
 [Authorize]
 public class AirlinesController : ControllerBase
@@ -19,7 +20,7 @@ public class AirlinesController : ControllerBase
         _mediator = mediator;
     }
     
-    // GET: /Airlines
+    // GET: /airlines
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AirlineDTO>>> GetAirlines(CancellationToken cancellationToken)
     {
@@ -29,22 +30,43 @@ public class AirlinesController : ControllerBase
         return Ok(airlines);
     }
     
-    // GET: /Airlines/{id}
+    /// <summary>
+    /// Retrieves a list of minimal airline details.
+    /// </summary>
+    /// <remarks>
+    /// This endpoint fetches basic details of airlines, such as their ID and name, 
+    /// for use in scenarios where only minimal data is required (e.g., dropdowns or summaries).
+    /// The method uses a query handler to retrieve the data.
+    /// </remarks>
+    /// <param name="cancellationToken">
+    /// A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+    /// </param>
+    /// <returns>
+    /// A list of minimal airline details, or an appropriate HTTP response if an error occurs.
+    /// </returns>
+    /// <response code="200">Returns the list of minimal airline details.</response>
+    /// <response code="401">If the user is not authorized to access this resource.</response>
+    /// <response code="500">If an internal server error occurs while processing the request.</response>
+    [HttpGet("minimal")]
+    public async Task<ActionResult<MinimalAirlineDTO>> GetMinimalAirlines(CancellationToken cancellationToken)
+    {
+        var query = new GetMinimalAirlinesQuery();
+        var airlines =  await _mediator.Send(query, cancellationToken);
+        
+        return Ok(airlines);
+    }
+    
+    // GET: /airlines/{id}
     [HttpGet("{id:int}")]
     public async Task<ActionResult<AirlineDTO>> GetAirline(int id, CancellationToken cancellationToken)
     {
         var query = new GetAirlineQuery(id);
         var airline = await _mediator.Send(query, cancellationToken);
 
-        if (airline == null)
-        {
-            return NotFound();
-        }
-        
         return Ok(airline);
     }
     
-    // PUT: /Airlines/{id}
+    // PUT: /airlines/{id}
     [HttpPut("{id:int}")]
     [Authorize(Policy = "RequireAdminRole")]
     public async Task<IActionResult> PutAirline(int id, UpdateAirlineCommand command,
@@ -60,7 +82,7 @@ public class AirlinesController : ControllerBase
         return NoContent();
     }
     
-    // POST: /Airlines
+    // POST: /airlines
     [HttpPost]
     [Authorize(Policy = "RequireAdminRole")]
     public async Task<ActionResult<AirlineDTO>> PostAirline(CreateAirlineCommand command,
@@ -71,7 +93,7 @@ public class AirlinesController : ControllerBase
         return CreatedAtAction(nameof(GetAirline), new { id = createdAirline.Id }, createdAirline);
     }
     
-    // DELETE: /Airlines/{id}
+    // DELETE: /airlines/{id}
     [HttpDelete("{id:int}")]
     [Authorize(Policy = "RequireAdminRole")]
     public async Task<ActionResult> DeleteAirline(int id, CancellationToken cancellationToken)
