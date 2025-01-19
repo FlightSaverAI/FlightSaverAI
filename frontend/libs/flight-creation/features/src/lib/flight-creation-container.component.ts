@@ -8,6 +8,7 @@ import { FlightCreationConstants } from './constants/flight-creation.constants';
 import { StepFlightComponent } from './step-flight/step-flight.component';
 import { StepTicketComponent } from './step-ticket/step-ticket.component';
 import { StepRateAndReviewComponent } from './step-rate-and-review/step-rate-and-review.component';
+import { FlightCreationFacadeService } from '@flight-saver/flight-creation/data-access';
 
 export const MAX_STEPS = 3;
 
@@ -37,15 +38,21 @@ export const MAX_STEPS = 3;
         (emitEvent)="navigateToNextStep()"
       ></shared-button>
       } @else{
-      <shared-button content="Save" [imgConf]="nextBtnConfig()"></shared-button>
+      <shared-button
+        content="Save"
+        [imgConf]="nextBtnConfig()"
+        (emitEvent)="saveFlight()"
+      ></shared-button>
       }
     </div>
   </div>`,
   styleUrl: './flight-creation-container.component.scss',
+  providers: [FlightCreationFacadeService],
 })
 export class FlightCreationContainerComponent {
   private _router = inject(Router);
   private _activatedRoute = inject(ActivatedRoute);
+  private _flightCreationFacadeService = inject(FlightCreationFacadeService);
   private _queryParams = toSignal(inject(ActivatedRoute).queryParams);
 
   prevBtnConfig = signal(FlightCreationConstants.prevBtnConf);
@@ -96,7 +103,7 @@ export class FlightCreationContainerComponent {
       return;
     }
 
-    this.updateStep(this.currentStep - 1);
+    this._updateStep(this.currentStep - 1);
   }
 
   public navigateToNextStep() {
@@ -104,10 +111,10 @@ export class FlightCreationContainerComponent {
       return;
     }
 
-    this.updateStep(this.currentStep + 1);
+    this._updateStep(this.currentStep + 1);
   }
 
-  private updateStep(step: number) {
+  private _updateStep(step: number) {
     const stepConfig = this.stepperConfig()[step - 1];
 
     if (!stepConfig) {
@@ -119,5 +126,31 @@ export class FlightCreationContainerComponent {
       queryParams: { stepNumber: step },
       queryParamsHandling: 'merge',
     });
+  }
+
+  protected saveFlight() {
+    let rateAndReviewForm;
+
+    if (this.activeComponent instanceof StepRateAndReviewComponent) {
+      rateAndReviewForm = this.activeComponent.rateAndReviewForm.getRawValue();
+    }
+
+    const { departureAirport, arrivalAirport, ...rest } = this.forms.flightDetailsForm;
+
+    const payload = {
+      newFlightDTO: {
+        flightDetailsForm: {
+          departureAirportId: departureAirport.id,
+          arrivalAirportId: arrivalAirport.id,
+          ...rest,
+        },
+        airlineId: this.forms.aircraftDetailsForm.airline.id,
+        aircraftId: this.forms.aircraftDetailsForm.aircraftType.id,
+        ticketForm: { ...this.forms.ticketForm },
+        rateAndReviewForm,
+      },
+    };
+
+    this._flightCreationFacadeService.saveFlight(payload);
   }
 }

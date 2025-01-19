@@ -3,7 +3,8 @@ import { NonNullableFormBuilder } from '@angular/forms';
 
 export function rateAndReviewForm() {
   return inject(NonNullableFormBuilder).group({
-    airportOpinion: createOpinionGroup(),
+    departureAirportOpinion: createOpinionGroup(),
+    arrivalAirportOpinion: createOpinionGroup(),
     airlinesOpinion: createOpinionGroup(),
     airPlaneOpinion: createOpinionGroup(),
   });
