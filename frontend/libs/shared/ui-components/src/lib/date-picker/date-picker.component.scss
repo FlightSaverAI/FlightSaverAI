@@ -1,0 +1,25 @@
+@use '@global/styles/styles.scss' as *;
+@use '../input/input.component.scss';
+
+.input-container {
+  position: relative;
+}
+
+.card {
+  position: absolute;
+  top: 100%;
+  width: 250px;
+  box-shadow: 0 1px 3px black;
+  z-index: 1;
+}
+
+.hehe {
+    
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    border-radius: 20px;
+    background-color: rgb(232, 230, 230);
+  }
+}
