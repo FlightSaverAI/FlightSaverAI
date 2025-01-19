@@ -11,6 +11,7 @@
     "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
     "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@environments/*": ["environments/*"],
       "@flight-saver/authentication/data-access": ["libs/authentication/data-access/src/index.ts"],
@@ -21,14 +22,14 @@
       "@flight-saver/authentication/utils": ["libs/authentication/utils/src/index.ts"],
       "@flight-saver/community/features": ["libs/community/features/src/index.ts"],
       "@flight-saver/community/ui": ["libs/community/ui/src/index.ts"],
-      "@flight-saver/flight-creation/features": ["libs/flight-creation/features/src/index.ts"],
-      "@flight-saver/flight-creation/routes": ["libs/flight-creation/routes/src/index.ts"],
-      "@flight-saver/flight-creation/ui": ["libs/flight-creation/ui/src/index.ts"],
-      "@flight-saver/flight-creation/utils": ["libs/flight-creation/utils/src/index.ts"],
       "@flight-saver/flight-creation/data-access": [
         "libs/flight-creation/data-access/src/index.ts"
       ],
+      "@flight-saver/flight-creation/features": ["libs/flight-creation/features/src/index.ts"],
       "@flight-saver/flight-creation/models": ["libs/flight-creation/models/src/index.ts"],
+      "@flight-saver/flight-creation/routes": ["libs/flight-creation/routes/src/index.ts"],
+      "@flight-saver/flight-creation/ui": ["libs/flight-creation/ui/src/index.ts"],
+      "@flight-saver/flight-creation/utils": ["libs/flight-creation/utils/src/index.ts"],
       "@flight-saver/home/features": ["libs/home/features/src/index.ts"],
       "@flight-saver/home/routes": ["libs/home/routes/src/index.ts"],
       "@flight-saver/home/ui": ["libs/home/ui/src/index.ts"],
