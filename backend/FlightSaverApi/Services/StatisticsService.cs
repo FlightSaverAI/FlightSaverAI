@@ -59,43 +59,67 @@ public class StatisticsService : IStatisticsService
 
     public Dictionary<ClassType, int> GetClassDistributionAsync(List<Flight> flights)
     {
-        var classDistribution = flights
-            .GroupBy(x => x.ClassType)
+        var classDistribution = Enum.GetValues(typeof(ClassType))
+            .Cast<ClassType>()
+            .ToDictionary(classType => classType, _ => 0);
+
+        var groupedFlights = flights
+            .GroupBy(flight => flight.ClassType)
             .Select(group => new
             {
                 ClassType = group.Key,
                 Count = group.Count()
-            })
-            .ToDictionary(x => x.ClassType, x => x.Count);
-        
+            });
+
+        foreach (var group in groupedFlights)
+        {
+            classDistribution[group.ClassType] = group.Count;
+        }
+
         return classDistribution;
     }
 
     public Dictionary<SeatType, int> GetSeatDistributionAsync(List<Flight> flights)
     {
-        var seatDistribution = flights
-            .GroupBy(x => x.SeatType)
+        var seatDistribution = Enum.GetValues(typeof(SeatType))
+            .Cast<SeatType>()
+            .ToDictionary(seatType => seatType, _ => 0);
+
+        var groupedFlights = flights
+            .GroupBy(flight => flight.SeatType)
             .Select(group => new
             {
                 SeatType = group.Key,
                 Count = group.Count()
-            })
-            .ToDictionary(x => x.SeatType, x => x.Count);
-        
+            });
+
+        foreach (var group in groupedFlights)
+        {
+            seatDistribution[group.SeatType] = group.Count;
+        }
+
         return seatDistribution;
     }
 
     public Dictionary<Reason, int> GetReasonDistributionAsync(List<Flight> flights)
     {
-        var reasonDistribution = flights
-            .GroupBy(x => x.Reason)
+        var reasonDistribution = Enum.GetValues(typeof(Reason))
+            .Cast<Reason>()
+            .ToDictionary(reason => reason, _ => 0);
+
+        var groupedFlights = flights
+            .GroupBy(flight => flight.Reason)
             .Select(group => new
             {
                 Reason = group.Key,
                 Count = group.Count()
-            })
-            .ToDictionary(x => x.Reason, x => x.Count);
-        
+            });
+
+        foreach (var group in groupedFlights)
+        {
+            reasonDistribution[group.Reason] = group.Count;
+        }
+
         return reasonDistribution;
     }
 
@@ -133,7 +157,9 @@ public class StatisticsService : IStatisticsService
 
     public async Task<Dictionary<Continent, int>> GetContinentsAsync(List<Flight> flights)
     {
-        var continentCounts = new Dictionary<Continent, int>();
+        var continentCounts = Enum.GetValues(typeof(Continent))
+            .Cast<Continent>()
+            .ToDictionary(continent => continent, _ => 0);
 
         foreach (var flight in flights)
         {
