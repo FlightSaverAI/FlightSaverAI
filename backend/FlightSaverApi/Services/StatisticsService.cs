@@ -25,16 +25,16 @@ public class StatisticsService : IStatisticsService
         
         var flightStatistics = new FlightStatistics()
         {
-            ClassDistribution = GetClassDistributionAsync(flights),
-            SeatDistribution = GetSeatDistributionAsync(flights),
-            ReasonDistribution = GetReasonDistributionAsync(flights),
+            ClassDistribution = GetClassDistribution(flights),
+            SeatDistribution = GetSeatDistribution(flights),
+            ReasonDistribution = GetReasonDistribution(flights),
             Continents = await GetContinentsAsync(flights),
-            TopAirports = GetTopAirportsAsync(flights),
-            TopAirlines = GetTopAirlinesAsync(flights),
-            TopAircrafts = GetTopAircraftAsync(flights),
-            FlightRoutes = GetTopFlightRoutesAsync(flights),
-            FlightsPerMonth = GetFlightsPerMonthAsync(flights),
-            FlightsPerWeek = GetFlightsPerWeekAsync(flights),
+            TopAirports = GetTopAirports(flights),
+            TopAirlines = GetTopAirlines(flights),
+            TopAircrafts = GetTopAircraft(flights),
+            FlightRoutes = GetTopFlightRoutes(flights),
+            FlightsPerMonth = GetFlightsPerMonth(flights),
+            FlightsPerWeek = GetFlightsPerWeek(flights),
         };
         
         return flightStatistics;
@@ -49,10 +49,10 @@ public class StatisticsService : IStatisticsService
         
         var flightStatistics = new CircualChartStatistics()
         {
-            ClassDistribution = GetClassDistributionAsync(flights),
-            SeatDistribution = GetSeatDistributionAsync(flights),
-            ReasonDistribution = GetReasonDistributionAsync(flights),
-            Continents = await GetContinentsAsync(flights),
+            ClassDistribution = GetCircualDataClassDistribution(flights),
+            SeatDistribution = GetCircualDataSeatDistribution(flights),
+            ReasonDistribution = GetCircualDataReasonDistribution(flights),
+            Continents = await GetCircualDataContinentsAsync(flights),
         };
         
         return flightStatistics;
@@ -67,10 +67,10 @@ public class StatisticsService : IStatisticsService
         
         var flightStatistics = new BarChartStatistics()
         {
-            TopAirports = GetTopAirportsAsync(flights),
-            TopAirlines = GetTopAirlinesAsync(flights),
-            TopAircrafts = GetTopAircraftAsync(flights),
-            FlightRoutes = GetTopFlightRoutesAsync(flights),
+            TopAirports = GetTopAirports(flights),
+            TopAirlines = GetTopAirlines(flights),
+            TopAircrafts = GetTopAircraft(flights),
+            FlightRoutes = GetTopFlightRoutes(flights),
         };
         
         return flightStatistics;
@@ -85,8 +85,8 @@ public class StatisticsService : IStatisticsService
         
         var flightStatistics = new LineChartStatistics()
         {
-            FlightsPerMonth = GetFlightsPerMonthAsync(flights),
-            FlightsPerWeek = GetFlightsPerWeekAsync(flights),
+            FlightsPerMonth = GetFlightsPerMonth(flights),
+            FlightsPerWeek = GetFlightsPerWeek(flights),
         };
         
         return flightStatistics;
@@ -101,15 +101,37 @@ public class StatisticsService : IStatisticsService
 
         var basicFlightStatistics = new BasicFlightStatistics()
         {
-            Distance = GetDistanceAsync(flights),
+            Distance = GetDistance(flights),
             FlightCount = GetFlightCount(flights),
-            TotalFlightTime = GetTotalFlightTimeAsync(flights)
+            TotalFlightTime = GetTotalFlightTime(flights)
         };
         
         return basicFlightStatistics;
     }
 
-    public Dictionary<ClassType, int> GetClassDistributionAsync(List<Flight> flights)
+    public Dictionary<ClassType, int> GetClassDistribution(List<Flight> flights)
+    {
+        var classDistribution = Enum.GetValues(typeof(ClassType))
+            .Cast<ClassType>()
+            .ToDictionary(classType => classType, _ => 0);
+
+        var groupedFlights = flights
+            .GroupBy(flight => flight.ClassType)
+            .Select(group => new
+            {
+                ClassType = group.Key,
+                Count = group.Count()
+            });
+
+        foreach (var group in groupedFlights)
+        {
+            classDistribution[group.ClassType] = group.Count;
+        }
+        
+        return classDistribution;
+    }
+
+    public List<CircualData> GetCircualDataClassDistribution (List<Flight> flights)
     {
         var classDistribution = Enum.GetValues(typeof(ClassType))
             .Cast<ClassType>()
@@ -128,10 +150,14 @@ public class StatisticsService : IStatisticsService
             classDistribution[group.ClassType] = group.Count;
         }
 
-        return classDistribution;
+        return classDistribution.Select(kv => new CircualData
+        {
+            Name = kv.Key == ClassType.EconomyPlus ? "Economy+" : kv.Key.ToString(),
+            Value = kv.Value
+        }).ToList();
     }
 
-    public Dictionary<SeatType, int> GetSeatDistributionAsync(List<Flight> flights)
+    public Dictionary<SeatType, int> GetSeatDistribution(List<Flight> flights)
     {
         var seatDistribution = Enum.GetValues(typeof(SeatType))
             .Cast<SeatType>()
@@ -152,8 +178,34 @@ public class StatisticsService : IStatisticsService
 
         return seatDistribution;
     }
+    
+    public List<CircualData> GetCircualDataSeatDistribution (List<Flight> flights)
+    {
+        var classDistribution = Enum.GetValues(typeof(SeatType))
+            .Cast<SeatType>()
+            .ToDictionary(classType => classType, _ => 0);
 
-    public Dictionary<Reason, int> GetReasonDistributionAsync(List<Flight> flights)
+        var groupedFlights = flights
+            .GroupBy(flight => flight.SeatType)
+            .Select(group => new
+            {
+                SeatType = group.Key,
+                Count = group.Count()
+            });
+
+        foreach (var group in groupedFlights)
+        {
+            classDistribution[group.SeatType] = group.Count;
+        }
+
+        return classDistribution.Select(kv => new CircualData
+        {
+            Name = kv.Key.ToString(),
+            Value = kv.Value
+        }).ToList();
+    }
+
+    public Dictionary<Reason, int> GetReasonDistribution(List<Flight> flights)
     {
         var reasonDistribution = Enum.GetValues(typeof(Reason))
             .Cast<Reason>()
@@ -173,6 +225,32 @@ public class StatisticsService : IStatisticsService
         }
 
         return reasonDistribution;
+    }
+    
+    public List<CircualData> GetCircualDataReasonDistribution (List<Flight> flights)
+    {
+        var classDistribution = Enum.GetValues(typeof(Reason))
+            .Cast<Reason>()
+            .ToDictionary(classType => classType, _ => 0);
+
+        var groupedFlights = flights
+            .GroupBy(flight => flight.Reason)
+            .Select(group => new
+            {
+                Reason = group.Key,
+                Count = group.Count()
+            });
+
+        foreach (var group in groupedFlights)
+        {
+            classDistribution[group.Reason] = group.Count;
+        }
+
+        return classDistribution.Select(kv => new CircualData
+        {
+            Name = kv.Key.ToString(),
+            Value = kv.Value
+        }).ToList();
     }
 
     public FlightCount GetFlightCount(List<Flight> flights)
@@ -232,8 +310,47 @@ public class StatisticsService : IStatisticsService
 
         return continentCounts;
     }
+    
+    public async Task<List<CircualData>> GetCircualDataContinentsAsync (List<Flight> flights)
+    {
+        var continentDistribution = Enum.GetValues(typeof(Continent))
+            .Cast<Continent>()
+            .Where(continent => continent != Continent.Unknown)  // Exclude Unknown
+            .ToDictionary(continent => continent, _ => 0);
 
-    public Dictionary<string, int> GetTopAirportsAsync(List<Flight> flights)
+        // Group flights by continent and count them
+        var groupedFlights = flights
+            .GroupBy(flight => flight.ArrivalAirport.Country)
+            .Select(group => new
+            {
+                Country = group.Key,
+                Count = group.Count()
+            });
+
+        // Loop through each flight group and assign the count to the correct continent
+        foreach (var group in groupedFlights)
+        {
+            var arrivalContinent = await _countryContinentService.GetContinentByCountryNameAsync(group.Country);
+
+            if (Enum.TryParse(arrivalContinent, out Continent arrivalEnum))
+            {
+                continentDistribution[arrivalEnum] += group.Count;
+            }
+            else
+            {
+                continentDistribution[Continent.Unknown] += group.Count;
+            }
+        }
+
+        // Convert the continent distribution to a list of ContinentDistributionItem
+        return continentDistribution.Select(kv => new CircualData()
+        {
+            Name = kv.Key.ToString(),
+            Value = kv.Value
+        }).ToList();
+    }
+
+    public Dictionary<string, int> GetTopAirports(List<Flight> flights)
     {
         var topAirports = flights
             .SelectMany(flight => new[] { flight.DepartureAirport, flight.ArrivalAirport })
@@ -250,7 +367,7 @@ public class StatisticsService : IStatisticsService
         return topAirports;
     }
 
-    public Dictionary<string, int> GetTopAirlinesAsync(List<Flight> flights)
+    public Dictionary<string, int> GetTopAirlines(List<Flight> flights)
     {
         var topAirlines = flights
             .GroupBy(x => x.Airline.IataCode)
@@ -266,7 +383,7 @@ public class StatisticsService : IStatisticsService
         return topAirlines;
     }
 
-    public Dictionary<string, int> GetTopAircraftAsync(List<Flight> flights)
+    public Dictionary<string, int> GetTopAircraft(List<Flight> flights)
     {
         var topAircrafts = flights
             .GroupBy(x => x.Aircraft.IcaoCode)
@@ -282,7 +399,7 @@ public class StatisticsService : IStatisticsService
         return topAircrafts;
     }
 
-    public Dictionary<string, int> GetTopFlightRoutesAsync(List<Flight> flights)
+    public Dictionary<string, int> GetTopFlightRoutes(List<Flight> flights)
     {
         var flightRoutes = flights
             .GroupBy(x => $"{x.DepartureAirport.IataCode} - {x.ArrivalAirport.IataCode}")
@@ -298,7 +415,7 @@ public class StatisticsService : IStatisticsService
         return flightRoutes;
     }
 
-    public Dictionary<Month, int> GetFlightsPerMonthAsync(List<Flight> flights, int? year = null)
+    public Dictionary<Month, int> GetFlightsPerMonth(List<Flight> flights, int? year = null)
     {
         year ??= DateTime.Now.Year;
     
@@ -323,7 +440,7 @@ public class StatisticsService : IStatisticsService
         return flightsPerMonth;
     }
 
-    public Dictionary<DayOfWeek, int> GetFlightsPerWeekAsync(List<Flight> flights, int? weekNumber = null)
+    public Dictionary<DayOfWeek, int> GetFlightsPerWeek(List<Flight> flights, int? weekNumber = null)
     {
         weekNumber ??= StatisticsHelper.GetWeekNumber(DateTime.Now);
 
@@ -355,7 +472,7 @@ public class StatisticsService : IStatisticsService
         return flightsPerWeek;
     }
 
-    public Distance GetDistanceAsync(List<Flight> flights)
+    public Distance GetDistance(List<Flight> flights)
     {
         var distance = new Distance();
         
@@ -367,7 +484,7 @@ public class StatisticsService : IStatisticsService
         return distance;
     }
 
-    public FlightTime GetTotalFlightTimeAsync(List<Flight> flights)
+    public FlightTime GetTotalFlightTime(List<Flight> flights)
     {
         TimeSpan totalFlightTime = TimeSpan.Zero;
 

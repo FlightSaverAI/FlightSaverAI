@@ -1,5 +1,6 @@
 using FlightSaverApi.Enums;
 using FlightSaverApi.Enums.FlightEnums;
+using Newtonsoft.Json;
 
 namespace FlightSaverApi.Models;
 
@@ -19,10 +20,18 @@ public class FlightStatistics
 
 public class CircualChartStatistics
 {
-    public Dictionary<ClassType, int> ClassDistribution { get; set; }
-    public Dictionary<SeatType, int> SeatDistribution { get; set; }
-    public Dictionary<Reason, int> ReasonDistribution { get; set; }
-    public Dictionary<Continent, int> Continents { get; set; }
+    public List<CircualData> ClassDistribution { get; set; }
+    public List<CircualData> SeatDistribution { get; set; }
+    public List<CircualData> ReasonDistribution { get; set; }
+    public List<CircualData> Continents { get; set; }
+}
+
+public class CircualData
+{
+    [JsonProperty("name")]
+    public string Name { get; set; }
+    [JsonProperty("value")]
+    public int Value { get; set; }
 }
 
 public class BarChartStatistics
