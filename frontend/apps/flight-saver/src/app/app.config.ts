@@ -2,15 +2,20 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideStore } from '@ngrx/store';
-import { AuthEffects, authReducer } from '@flight-saver/authentication/data-access';
+import {
+  AuthEffects,
+  authReducer,
+  authInterceptor,
+} from '@flight-saver/authentication/data-access';
 import { provideEffects } from '@ngrx/effects';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { loaderInterceptor } from '@shared/data-access';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideStore({ auth: authReducer.reducer }),
     provideEffects(AuthEffects),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor])),
   ],
 };

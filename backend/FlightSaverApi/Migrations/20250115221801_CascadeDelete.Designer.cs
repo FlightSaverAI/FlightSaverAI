@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlightSaverApi.Migrations
 {
     [DbContext(typeof(FlightSaverContext))]
-    [Migration("20250116165656_SocialMediaPosts")]
-    partial class SocialMediaPosts
+    [Migration("20250115221801_CascadeDelete")]
+    partial class CascadeDelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,43 +161,6 @@ namespace FlightSaverApi.Migrations
                         .IsUnique();
 
                     b.ToTable("Airports");
-                });
-
-            modelBuilder.Entity("FlightSaverApi.Models.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<int>("LikesCount")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("PostedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("SocialPostId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SocialPostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("FlightSaverApi.Models.Flight", b =>
@@ -373,50 +336,6 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("AirportReviews");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.SocialPost", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CommentsCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<int>("LikesCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
-
-                    b.Property<DateTime>("PostedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SocialPosts");
-                });
-
             modelBuilder.Entity("FlightSaverApi.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -437,9 +356,6 @@ namespace FlightSaverApi.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
                         .HasColumnType("bytea");
-
-                    b.Property<string>("ProfilePictureUrl")
-                        .HasColumnType("text");
 
                     b.Property<int>("Role")
                         .HasColumnType("integer");
@@ -469,23 +385,6 @@ namespace FlightSaverApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Airline");
-                });
-
-            modelBuilder.Entity("FlightSaverApi.Models.Comment", b =>
-                {
-                    b.HasOne("FlightSaverApi.Models.SocialPost", "SocialPost")
-                        .WithMany("Comments")
-                        .HasForeignKey("SocialPostId");
-
-                    b.HasOne("FlightSaverApi.Models.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SocialPost");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FlightSaverApi.Models.Flight", b =>
@@ -538,8 +437,7 @@ namespace FlightSaverApi.Migrations
                     b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithOne("AircraftReview")
                         .HasForeignKey("FlightSaverApi.Models.Review.AircraftReview", "FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AircraftReviews")
@@ -565,8 +463,7 @@ namespace FlightSaverApi.Migrations
                     b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithOne("AirlineReview")
                         .HasForeignKey("FlightSaverApi.Models.Review.AirlineReview", "FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AirlineReviews")
@@ -592,8 +489,7 @@ namespace FlightSaverApi.Migrations
                     b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithMany("AirportReviews")
                         .HasForeignKey("FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AirportReviews")
@@ -604,17 +500,6 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("Airport");
 
                     b.Navigation("Flight");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FlightSaverApi.Models.SocialPost", b =>
-                {
-                    b.HasOne("FlightSaverApi.Models.User", "User")
-                        .WithMany("SocialPosts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -653,11 +538,6 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("AirportReviews");
                 });
 
-            modelBuilder.Entity("FlightSaverApi.Models.SocialPost", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
             modelBuilder.Entity("FlightSaverApi.Models.User", b =>
                 {
                     b.Navigation("AircraftReviews");
@@ -666,11 +546,7 @@ namespace FlightSaverApi.Migrations
 
                     b.Navigation("AirportReviews");
 
-                    b.Navigation("Comments");
-
                     b.Navigation("Flights");
-
-                    b.Navigation("SocialPosts");
                 });
 #pragma warning restore 612, 618
         }

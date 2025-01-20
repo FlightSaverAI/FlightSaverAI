@@ -1,6 +1,7 @@
 @use '@global/styles/styles.scss' as *;
 
 .input-container {
+  position: relative;
   display: flex;
   border-radius: 8px;
   height: 35px;

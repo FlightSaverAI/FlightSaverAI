@@ -9,7 +9,6 @@ public interface IStatisticsService
     Task<FlightStatistics> GetFlightStatisticsAsync(int userId, CancellationToken cancellationToken = default);
     Task<CircualChartStatistics> GetCircualChartStatisticsAsync(int userId, CancellationToken cancellationToken = default);
     Task<BarChartStatistics> GetBarChartStatisticsAsync(int userId, CancellationToken cancellationToken = default);
-
     Task<LineChartStatistics> GetLineChartStatisticsAsync(int userId, CancellationToken cancellationToken = default);
     Task<BasicFlightStatistics> GetBasicFlightStatisticsAsync(int userId, CancellationToken cancellationToken = default);
     Dictionary<ClassType, int> GetClassDistribution(List<Flight> flights);

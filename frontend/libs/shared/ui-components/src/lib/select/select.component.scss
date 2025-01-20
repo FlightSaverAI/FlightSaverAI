@@ -1,0 +1,10 @@
+@use '@global/styles/styles.scss' as *;
+@use '../input/input.component.scss';
+
+.dropdown-arrow {
+  transition: 0.3s;
+}
+
+.dropdown-arrow.rotated {
+  transform: rotate(180deg);
+}

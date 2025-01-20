@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, forwardRef, input, signal } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
-import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
 import { FormsModule } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, NgOptimizedImage, ValidationSignComponent, NgClass, FormsModule],
   template: `
     @if(label() ){
-    <label for="input">{{ label() }}</label>
+      <label for="input">{{ label() }}{{ hasRequiredValidator ? '*' : '' }}</label>
     }
     <div
       id="input"
@@ -35,6 +35,7 @@ import { FormsModule } from '@angular/forms';
         [style.padding]="!iconSrc() ? '10px' : null"
         [type]="type()"
         [placeholder]="placeholder()"
+        [readOnly]="isReadOnly()"
         (input)="setInput($event.target)"
         (blur)="onTouched()"
       />
@@ -70,6 +71,7 @@ export class InputComponent implements ControlValueAccessor {
   type = input<string>('text');
   parentForm = input.required<FormGroup<any>>();
   fieldName = input.required<string>();
+  isReadOnly = input<boolean>(false);
 
   valueChangeListener = signal('');
   value: any;
@@ -83,6 +85,17 @@ export class InputComponent implements ControlValueAccessor {
 
   get hasValidator(): boolean {
     return this.formField && this.formField.validator ? true : false;
+  }
+
+  get hasRequiredValidator() {
+    const validator = this.formField.validator;
+
+    if (!validator) {
+      return false;
+    }
+
+    const validationResult = validator({} as AbstractControl);
+    return validationResult && validationResult['required'] ? true : false;
   }
 
   writeValue(value: any): void {

@@ -17,11 +17,11 @@ export class StepRateAndReviewComponent {
 
   rateAndReviewFormConfig = [
     {
-      fieldName: 'airportOpinion',
+      fieldName: 'departureAirportOpinion',
       imgSrc: 'global/assets/images/top-airports.jpg',
     },
     {
-      fieldName: 'airlinesOpinion',
+      fieldName: 'arrivalAirportOpinion',
       imgSrc: 'global/assets/images/top-airports.jpg',
     },
     {
@@ -42,8 +42,6 @@ export class StepRateAndReviewComponent {
         this.rateAndReviewForm.patchValue({
           ...currentFormState.rateAndReviewForm,
         });
-
-        console.log(this.rateAndReviewForm);
       }
     },
     { allowSignalWrites: true }
