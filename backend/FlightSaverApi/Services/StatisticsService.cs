@@ -40,6 +40,58 @@ public class StatisticsService : IStatisticsService
         return flightStatistics;
     }
 
+    public async Task<CircualChartStatistics> GetCircualChartStatisticsAsync(int userId,
+        CancellationToken cancellationToken = default)
+    {
+        var flights = await _flightsService.GetFlightsByUserIdAsync(userId, cancellationToken);
+        
+        if (flights.Count == 0) return new CircualChartStatistics();
+        
+        var flightStatistics = new CircualChartStatistics()
+        {
+            ClassDistribution = GetClassDistributionAsync(flights),
+            SeatDistribution = GetSeatDistributionAsync(flights),
+            ReasonDistribution = GetReasonDistributionAsync(flights),
+            Continents = await GetContinentsAsync(flights),
+        };
+        
+        return flightStatistics;
+    }
+    
+    public async Task<BarChartStatistics> GetBarChartStatisticsAsync(int userId,
+        CancellationToken cancellationToken = default)
+    {
+        var flights = await _flightsService.GetFlightsByUserIdAsync(userId, cancellationToken);
+        
+        if (flights.Count == 0) return new BarChartStatistics();
+        
+        var flightStatistics = new BarChartStatistics()
+        {
+            TopAirports = GetTopAirportsAsync(flights),
+            TopAirlines = GetTopAirlinesAsync(flights),
+            TopAircrafts = GetTopAircraftAsync(flights),
+            FlightRoutes = GetTopFlightRoutesAsync(flights),
+        };
+        
+        return flightStatistics;
+    }
+    
+    public async Task<LineChartStatistics> GetLineChartStatisticsAsync(int userId,
+        CancellationToken cancellationToken = default)
+    {
+        var flights = await _flightsService.GetFlightsByUserIdAsync(userId, cancellationToken);
+        
+        if (flights.Count == 0) return new LineChartStatistics();
+        
+        var flightStatistics = new LineChartStatistics()
+        {
+            FlightsPerMonth = GetFlightsPerMonthAsync(flights),
+            FlightsPerWeek = GetFlightsPerWeekAsync(flights),
+        };
+        
+        return flightStatistics;
+    }
+
     public async Task<BasicFlightStatistics> GetBasicFlightStatisticsAsync(int userId,
         CancellationToken cancellationToken = default)
     {
@@ -159,11 +211,11 @@ public class StatisticsService : IStatisticsService
     {
         var continentCounts = Enum.GetValues(typeof(Continent))
             .Cast<Continent>()
+            .Where(continent => continent != Continent.Unknown)
             .ToDictionary(continent => continent, _ => 0);
 
         foreach (var flight in flights)
         {
-            // Get continents for departure and arrival airports
             var arrivalContinent = await _countryContinentService.GetContinentByCountryNameAsync(flight.ArrivalAirport.Country);
 
             if (Enum.TryParse(arrivalContinent, out Continent arrivalEnum))

@@ -17,6 +17,28 @@ public class FlightStatistics
     public Dictionary<DayOfWeek, int> FlightsPerWeek { get; set; }
 }
 
+public class CircualChartStatistics
+{
+    public Dictionary<ClassType, int> ClassDistribution { get; set; }
+    public Dictionary<SeatType, int> SeatDistribution { get; set; }
+    public Dictionary<Reason, int> ReasonDistribution { get; set; }
+    public Dictionary<Continent, int> Continents { get; set; }
+}
+
+public class BarChartStatistics
+{
+    public Dictionary<string, int> TopAirports { get; set; }
+    public Dictionary<string, int> TopAirlines { get; set; }
+    public Dictionary<string, int> TopAircrafts { get; set; }
+    public Dictionary<string, int> FlightRoutes { get; set; }
+}
+
+public class LineChartStatistics
+{
+    public Dictionary<Month, int> FlightsPerMonth { get; set; }
+    public Dictionary<DayOfWeek, int> FlightsPerWeek { get; set; }
+}
+
 public class BasicFlightStatistics
 {
     public FlightCount FlightCount { get; set; }
