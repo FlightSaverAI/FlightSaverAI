@@ -65,5 +65,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne(c => c.User)
             .HasForeignKey(r => r.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        builder
+            .HasMany(u => u.Friends)
+            .WithMany()
+            .UsingEntity<Dictionary<string, object>>(
+                "UserFriends", // Name of the join table
+                j => j.HasOne<User>().WithMany().HasForeignKey("UserId"),
+                j => j.HasOne<User>().WithMany().HasForeignKey("FriendId"),
+                j =>
+                {
+                    j.HasKey("UserId", "FriendId");
+                    j.ToTable("UserFriends");
+                });
     }
 }

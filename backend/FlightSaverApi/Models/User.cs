@@ -30,6 +30,8 @@ namespace FlightSaverApi.Models
         public virtual List<SocialPost>? SocialPosts { get; set; }
         
         public virtual List<Comment>? Comments { get; set; }
+        
+        public virtual List<User> Friends { get; set; } = [];
     }
 }
 
