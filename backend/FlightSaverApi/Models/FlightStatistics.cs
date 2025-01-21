@@ -1,5 +1,6 @@
 using FlightSaverApi.Enums;
 using FlightSaverApi.Enums.FlightEnums;
+using Newtonsoft.Json;
 
 namespace FlightSaverApi.Models;
 
@@ -13,6 +14,36 @@ public class FlightStatistics
     public Dictionary<string, int> TopAirlines { get; set; }
     public Dictionary<string, int> TopAircrafts { get; set; }
     public Dictionary<string, int> FlightRoutes { get; set; }
+    public Dictionary<Month, int> FlightsPerMonth { get; set; }
+    public Dictionary<DayOfWeek, int> FlightsPerWeek { get; set; }
+}
+
+public class CircualChartStatistics
+{
+    public List<CircualData> ClassDistribution { get; set; }
+    public List<CircualData> SeatDistribution { get; set; }
+    public List<CircualData> ReasonDistribution { get; set; }
+    public List<CircualData> Continents { get; set; }
+}
+
+public class CircualData
+{
+    [JsonProperty("name")]
+    public string Name { get; set; }
+    [JsonProperty("value")]
+    public int Value { get; set; }
+}
+
+public class BarChartStatistics
+{
+    public Dictionary<string, int> TopAirports { get; set; }
+    public Dictionary<string, int> TopAirlines { get; set; }
+    public Dictionary<string, int> TopAircrafts { get; set; }
+    public Dictionary<string, int> FlightRoutes { get; set; }
+}
+
+public class LineChartStatistics
+{
     public Dictionary<Month, int> FlightsPerMonth { get; set; }
     public Dictionary<DayOfWeek, int> FlightsPerWeek { get; set; }
 }

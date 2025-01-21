@@ -43,7 +43,7 @@ public class DbSeeder
             }
             context.SaveChanges();
         }
-
+        
         // Add Airlines if not already present
         if (!context.Airlines.Any())
         {
@@ -55,14 +55,14 @@ public class DbSeeder
                 new Airline { Name = "Delta Airlines", IataCode = "DL", IcaoCode = "DAL", Country = "USA" },
                 new Airline { Name = "United Airlines", IataCode = "UA", IcaoCode = "UAL", Country = "USA" }
             };
-
+        
             foreach (var a in airlines)
             {
                 context.Airlines.Add(a);
             }
             context.SaveChanges(); // Save to get the actual AirlineIds
         }
-
+        
         // Add Aircrafts if not already present
         if (!context.Aircrafts.Any())
         {
@@ -74,14 +74,14 @@ public class DbSeeder
                 new Aircraft { Name = "Boeing 737", IataCode = "737", IcaoCode = "B737", RegNumber = "N67890", AirlineId = airlines.FirstOrDefault(a => a.IataCode == "UA")?.Id ?? 3 },
                 new Aircraft { Name = "Airbus A320", IataCode = "320", IcaoCode = "A32X", RegNumber = "N11223", AirlineId = airlines.FirstOrDefault(a => a.IataCode == "DL")?.Id ?? 4 }
             };
-
+        
             foreach (var a in aircrafts)
             {
                 context.Aircrafts.Add(a);
             }
             context.SaveChanges();
         }
-
+        
         // Add Flights if not already present
         if (!context.Flights.Any())
         {
@@ -144,14 +144,14 @@ public class DbSeeder
                     UserId = 3
                 }
             };
-
+        
             foreach (var f in flights)
             {
                 context.Flights.Add(f);
             }
             context.SaveChanges();
         }
-
+        
         // Add Reviews if not already present
         if (!context.AircraftReviews.Any() || !context.AirlineReviews.Any() || !context.AirportReviews.Any())
         {
@@ -168,14 +168,14 @@ public class DbSeeder
                 new AirlineReview { Rating = 5, Comment = "Excellent service, would fly with Emirates again.", UserId = 2, FlightId = 3, AirlineId = 3 },
                 new AirportReview { Rating = 4, Comment = "Great amenities, but it was crowded.", UserId = 2, FlightId = 3, AirportId = 3, AirportReviewType = AirportReviewType.Departure },
                 new AirportReview { Rating = 5, Comment = "Efficient and quick arrival process.", UserId = 2, FlightId = 4, AirportId = 4, AirportReviewType = AirportReviewType.Arrival },
-
+        
                 // Additional Reviews for Flight UA400
                 new AircraftReview { Rating = 4, Comment = "The seating was a bit cramped, but the flight was smooth.", UserId = 2, FlightId = 4, AircraftId = 4 },
                 new AirlineReview { Rating = 4, Comment = "Good flight overall, but lacked entertainment options.", UserId = 2, FlightId = 4, AirlineId = 4 },
                 new AirportReview { Rating = 5, Comment = "Fantastic airport experience, fast check-in.", UserId = 2, FlightId = 4, AirportId = 4, AirportReviewType = AirportReviewType.Departure },
                 new AirportReview { Rating = 4, Comment = "Customs was a bit slow, but overall good experience.", UserId = 2, FlightId = 4, AirportId = 3, AirportReviewType = AirportReviewType.Arrival }
             };
-
+        
             foreach (var r in reviews)
             {
                 if (r is AircraftReview aircraftReview)

@@ -16,6 +16,8 @@ namespace FlightSaverApi.Models
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
+        
+        public string? ProfilePictureUrl { get; set; }
 
         public virtual List<AircraftReview>? AircraftReviews { get; set; }
         
@@ -24,6 +26,12 @@ namespace FlightSaverApi.Models
         public virtual List<AirportReview>? AirportReviews { get; set; }
         
         public virtual List<Flight>? Flights { get; set; }
+        
+        public virtual List<SocialPost>? SocialPosts { get; set; }
+        
+        public virtual List<Comment>? Comments { get; set; }
+        
+        public virtual List<User> Friends { get; set; } = [];
     }
 }
 
