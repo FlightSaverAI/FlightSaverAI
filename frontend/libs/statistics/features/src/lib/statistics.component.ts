@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FlightPassengerOverviewComponent } from '@flight-saver/statistics/ui';
 import { TopOverviewComponent } from '@flight-saver/statistics/ui';
-import { StatisticsContants } from './constants/statistics.constants';
 import { ActivityOverviewComponent } from '@flight-saver/statistics/ui';
+import {
+  createActivityOverviewChartConfig,
+  createFlightOverviewChartConfig,
+  createTopOverviewChartConfig,
+} from '@flight-saver/statistics/utils';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   standalone: true,
@@ -17,18 +21,18 @@ import { ActivityOverviewComponent } from '@flight-saver/statistics/ui';
   template: `
     <div class="wrapper">
       <statistics-flight-passenger-overview
-        [flightPassangerOverview]="flightPassangerOverview"
+        [flightPassangerOverview]="flightOverviewChartConfig()"
       ></statistics-flight-passenger-overview>
-      <statistics-top-overview [topOverview]="topOverview"></statistics-top-overview>
+      <statistics-top-overview [topOverview]="topOverviewChartConfig()"></statistics-top-overview>
       <statistics-activity-overview
-        [activityOverview]="activityOverview"
+        [activityOverview]="activityOverviewChartConfig()"
       ></statistics-activity-overview>
     </div>
   `,
   styleUrl: './statistics.component.scss',
 })
 export class StatisticsComponent {
-  flightPassangerOverview = StatisticsContants.flightPassangerOverview;
-  topOverview = StatisticsContants.topOverview;
-  activityOverview = StatisticsContants.activityOverview;
+  flightOverviewChartConfig = toSignal(createFlightOverviewChartConfig());
+  topOverviewChartConfig = toSignal(createTopOverviewChartConfig());
+  activityOverviewChartConfig = toSignal(createActivityOverviewChartConfig());
 }
