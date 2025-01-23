@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlightSaverApi.Controllers;
 
-[Route("/statistics")]
+[Route("/statistic")]
 [Authorize(Policy = "RequireUserRole")]
 public class StatisticsController : ControllerBase
 {

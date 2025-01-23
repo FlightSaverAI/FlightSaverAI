@@ -22,6 +22,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddScoped<IFlightsService, FlightsService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpClient<CountryContinentService>();
 
 builder.Services.AddMediatR(cfg => {

@@ -32,6 +32,22 @@ namespace FlightSaverApi.Mappings
             CreateMap<User, UserRegisterDTO>()
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
 
+            CreateMap<User, EditUserDTO>()
+                .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+            CreateMap<EditUserDTO, User>()
+                .ForMember(dest => dest.AirportReviews, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
+                .ForMember(dest => dest.Role, opt => opt.Ignore())
+                .ForMember(dest => dest.Comments, opt => opt.Ignore())
+                .ForMember(dest => dest.Flights, opt => opt.Ignore())
+                .ForMember(dest => dest.AirlineReviews, opt => opt.Ignore())
+                .ForMember(dest => dest.SocialPosts, opt => opt.Ignore())
+                .ForAllMembers(opt =>
+                    opt.Condition((src, dest, srcMember) =>
+                        srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+
             CreateMap<AirlineDTO, Airline>()
                 .ReverseMap();
             
