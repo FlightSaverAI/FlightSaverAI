@@ -16,11 +16,19 @@ namespace FlightSaverApi.Services
             if (_countryContinentCache.TryGetValue(countryName, out var cachedContinent))
                 return cachedContinent;
 
-            var continent = await FetchContinentFromApiAsync(countryName, cancellationToken);
-            if (!string.IsNullOrEmpty(continent))
-                _countryContinentCache[countryName] = continent;
+            try
+            {
+                var continent = await FetchContinentFromApiAsync(countryName, cancellationToken);
+                if (!string.IsNullOrEmpty(continent))
+                    _countryContinentCache[countryName] = continent;
 
-            return continent;
+                return continent;
+            }
+            catch (Exception ex)
+            {
+                return "Error fetching continent from api";
+            }
+
         }
 
         public async Task<string?> FetchContinentFromApiAsync(string countryName, CancellationToken cancellationToken = default)

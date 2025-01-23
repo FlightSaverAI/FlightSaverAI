@@ -336,10 +336,6 @@ public class StatisticsService : IStatisticsService
             {
                 continentDistribution[arrivalEnum] += group.Count;
             }
-            else
-            {
-                continentDistribution[Continent.Unknown] += group.Count;
-            }
         }
 
         // Convert the continent distribution to a list of ContinentDistributionItem
