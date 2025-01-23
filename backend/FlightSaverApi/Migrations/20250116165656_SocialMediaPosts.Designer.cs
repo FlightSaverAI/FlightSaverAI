@@ -12,8 +12,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FlightSaverApi.Migrations
 {
     [DbContext(typeof(FlightSaverContext))]
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
     [Migration("20250116165656_SocialMediaPosts")]
     partial class SocialMediaPosts
+========
+    [Migration("20250115191052_NullColumns")]
+    partial class NullColumns
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,7 +168,11 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("Airports");
                 });
 
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.Comment", b =>
+========
+            modelBuilder.Entity("FlightSaverApi.Models.Flight", b =>
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,6 +180,7 @@ namespace FlightSaverApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -211,6 +221,11 @@ namespace FlightSaverApi.Migrations
                     b.Property<int?>("AircraftId")
                         .HasColumnType("integer");
 
+========
+                    b.Property<int?>("AircraftId")
+                        .HasColumnType("integer");
+
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
                     b.Property<int?>("AirlineId")
                         .HasColumnType("integer");
 
@@ -373,6 +388,7 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("AirportReviews");
                 });
 
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.SocialPost", b =>
                 {
                     b.Property<int>("Id")
@@ -417,6 +433,8 @@ namespace FlightSaverApi.Migrations
                     b.ToTable("SocialPosts");
                 });
 
+========
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -471,6 +489,7 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("Airline");
                 });
 
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.Comment", b =>
                 {
                     b.HasOne("FlightSaverApi.Models.SocialPost", "SocialPost")
@@ -498,6 +517,18 @@ namespace FlightSaverApi.Migrations
                         .WithMany("Flights")
                         .HasForeignKey("AirlineId");
 
+========
+            modelBuilder.Entity("FlightSaverApi.Models.Flight", b =>
+                {
+                    b.HasOne("FlightSaverApi.Models.Aircraft", "Aircraft")
+                        .WithMany("Flights")
+                        .HasForeignKey("AircraftId");
+
+                    b.HasOne("FlightSaverApi.Models.Airline", "Airline")
+                        .WithMany("Flights")
+                        .HasForeignKey("AirlineId");
+
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
                     b.HasOne("FlightSaverApi.Models.Airport", "ArrivalAirport")
                         .WithMany("ArrivingFlights")
                         .HasForeignKey("ArrivalAirportId")
@@ -537,9 +568,13 @@ namespace FlightSaverApi.Migrations
 
                     b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithOne("AircraftReview")
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
                         .HasForeignKey("FlightSaverApi.Models.Review.AircraftReview", "FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+========
+                        .HasForeignKey("FlightSaverApi.Models.Review.AircraftReview", "FlightId");
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
 
                     b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AircraftReviews")
@@ -564,9 +599,13 @@ namespace FlightSaverApi.Migrations
 
                     b.HasOne("FlightSaverApi.Models.Flight", "Flight")
                         .WithOne("AirlineReview")
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
                         .HasForeignKey("FlightSaverApi.Models.Review.AirlineReview", "FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+========
+                        .HasForeignKey("FlightSaverApi.Models.Review.AirlineReview", "FlightId");
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
 
                     b.HasOne("FlightSaverApi.Models.User", "User")
                         .WithMany("AirlineReviews")
@@ -608,6 +647,7 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("User");
                 });
 
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.SocialPost", b =>
                 {
                     b.HasOne("FlightSaverApi.Models.User", "User")
@@ -619,6 +659,8 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("User");
                 });
 
+========
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.Aircraft", b =>
                 {
                     b.Navigation("AircraftReviews");
@@ -653,11 +695,14 @@ namespace FlightSaverApi.Migrations
                     b.Navigation("AirportReviews");
                 });
 
+<<<<<<<< HEAD:backend/FlightSaverApi/Migrations/20250116165656_SocialMediaPosts.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.SocialPost", b =>
                 {
                     b.Navigation("Comments");
                 });
 
+========
+>>>>>>>> main:backend/FlightSaverApi/Migrations/20250115191052_NullColumns.Designer.cs
             modelBuilder.Entity("FlightSaverApi.Models.User", b =>
                 {
                     b.Navigation("AircraftReviews");

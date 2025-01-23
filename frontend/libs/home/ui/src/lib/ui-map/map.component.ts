@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { Component, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import L from 'leaflet';
@@ -14,12 +16,12 @@ export class MapComponent implements OnInit {
   flightData = input.required<any[]>();
   flightsMap: any;
 
-  ngOnInit() {
+  public ngOnInit() {
     this._initMap();
   }
 
   private _initMap() {
-    this.flightsMap = L.map('map').setView([52.2297, 21.0122], 6);
+    this.flightsMap = L.map('map').setView([52.2297, 21.0122], 5);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution:
@@ -29,15 +31,32 @@ export class MapComponent implements OnInit {
     }).addTo(this.flightsMap);
 
     this.flightData().forEach((flight) => {
-      const polyline = L.polyline([flight.start.latLng, flight.end.latLng], { color: 'red' }).addTo(
+      const departureLatLng = [flight.departureAirportLatitude, flight.departureAirportLongitude];
+      const arrivalLatLng = [flight.arrivalAirportLatitude, flight.arrivalAirportLongitude];
+
+      const polyline = L.polyline([departureLatLng, arrivalLatLng], { color: 'red' }).addTo(
         this.flightsMap
       );
 
       this.flightsMap.fitBounds(polyline.getBounds());
-      this.flightsMap.setZoom(5);
+      this.flightsMap.setZoom(4);
 
-      this._addMarker(flight.start.latLng, `Start: ${flight.start.departureAirport}`);
-      this._addMarker(flight.end.latLng, `End: ${flight.end.arrivalAirport}`);
+      this._addMarker(
+        departureLatLng,
+        `<strong>Start:</strong> ${
+          flight.departureAirportName
+        } <br/> <strong>Departure Time:</strong> ${dayjs(flight.departureTime).format(
+          'DD/MM/YYYY HH:mm'
+        )}`
+      );
+      this._addMarker(
+        arrivalLatLng,
+        `<strong>End:</strong> ${
+          flight.arrivalAirportName
+        } <br/> <strong>Arrival Time:</strong> ${dayjs(flight.arrivalTime).format(
+          'DD/MM/YYYY HH:mm'
+        )}`
+      );
     });
   }
 
