@@ -12,10 +12,18 @@ using FlightSaverApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotNetEnv.Env.Load();
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<FlightSaverContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("FlightSaverDbConnection")));
+{
+    var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_FlightSaverDbConnection");
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        throw new InvalidOperationException("Database connection string is not set in the environment variables.");
+    }
+    options.UseNpgsql(connectionString);
+});
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
