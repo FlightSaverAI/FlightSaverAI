@@ -21,21 +21,24 @@ public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerab
         _statisticsService = statisticsService;
     }
     
-    public async Task<IEnumerable<FriendDTO>> Handle(GetFriendsQuery request,
-        CancellationToken cancellationToken)
+    public async Task<IEnumerable<FriendDTO>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
     {
-        var users = await _context.Users.Where(x => x.Id != request.UserId).ToListAsync(cancellationToken);
-        
-        var usersDTO = _mapper.Map<IEnumerable<FriendDTO>>(users);
+        var user = await _context.Users
+            .Include(u => u.Friends)
+            .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
-        if (usersDTO != null || users.Count == 0)
+        if (user == null)
         {
-            foreach (var user in usersDTO)
-            {
-                user.Statistics = await _statisticsService.GetBasicFlightStatisticsAsync(user.Id, cancellationToken);
-            }
+            return Enumerable.Empty<FriendDTO>();
         }
-        
-        return usersDTO;
+
+        var friendsDTO = _mapper.Map<IEnumerable<FriendDTO>>(user.Friends);
+
+        foreach (var friend in friendsDTO)
+        {
+            friend.Statistics = await _statisticsService.GetBasicFlightStatisticsAsync(friend.Id, cancellationToken);
+        }
+
+        return friendsDTO;
     }
 }
