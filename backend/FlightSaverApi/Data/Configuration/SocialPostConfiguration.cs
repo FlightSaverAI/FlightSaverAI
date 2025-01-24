@@ -18,13 +18,14 @@ public class SocialPostConfiguration : IEntityTypeConfiguration<SocialPost>
             .HasMany(s => s.Comments)
             .WithOne(c => c.SocialPost)
             .HasForeignKey(s => s.SocialPostId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Cascade);
         
         builder.Property(s => s.PostedAt)
             .IsRequired();
         
         builder.Property(s => s.UpdatedAt)
-            .IsRequired();
+            .IsRequired(false);
         
         builder.Property(s => s.Location)
             .HasMaxLength(150)
