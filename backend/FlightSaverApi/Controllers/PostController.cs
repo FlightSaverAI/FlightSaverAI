@@ -51,6 +51,29 @@ public class PostController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    
+    [HttpGet("friend")]
+    public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetFriendsPosts(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+
+            var query = new GetFriendsPostsQuery(userId);
+
+            var posts = await _mediator.Send(query, cancellationToken);
+
+            return Ok(posts);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<SocialPostDTO>> GetPost([FromRoute] int id, CancellationToken cancellationToken)

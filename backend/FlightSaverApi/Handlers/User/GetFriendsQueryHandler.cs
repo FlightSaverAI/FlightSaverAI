@@ -36,6 +36,7 @@ public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerab
 
         foreach (var friend in friendsDTO)
         {
+            friend.IsLoggedUserFriend = true;
             friend.Statistics = await _statisticsService.GetBasicFlightStatisticsAsync(friend.Id, cancellationToken);
         }
 
