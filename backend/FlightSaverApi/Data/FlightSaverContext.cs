@@ -22,6 +22,7 @@ namespace FlightSaverApi.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
+        public DbSet<ImageRecord> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
