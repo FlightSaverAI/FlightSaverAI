@@ -3,14 +3,12 @@ using MediatR;
 
 namespace FlightSaverApi.Queries.Post;
 
-public class GetPostQuery : IRequest<SocialPostDTO>
+public class GetFriendsPostsQuery : IRequest<IEnumerable<SocialPostDTO>>
 {
-    public int Id { get; set; }
     public int UserId { get; set; }
 
-    public GetPostQuery(int id, int userId)
+    public GetFriendsPostsQuery(int userId)
     {
-        Id = id;
         UserId = userId;
     }
 }

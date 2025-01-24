@@ -8,5 +8,9 @@ public class FriendDTO
     
     public string Name { get; set; }
     
+    public string? ProfilePictureUrl { get; set; }
+    
+    public bool IsLoggedUserFriend { get; set; }
+    
     public BasicFlightStatistics Statistics { get; set; }
 }

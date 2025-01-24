@@ -1,7 +1,9 @@
+using FlightSaverApi.Commands.Post;
 using FlightSaverApi.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace FlightSaverApi.Commands.Post;
+namespace FlightSaverApi.Handlers.Post;
 
 public class UnlikePostCommandHandler : IRequestHandler<UnlikePostCommand, Unit>
 {
@@ -19,11 +21,18 @@ public class UnlikePostCommandHandler : IRequestHandler<UnlikePostCommand, Unit>
         if (post == null)
             throw new KeyNotFoundException("Post not found.");
 
-        if (post.LikesCount > 0)
-        {
-            post.LikesCount--;
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+        // Check if the user has liked the post
+        var like = await _context.PostLikes
+            .FirstOrDefaultAsync(pl => pl.PostId == request.PostId && pl.UserId == request.UserId, cancellationToken);
+
+        if (like == null)
+            throw new InvalidOperationException("You have not liked this post.");
+
+        // Remove the like
+        _context.PostLikes.Remove(like);
+
+        post.LikesCount--;
+        await _context.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }

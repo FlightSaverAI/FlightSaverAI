@@ -13,4 +13,14 @@ public class SocialPost
     public int LikesCount { get; set; }
     public int CommentsCount { get; set; }
     public virtual List<Comment>? Comments { get; set; }
+    public virtual List<PostLike> Likes { get; set; }
+}
+
+public class PostLike
+{
+    public int Id { get; set; }
+    public int PostId { get; set; }
+    public virtual SocialPost Post { get; set; }
+    public int UserId { get; set; }
+    public virtual User User { get; set; }
 }

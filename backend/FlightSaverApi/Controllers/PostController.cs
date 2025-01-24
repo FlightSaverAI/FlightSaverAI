@@ -51,11 +51,36 @@ public class PostController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    
+    [HttpGet("friend")]
+    public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetFriendsPosts(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+
+            var query = new GetFriendsPostsQuery(userId);
+
+            var posts = await _mediator.Send(query, cancellationToken);
+
+            return Ok(posts);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<SocialPostDTO>> GetPost([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var query = new GetPostQuery(id);
+        var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+        
+        var query = new GetPostQuery(id, userId);
         var post = await _mediator.Send(query, cancellationToken);
         
         return Ok(post);
@@ -140,7 +165,8 @@ public class PostController : ControllerBase
     {
         try
         {
-            var command = new LikePostCommand { PostId = id };
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            var command = new LikePostCommand { PostId = id , UserId = userId };
             await _mediator.Send(command, cancellationToken);
             return NoContent();
         }
@@ -159,7 +185,8 @@ public class PostController : ControllerBase
     {
         try
         {
-            var command = new UnlikePostCommand { PostId = id };
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            var command = new UnlikePostCommand { PostId = id, UserId = userId };
             await _mediator.Send(command, cancellationToken);
             return NoContent();
         }

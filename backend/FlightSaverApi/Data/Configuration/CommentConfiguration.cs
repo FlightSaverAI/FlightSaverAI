@@ -19,6 +19,13 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
             .WithMany(s => s.Comments)
             .HasForeignKey(c => c.SocialPostId)
             .IsRequired();
+        
+        builder
+            .HasMany(c => c.Likes)
+            .WithOne(l => l.Comment)
+            .HasForeignKey(l => l.CommentId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(c => c.PostedAt)
             .IsRequired();

@@ -6,9 +6,11 @@ namespace FlightSaverApi.Queries.Comment;
 public class GetCommentsByPostIdQuery : IRequest<IEnumerable<CommentDTO>>
 {
     public int PostId { get; set; }
+    public int UserId { get; set; }
 
-    public GetCommentsByPostIdQuery(int postId)
+    public GetCommentsByPostIdQuery(int postId, int userId)
     {
         PostId = postId;
+        UserId = userId;
     }
 }
