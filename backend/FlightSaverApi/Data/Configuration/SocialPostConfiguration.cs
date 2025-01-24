@@ -21,6 +21,13 @@ public class SocialPostConfiguration : IEntityTypeConfiguration<SocialPost>
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
         
+        builder
+            .HasMany(s => s.Likes)
+            .WithOne(l => l.Post)
+            .HasForeignKey(l => l.PostId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+        
         builder.Property(s => s.PostedAt)
             .IsRequired();
         
@@ -44,6 +51,5 @@ public class SocialPostConfiguration : IEntityTypeConfiguration<SocialPost>
 
         builder.Property(s => s.CommentsCount)
             .IsRequired();
-        
     }
 }

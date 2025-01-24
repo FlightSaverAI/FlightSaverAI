@@ -23,7 +23,9 @@ public class CommentController : ControllerBase
     public async Task<ActionResult<IEnumerable<CommentDTO>>> GetCommentsByPostId(int postId,
         CancellationToken cancellationToken)
     {
-        var query = new GetCommentsByPostIdQuery(postId);
+        var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+        
+        var query = new GetCommentsByPostIdQuery(postId, userId);
         
         var comments = await _mediator.Send(query, cancellationToken);
         
@@ -109,7 +111,8 @@ public class CommentController : ControllerBase
     {
         try
         {
-            var command = new LikeCommentCommand { CommentId = id };
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            var command = new LikeCommentCommand { CommentId = id, UserId = userId };
             await _mediator.Send(command, cancellationToken);
             return NoContent();
         }
@@ -128,7 +131,8 @@ public class CommentController : ControllerBase
     {
         try
         {
-            var command = new UnlikeCommentCommand { CommentId = id };
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            var command = new UnlikeCommentCommand { CommentId = id, UserId = userId };
             await _mediator.Send(command, cancellationToken);
             return NoContent();
         }

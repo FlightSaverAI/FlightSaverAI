@@ -24,8 +24,17 @@ public class GetPostsByUserIdQueryHandler : IRequestHandler<GetPostsByUserIdQuer
             .Where(p => p.UserId == request.UserId)
             .Include(p => p.Comments)
             .Include(p => p.User)
+            .Include(p => p.Likes)
             .ToListAsync(cancellationToken);
-        
-        return _mapper.Map<IEnumerable<SocialPostDTO>>(posts);
+
+        var postDtos = _mapper.Map<IEnumerable<SocialPostDTO>>(posts);
+
+        foreach (var postDto in postDtos)
+        {
+            var postEntity = posts.First(p => p.Id == postDto.Id);
+            postDto.IsLikedByCurrentUser = postEntity.Likes.Any(like => like.UserId == request.UserId);
+        }
+
+        return postDtos;
     }
 }

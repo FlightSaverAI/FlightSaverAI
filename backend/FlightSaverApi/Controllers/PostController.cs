@@ -78,7 +78,9 @@ public class PostController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<SocialPostDTO>> GetPost([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var query = new GetPostQuery(id);
+        var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+        
+        var query = new GetPostQuery(id, userId);
         var post = await _mediator.Send(query, cancellationToken);
         
         return Ok(post);
@@ -163,7 +165,8 @@ public class PostController : ControllerBase
     {
         try
         {
-            var command = new LikePostCommand { PostId = id };
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            var command = new LikePostCommand { PostId = id , UserId = userId };
             await _mediator.Send(command, cancellationToken);
             return NoContent();
         }
@@ -182,7 +185,8 @@ public class PostController : ControllerBase
     {
         try
         {
-            var command = new UnlikePostCommand { PostId = id };
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            var command = new UnlikePostCommand { PostId = id, UserId = userId };
             await _mediator.Send(command, cancellationToken);
             return NoContent();
         }

@@ -1,6 +1,8 @@
 using FlightSaverApi.Commands.Comment;
 using FlightSaverApi.Data;
+using FlightSaverApi.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Handlers.Comment;
 
@@ -19,6 +21,20 @@ public class LikeCommentCommandHandler : IRequestHandler<LikeCommentCommand, Uni
 
         if (comment == null)
             throw new KeyNotFoundException("Comment not found.");
+
+        // Check if the user already liked the comment
+        var alreadyLiked = await _context.CommentLikes
+            .AnyAsync(cl => cl.CommentId == request.CommentId && cl.UserId == request.UserId, cancellationToken);
+
+        if (alreadyLiked)
+            throw new InvalidOperationException("You have already liked this comment.");
+
+        // Add the like
+        _context.CommentLikes.Add(new CommentLike
+        {
+            CommentId = request.CommentId,
+            UserId = request.UserId
+        });
 
         comment.LikesCount++;
         await _context.SaveChangesAsync(cancellationToken);

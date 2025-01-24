@@ -23,15 +23,19 @@ public class GetPostQueryHandler : IRequestHandler<GetPostQuery, SocialPostDTO>
         var post = await _context.SocialPosts
             .Include(p => p.Comments)
             .Include(p => p.User)
+            .Include(p => p.Likes)
             .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
-        
+
         if (post == null)
         {
             throw new KeyNotFoundException($"Post with Id {request.Id} does not exist.");
         }
-        
+
         var postDto = _mapper.Map<SocialPostDTO>(post);
-        
+
+        // Check if the current user liked this post
+        postDto.IsLikedByCurrentUser = post.Likes.Any(like => like.UserId == request.UserId);
+
         return postDto;
     }
 }

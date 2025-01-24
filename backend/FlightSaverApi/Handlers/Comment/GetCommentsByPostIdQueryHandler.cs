@@ -22,11 +22,19 @@ public class GetCommentsByPostIdQueryHandler : IRequestHandler<GetCommentsByPost
     {
         var query = _context.Comments
             .Where(c => c.SocialPostId == request.PostId)
-            .Include(p => p.User)
-            .AsQueryable();
-        
+            .Include(c => c.User)
+            .Include(c => c.Likes);
+
         var comments = await query.ToListAsync(cancellationToken);
-        
-        return _mapper.Map<IEnumerable<CommentDTO>>(comments);
+
+        var commentDtos = _mapper.Map<IEnumerable<CommentDTO>>(comments);
+
+        foreach (var commentDto in commentDtos)
+        {
+            var commentEntity = comments.First(c => c.Id == commentDto.Id);
+            commentDto.IsLikedByCurrentUser = commentEntity.Likes.Any(like => like.UserId == request.UserId);
+        }
+
+        return commentDtos;
     }
 }

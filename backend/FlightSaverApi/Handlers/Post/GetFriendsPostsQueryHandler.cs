@@ -20,7 +20,6 @@ public class GetFriendsPostsQueryHandler : IRequestHandler<GetFriendsPostsQuery,
 
     public async Task<IEnumerable<SocialPostDTO>> Handle(GetFriendsPostsQuery request, CancellationToken cancellationToken)
     {
-        // Fetch friends of the user
         var friends = await _context.Users
             .Include(u => u.Friends)
             .Where(u => u.Id == request.UserId)
@@ -29,13 +28,21 @@ public class GetFriendsPostsQueryHandler : IRequestHandler<GetFriendsPostsQuery,
 
         var friendIds = friends.Select(f => f.Id).ToList();
 
-        // Fetch posts by friends
         var posts = await _context.SocialPosts
             .Include(p => p.User)
             .Include(p => p.Comments)
+            .Include(p => p.Likes)
             .Where(p => friendIds.Contains(p.UserId))
             .ToListAsync(cancellationToken);
 
-        return _mapper.Map<IEnumerable<SocialPostDTO>>(posts);
+        var postDtos = _mapper.Map<IEnumerable<SocialPostDTO>>(posts);
+
+        foreach (var postDto in postDtos)
+        {
+            var postEntity = posts.First(p => p.Id == postDto.Id);
+            postDto.IsLikedByCurrentUser = postEntity.Likes.Any(like => like.UserId == request.UserId);
+        }
+
+        return postDtos;
     }
 }

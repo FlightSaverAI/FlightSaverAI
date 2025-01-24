@@ -33,6 +33,8 @@ public class AddFriendCommandHandler : IRequestHandler<AddFriendCommand, Unit>
             throw new InvalidOperationException("This user is already your friend.");
 
         user.Friends.Add(friend);
+        friend.Friends.Add(user);
+        
         await _context.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;

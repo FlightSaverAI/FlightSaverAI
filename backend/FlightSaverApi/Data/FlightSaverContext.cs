@@ -20,6 +20,8 @@ namespace FlightSaverApi.Data
         public DbSet<Flight> Flights { get; set; }
         public DbSet<SocialPost> SocialPosts { get; set; }        
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
+        public DbSet<CommentLike> CommentLikes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
