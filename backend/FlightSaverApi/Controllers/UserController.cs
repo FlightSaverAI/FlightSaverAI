@@ -41,6 +41,18 @@ public class UserController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("/friends")]
+    public async Task<ActionResult<IEnumerable<FriendDTO>>> GetFriends(CancellationToken cancellationToken)
+    {
+        var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+        
+        var query = new GetFriendsQuery() {UserId = userId};
+        
+        var users = await _mediator.Send(query, cancellationToken);
+        
+        return Ok(users);
+    }
     
     [HttpPut]
     public async Task<IActionResult> UpdateUser(EditUserDTO editUserDto, CancellationToken cancellationToken)
