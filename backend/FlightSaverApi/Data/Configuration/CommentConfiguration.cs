@@ -24,7 +24,7 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
             .IsRequired();
         
         builder.Property(c => c.UpdatedAt)
-            .IsRequired();
+            .IsRequired(false);
         
         builder.Property(c => c.Content)
             .HasMaxLength(500)

@@ -15,7 +15,7 @@ public class DeleteAircraftCommandHandler : IRequestHandler<DeleteAircraftComman
 
     public async Task<Unit> Handle(DeleteAircraftCommand request, CancellationToken cancellationToken)
     {
-        var aircraft = await _context.Aircrafts.FindAsync(request.Id);
+        var aircraft = await _context.Aircrafts.FindAsync(request.Id, cancellationToken);
         if (aircraft == null)
         {
             throw new KeyNotFoundException($"Aircraft with Id {request.Id} does not exist.");
