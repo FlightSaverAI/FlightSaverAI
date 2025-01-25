@@ -10,14 +10,14 @@ export class StatisticsService {
   private _httpClient = inject(HttpClient);
 
   public getTopOverview(): Observable<any> {
-    return this._httpClient.get(`${environment.url}/statistics/bar`);
+    return this._httpClient.get(`${environment.url}/statistic/bar`);
   }
 
   public getFlightPassangerOverview(): Observable<any> {
-    return this._httpClient.get(`${environment.url}/statistics/circual`);
+    return this._httpClient.get(`${environment.url}/statistic/circual`);
   }
 
   public getActivityOverview(): Observable<any> {
-    return this._httpClient.get(`${environment.url}/statistics/line`);
+    return this._httpClient.get(`${environment.url}/statistic/line`);
   }
 }

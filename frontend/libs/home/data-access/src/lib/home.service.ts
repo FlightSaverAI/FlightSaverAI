@@ -14,6 +14,6 @@ export class HomeService {
   }
 
   public getBasicStatistics(): Observable<any> {
-    return this._http.get(`${environment.url}/statistics/basic`);
+    return this._http.get(`${environment.url}/statistic/basic`);
   }
 }
