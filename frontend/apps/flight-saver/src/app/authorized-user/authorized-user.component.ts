@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent, NavConfig } from '@shared/ui-components';
+import { NavbarComponent, NavConfig } from '@shared/ui';
 
 @Component({
   standalone: true,

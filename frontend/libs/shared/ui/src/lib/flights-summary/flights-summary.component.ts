@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormatTimePipe } from './format-time.pipe';
 
 @Component({
-  selector: 'home-flights-summary',
+  selector: 'shared-flights-summary',
   standalone: true,
   imports: [CommonModule, FormatTimePipe],
   template: `<div class="summary">
@@ -13,6 +13,7 @@ import { FormatTimePipe } from './format-time.pipe';
         <p>
           <strong>{{ this.statistics().flightCount.count }}</strong> flights
         </p>
+        @if(isAdvanced()){
         <p>
           <strong>{{ this.statistics().flightCount.flightDistribution.International }}</strong>
           international
@@ -21,6 +22,7 @@ import { FormatTimePipe } from './format-time.pipe';
           <strong>{{ this.statistics().flightCount.flightDistribution.Domestic }}</strong>
           domestic
         </p>
+        }
       </div>
     </div>
     <div class="summary__flights">
@@ -29,6 +31,7 @@ import { FormatTimePipe } from './format-time.pipe';
         <p>
           <strong>{{ totalDistance() }}</strong> km
         </p>
+        @if(isAdvanced()){
         <p>
           <strong>{{ this.statistics().distance.aroundEarthDistance.toFixed(2) }}x</strong> around
           the earth
@@ -37,6 +40,7 @@ import { FormatTimePipe } from './format-time.pipe';
           <strong>{{ this.statistics().distance.toTheMoonDistance.toFixed(2) }}x</strong> to the
           moon
         </p>
+        }
       </div>
     </div>
     <div class="summary__flights">
@@ -45,12 +49,14 @@ import { FormatTimePipe } from './format-time.pipe';
         <p>
           <strong>{{ this.statistics().totalFlightTime.time | formatTime }}</strong>
         </p>
+        @if(isAdvanced()){
         <p>
           <strong>{{ this.statistics().totalFlightTime.days.toFixed(2) }}</strong> days
         </p>
         <p>
           <strong>{{ this.statistics().totalFlightTime.months.toFixed(2) }}</strong> months
         </p>
+        }
       </div>
     </div>
   </div>`,
@@ -58,6 +64,7 @@ import { FormatTimePipe } from './format-time.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlightsSummaryComponent {
+  isAdvanced = input.required<boolean>();
   statistics = input.required<any>();
   totalDistance = computed(() => Math.round(this.statistics().distance.totalDistance));
 }
