@@ -1,11 +1,12 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '@shared/ui-components';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'user-profile-avatar',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, ButtonComponent, RouterModule],
   template: `
     <div class="container">
       <img src="global/assets/background-image.png" alt="" />
@@ -23,12 +24,14 @@ import { ButtonComponent } from '@shared/ui-components';
           class="edit-profile"
           content="Edit Profile"
           category="secondary"
+          [routerLink]="['/authorized/user-profile/settings']"
         ></shared-button>
         }
       </div>
     </div>
   `,
   styleUrl: './avatar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarComponent {
   isSettingsSection = input.required<boolean>();
