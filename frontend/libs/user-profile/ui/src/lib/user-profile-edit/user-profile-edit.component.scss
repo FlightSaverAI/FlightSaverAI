@@ -1,0 +1,50 @@
+@use '@global/styles/styles.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 25px;
+  background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+  border-radius: 30px;
+  color: white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 35px;
+}
+
+.title {
+  padding: 25px 35px 5px;
+}
+
+shared-button {
+  margin: 10px 35px 30px;
+  width: 125px;
+  align-self: flex-end;
+}
+
+@include tablet {
+  .container {
+    column-gap: 75px;
+    max-width: 60vw;
+    width: 100%;
+  }
+
+  .form {
+    width: 100%;
+    flex-direction: row;
+    gap: 50px;
+  }
+
+  shared-input {
+    width: 100%;
+  }
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
