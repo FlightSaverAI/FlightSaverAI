@@ -21,13 +21,7 @@ interface imgConf {
     (click)="emitEvent.emit()"
   >
     @if(imgConf().imgSrc){
-    <img
-      [ngClass]="imgConf().imgClass"
-      [ngSrc]="imgConf().imgSrc"
-      alt=""
-      width="15"
-      height="15"
-    />
+    <img [ngClass]="imgConf().imgClass" [ngSrc]="imgConf().imgSrc" alt="" width="15" height="15" />
     }
 
     {{ content() }}
