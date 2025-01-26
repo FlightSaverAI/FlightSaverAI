@@ -1,7 +1,13 @@
 import { ChangeDetectionStrategy, Component, forwardRef, input, signal } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
-import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
 import { FormsModule } from '@angular/forms';
 
@@ -10,49 +16,51 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, NgOptimizedImage, ValidationSignComponent, NgClass, FormsModule],
   template: `
-    @if(label() ){
-      <label for="input">{{ label() }}{{ hasRequiredValidator ? '*' : '' }}</label>
-    }
-    <div
-      id="input"
-      class="input-container"
-      [ngClass]="
-        !formField.pristine
-          ? {
-              'input-container--error': hasValidator && formField.status === 'INVALID',
-              'input-container--success': hasValidator && formField.status === 'VALID'
-            }
-          : {}
-      "
-    >
-      @if(iconSrc()){
-      <div class="icon-container">
-        <img [ngSrc]="iconSrc()" alt="" width="20" height="20" />
+    <div [ngClass]="{ disabled: isDisabled() }">
+      <label for="input" *ngIf="label()">{{ label() }}{{ hasRequiredValidator ? '*' : '' }}</label>
+      <div
+        id="input"
+        class="input-container"
+        [ngClass]="
+          !formField.pristine
+            ? {
+                'input-container--error': hasValidator && formField.status === 'INVALID',
+                'input-container--success': hasValidator && formField.status === 'VALID'
+              }
+            : {}
+        "
+      >
+        @if(iconSrc()){
+        <div class="icon-container">
+          <img [ngSrc]="iconSrc()" alt="" width="20" height="20" />
+        </div>
+        }
+        <input
+          [ngModel]="value"
+          [style.padding]="!iconSrc() ? '10px' : null"
+          [type]="type()"
+          [placeholder]="placeholder()"
+          [readOnly]="isReadOnly()"
+          (input)="setInput($event.target)"
+          (blur)="onTouched()"
+        />
+
+        @if(formField){
+        <shared-validation-sign [formField]="formField"></shared-validation-sign>
+        }
       </div>
-      }
-      <input
-        [ngModel]="value"
-        [style.padding]="!iconSrc() ? '10px' : null"
-        [type]="type()"
-        [placeholder]="placeholder()"
-        [readOnly]="isReadOnly()"
-        (input)="setInput($event.target)"
-        (blur)="onTouched()"
-      />
 
-      @if(formField){
-      <shared-validation-sign [formField]="formField"></shared-validation-sign>
-      }
+      <p
+        class="error-message"
+        [style.visibility]="
+          hasValidator && !formField.pristine && formField.status === 'INVALID'
+            ? 'visible'
+            : 'hidden'
+        "
+      >
+        Field {{ label() }} {{ valueChangeListener() ? 'is invalid' : 'is required' }}
+      </p>
     </div>
-
-    <p
-      class="error-message"
-      [style.visibility]="
-        hasValidator && !formField.pristine && formField.status === 'INVALID' ? 'visible' : 'hidden'
-      "
-    >
-      Field {{ label() }} {{ valueChangeListener() ? 'is invalid' : 'is required' }}
-    </p>
   `,
   styleUrl: './input.component.scss',
   providers: [
@@ -72,6 +80,7 @@ export class InputComponent implements ControlValueAccessor {
   parentForm = input.required<FormGroup<any>>();
   fieldName = input.required<string>();
   isReadOnly = input<boolean>(false);
+  isDisabled = input<boolean>(false);
 
   valueChangeListener = signal('');
   value: any;
