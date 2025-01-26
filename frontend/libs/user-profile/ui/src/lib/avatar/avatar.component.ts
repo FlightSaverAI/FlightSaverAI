@@ -14,7 +14,7 @@ import { ButtonComponent } from '@shared/ui-components';
         @if(isSettingsSection()) {
         <shared-button
           class="update-picture"
-          content="Edit Picture"
+          content="Update Photo"
           category="secondary"
         ></shared-button>
         } @else {
@@ -31,6 +31,6 @@ import { ButtonComponent } from '@shared/ui-components';
   styleUrl: './avatar.component.scss',
 })
 export class AvatarComponent {
-  isSettingsSection = input(false);
+  isSettingsSection = input.required<boolean>();
   selectedOption = output();
 }
