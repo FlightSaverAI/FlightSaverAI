@@ -10,7 +10,7 @@ import { HomeService } from '@flight-saver/home/data-access';
   standalone: true,
   imports: [CommonModule, PostComponent, AvatarComponent, FlightsSummaryComponent],
   template: `<div class="travel">
-    <user-profile-avatar></user-profile-avatar>
+    <user-profile-avatar [isSettingsSection]="false"></user-profile-avatar>
     <shared-flights-summary
       [statistics]="basicStatistics()"
       [isAdvanced]="false"
@@ -32,6 +32,7 @@ import { HomeService } from '@flight-saver/home/data-access';
 export class UserProfileContainerComponent {
   //TO FIX (this endpoint should be in shared data access library)
   protected basicStatistics = toSignal(inject(HomeService).getBasicStatistics());
+  
 
   mockedUsersPosts = [
     {
