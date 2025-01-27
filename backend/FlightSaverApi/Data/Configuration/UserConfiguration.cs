@@ -29,6 +29,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 
         builder.Property(u => u.ProfilePictureUrl)
             .IsRequired(false);
+        
+        builder.Property(u => u.BackgroundPictureUrl)
+            .IsRequired(false);
 
         builder
             .HasMany(u => u.AircraftReviews)

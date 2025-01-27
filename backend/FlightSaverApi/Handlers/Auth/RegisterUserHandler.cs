@@ -41,6 +41,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, string>
         user.PasswordSalt = passwordSalt;
         user.Role = UserRole.User;
         user.ProfilePictureUrl = "";
+        user.BackgroundPictureUrl = "";
         
         _context.Users.Add(user);
         await _context.SaveChangesAsync(cancellationToken);
