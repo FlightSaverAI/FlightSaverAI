@@ -10,6 +10,8 @@ public class FriendDTO
     
     public string? ProfilePictureUrl { get; set; }
     
+    public string? BackgroundPictureUrl { get; set; }
+    
     public bool IsLoggedUserFriend { get; set; }
     
     public BasicFlightStatistics Statistics { get; set; }

@@ -44,6 +44,7 @@ public class UserProfile : Profile
         CreateMap<User, FriendDTO>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username))
             .ForMember(dest => dest.ProfilePictureUrl, opt => opt.MapFrom(src => src.ProfilePictureUrl))
+            .ForMember(dest => dest.BackgroundPictureUrl, opt => opt.MapFrom(src => src.BackgroundPictureUrl))
             .ForMember(dest => dest.Statistics, opt => opt.Ignore()) // Customize how to map Statistics if needed
             .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) =>

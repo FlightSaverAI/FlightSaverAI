@@ -18,6 +18,8 @@ namespace FlightSaverApi.Models
         public byte[] PasswordSalt { get; set; }
         
         public string? ProfilePictureUrl { get; set; }
+        
+        public string? BackgroundPictureUrl { get; set; }
 
         public virtual List<AircraftReview>? AircraftReviews { get; set; }
         
