@@ -3,12 +3,13 @@ using FlightSaverApi.Data;
 using FlightSaverApi.DTOs.User;
 using FlightSaverApi.Interfaces.Services;
 using FlightSaverApi.Queries.User;
+using FlightSaverApi.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Handlers.User;
 
-public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerable<FriendDTO>>
+public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, PagedUserResult>
 {
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerab
         _statisticsService = statisticsService;
     }
     
-    public async Task<IEnumerable<FriendDTO>> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
+    public async Task<PagedUserResult> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
     {
         var user = await _context.Users
             .Include(u => u.Friends)
@@ -29,7 +30,7 @@ public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerab
 
         if (user == null)
         {
-            return Enumerable.Empty<FriendDTO>();
+            return new PagedUserResult();
         }
 
         var friendsDTO = _mapper.Map<IEnumerable<FriendDTO>>(user.Friends);
@@ -39,7 +40,27 @@ public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, IEnumerab
             friend.IsLoggedUserFriend = true;
             friend.Statistics = await _statisticsService.GetBasicFlightStatisticsAsync(friend.Id, cancellationToken);
         }
+        
+        var totalRecords = 0;
+        var totalPages = 0;
+        
+        if (request.PageNumber.HasValue && request.PageSize.HasValue && request.PageNumber > 0 && request.PageSize > 0)
+        {
+            totalRecords = friendsDTO.Count();
+            totalPages = (int)Math.Ceiling((double)totalRecords / (request.PageSize ?? 10));
+            return new PagedUserResult()
+            {
+                Users = friendsDTO.Skip((request.PageNumber.Value - 1) * request.PageSize.Value)
+                    .Take(request.PageSize.Value)
+                    .ToList(),
+                TotalPages = totalPages
+            };
+        }
 
-        return friendsDTO;
+        return new PagedUserResult()
+        {
+            Users = friendsDTO,
+            TotalPages = totalPages
+        };
     }
 }

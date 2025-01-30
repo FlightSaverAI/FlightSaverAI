@@ -20,19 +20,31 @@ public class GetFriendsPostsQueryHandler : IRequestHandler<GetFriendsPostsQuery,
 
     public async Task<IEnumerable<SocialPostDTO>> Handle(GetFriendsPostsQuery request, CancellationToken cancellationToken)
     {
-        var friends = await _context.Users
-            .Include(u => u.Friends)
+        var friendIds = await _context.Users
             .Where(u => u.Id == request.UserId)
-            .SelectMany(u => u.Friends)
+            .SelectMany(u => u.Friends.Select(f => f.Id))
             .ToListAsync(cancellationToken);
+        
+        friendIds.Add(request.UserId);
 
-        var friendIds = friends.Select(f => f.Id).ToList();
-
-        var posts = await _context.SocialPosts
+        var query = _context.SocialPosts
             .Include(p => p.User)
             .Include(p => p.Comments)
             .Include(p => p.Likes)
-            .Where(p => friendIds.Contains(p.UserId))
+            .Where(p => friendIds.Contains(p.UserId));
+
+        if (request.LastPostId.HasValue)
+        {
+            var lastPost = await _context.SocialPosts.FindAsync(request.LastPostId);
+            if (lastPost != null)
+            {
+                query = query.Where(p => p.PostedAt < lastPost.PostedAt);
+            }
+        }
+
+        var posts = await query
+            .OrderByDescending(p => p.PostedAt)
+            .Take(request.PageSize)
             .ToListAsync(cancellationToken);
 
         var postDtos = _mapper.Map<IEnumerable<SocialPostDTO>>(posts);
