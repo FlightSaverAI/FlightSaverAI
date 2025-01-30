@@ -29,14 +29,14 @@ public class PostController : ControllerBase
     }
 
     [HttpGet("user")]
-    public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetPostsByUserId(CancellationToken cancellationToken,
-        int? userId = null)
+    public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetPostsByUserId(CancellationToken cancellationToken, 
+        [FromQuery] int? lastPostId, [FromQuery] int pageSize = 10, int? userId = null)
     {
         try
         {
             userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
             
-            var query = new GetPostsByUserIdQuery(userId.Value);
+            var query = new GetPostsByUserIdQuery(userId.Value, lastPostId, pageSize);
         
             var posts = await _mediator.Send(query, cancellationToken);
         
@@ -53,13 +53,14 @@ public class PostController : ControllerBase
     }
     
     [HttpGet("friend")]
-    public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetFriendsPosts(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetFriendsPosts(CancellationToken cancellationToken,
+        [FromQuery] int? lastPostId = null, [FromQuery] int pageSize = 10)
     {
         try
         {
             var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
 
-            var query = new GetFriendsPostsQuery(userId);
+            var query = new GetFriendsPostsQuery(userId, lastPostId, pageSize);
 
             var posts = await _mediator.Send(query, cancellationToken);
 
