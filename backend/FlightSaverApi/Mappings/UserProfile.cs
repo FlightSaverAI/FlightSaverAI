@@ -25,8 +25,13 @@ public class UserProfile : Profile
         CreateMap<User, UserRegisterDTO>()
             .ForMember(dest => dest.Password, opt => opt.Ignore());
 
-        CreateMap<User, EditUserDTO>()
+        CreateMap<User, UserInfoDTO>()
             .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+        CreateMap<User, EditUserDTO>()
+            .ForMember(dest => dest.Password, opt => opt.Ignore())
+            .ForMember(dest => dest.ProfilePictureImage, opt => opt.Ignore())
+            .ForMember(dest => dest.BackgroundPictureImage, opt => opt.Ignore());
 
         CreateMap<EditUserDTO, User>()
             .ForMember(dest => dest.AirportReviews, opt => opt.Ignore())
@@ -44,6 +49,7 @@ public class UserProfile : Profile
         CreateMap<User, FriendDTO>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username))
             .ForMember(dest => dest.ProfilePictureUrl, opt => opt.MapFrom(src => src.ProfilePictureUrl))
+            .ForMember(dest => dest.BackgroundPictureUrl, opt => opt.MapFrom(src => src.BackgroundPictureUrl))
             .ForMember(dest => dest.Statistics, opt => opt.Ignore()) // Customize how to map Statistics if needed
             .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) =>

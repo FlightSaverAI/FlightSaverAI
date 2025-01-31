@@ -2,6 +2,7 @@ using FlightSaverApi.Commands.User;
 using FlightSaverApi.DTOs.User;
 using FlightSaverApi.Helpers;
 using FlightSaverApi.Queries.User;
+using FlightSaverApi.Results;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,13 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("info")]
-    public async Task<ActionResult<EditUserDTO>> GetUserInfo(CancellationToken cancellationToken)
+    public async Task<ActionResult<UserInfoDTO>> GetUserInfo(CancellationToken cancellationToken)
     {
         try
         {
             var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
             
-            var query = new GetEditUserQuery(userId);
+            var query = new GetUserInfoQuery(userId);
         
             var user = await _mediator.Send(query, cancellationToken);
         
@@ -43,11 +44,17 @@ public class UserController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<FriendDTO>>> GetUsers(CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedUserResult>> GetUsers([FromQuery] int? pageNumber,
+        [FromQuery] int? pageSize, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
         
-        var query = new GetUsersQuery() {UserId = userId};
+        var query = new GetUsersQuery()
+        {
+            UserId = userId,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
         
         var users = await _mediator.Send(query, cancellationToken);
         
@@ -55,11 +62,17 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("/friend")]
-    public async Task<ActionResult<IEnumerable<FriendDTO>>> GetFriends(CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedUserResult>> GetFriends([FromQuery] int? pageNumber,
+        [FromQuery] int? pageSize, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
         
-        var query = new GetFriendsQuery() {UserId = userId};
+        var query = new GetFriendsQuery()
+        {
+            UserId = userId,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
         
         var users = await _mediator.Send(query, cancellationToken);
         

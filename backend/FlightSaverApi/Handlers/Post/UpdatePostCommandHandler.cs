@@ -3,6 +3,8 @@ using FlightSaverApi.Commands.Comment;
 using FlightSaverApi.Commands.Post;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs.Post;
+using FlightSaverApi.Interfaces.Services;
+using FlightSaverApi.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +14,13 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, EditS
 {
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
+    private readonly IBlobStorageService _blobStorageService;
 
-    public UpdatePostCommandHandler(FlightSaverContext context, IMapper mapper)
+    public UpdatePostCommandHandler(FlightSaverContext context, IMapper mapper, IBlobStorageService blobStorageService)
     {
         _context = context;
         _mapper = mapper;
+        _blobStorageService = blobStorageService;
     }
 
     public async Task<EditSocialPostDTO> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
@@ -31,6 +35,21 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, EditS
         if (posts.UserId != request.UserId)
         {
             throw new UnauthorizedAccessException("You are not authorized to edit this post.");
+        }
+        
+        if (request.EditSocialPostDTO.Image is not null)
+        {
+            var imageUrl = await _blobStorageService.UploadImageAsync(request.EditSocialPostDTO.Image);
+
+            var imageRecord = new ImageRecord()
+            {
+                Url = imageUrl
+            };
+            
+            _context.Images.Add(imageRecord);
+            await _context.SaveChangesAsync(cancellationToken);
+            
+            posts.ImageUrl = imageUrl;
         }
         
         posts.UpdatedAt = DateTime.UtcNow;
