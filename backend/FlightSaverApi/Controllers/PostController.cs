@@ -117,7 +117,7 @@ public class PostController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<SocialPostDTO>> CreatePost([FromBody] CreatePostCommand command,
+    public async Task<ActionResult<SocialPostDTO>> CreatePost(CreatePostCommand command,
         CancellationToken cancellationToken)
     {
         try
