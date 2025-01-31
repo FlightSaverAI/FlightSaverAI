@@ -34,15 +34,13 @@ public class PostProfile : Profile
         CreateMap<EditSocialPostDTO, SocialPost>()
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
             .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
-            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
             .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) =>
                     srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
-        
+
         CreateMap<SocialPost, EditSocialPostDTO>()
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
-            .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
-            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl));
+            .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content));
 
         CreateMap<EditCommentDTO, Comment>()
             .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
@@ -72,7 +70,7 @@ public class PostProfile : Profile
         CreateMap<NewPostDTO, SocialPost>()
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
             .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
-            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
+            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.User, opt => opt.Ignore())
@@ -85,7 +83,6 @@ public class PostProfile : Profile
         CreateMap<SocialPost, NewPostDTO>()
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
             .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
-            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
     }
 }
