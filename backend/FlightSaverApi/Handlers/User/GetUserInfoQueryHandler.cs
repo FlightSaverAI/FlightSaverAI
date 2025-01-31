@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Handlers.User;
 
-public class GetEditUserQueryHandler : IRequestHandler<GetEditUserQuery, EditUserDTO>
+public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserInfoDTO>
 {
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
     
-    public GetEditUserQueryHandler(FlightSaverContext context, IMapper mapper)
+    public GetUserInfoQueryHandler(FlightSaverContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
     
-    public async Task<EditUserDTO> Handle(GetEditUserQuery request,
+    public async Task<UserInfoDTO> Handle(GetUserInfoQuery request,
         CancellationToken cancellationToken)
     {
         var user = await _context.Users.FindAsync(request.Id, cancellationToken);
@@ -28,7 +28,7 @@ public class GetEditUserQueryHandler : IRequestHandler<GetEditUserQuery, EditUse
             throw new KeyNotFoundException($"User with Id {request.Id} does not exist.");
         }
         
-        var userDto = _mapper.Map<EditUserDTO>(user);
+        var userDto = _mapper.Map<UserInfoDTO>(user);
         
         return userDto;
     }

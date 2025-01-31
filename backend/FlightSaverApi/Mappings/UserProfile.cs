@@ -25,6 +25,9 @@ public class UserProfile : Profile
         CreateMap<User, UserRegisterDTO>()
             .ForMember(dest => dest.Password, opt => opt.Ignore());
 
+        CreateMap<User, UserInfoDTO>()
+            .ForMember(dest => dest.Password, opt => opt.Ignore());
+
         CreateMap<User, EditUserDTO>()
             .ForMember(dest => dest.Password, opt => opt.Ignore())
             .ForMember(dest => dest.ProfilePictureImage, opt => opt.Ignore())

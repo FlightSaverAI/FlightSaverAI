@@ -3,11 +3,11 @@ using MediatR;
 
 namespace FlightSaverApi.Queries.User;
 
-public class GetEditUserQuery : IRequest<EditUserDTO>
+public class GetUserInfoQuery : IRequest<UserInfoDTO>
 {
     public int Id { get; set; }
 
-    public GetEditUserQuery(int id)
+    public GetUserInfoQuery(int id)
     {
         Id = id;
     }
