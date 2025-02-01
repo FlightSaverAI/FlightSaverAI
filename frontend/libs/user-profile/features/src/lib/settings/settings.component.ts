@@ -14,14 +14,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   imports: [CommonModule, AvatarComponent, UserProfileEditComponent, MatDialogModule],
   template: `
     <!-- TOFIX -->
-    @defer(when userData() || updatedUserData()) {
+    @defer(when userData()) {
     <div class="settings-container">
       <user-profile-avatar
         [isSettingsSection]="true"
-        [backgroundPhotoUrl]="
-          updatedUserData().backgroundPictureUrl ?? userData().backgroundPictureUrl
-        "
-        [profilePhotoUrl]="updatedUserData().profilePictureUrl ?? userData().profilePictureUrl"
+        [backgroundPhotoUrl]="userData().backgroundPictureUrl"
+        [profilePhotoUrl]="userData().profilePictureUrl"
         (openUploadPhotoModal)="openUploadPhotoModal($event)"
       ></user-profile-avatar>
       <user-profile-edit
@@ -46,7 +44,7 @@ export class SettingsComponent {
   protected changePasswordForm = signal(changePasswordForm());
 
   //TOFIX
-  protected updatedUserData = signal({} as any);
+  protected updatedUserData = signal(null as any);
 
   protected userData = toSignal(
     this._settingsService.getUserProfileData().pipe(
