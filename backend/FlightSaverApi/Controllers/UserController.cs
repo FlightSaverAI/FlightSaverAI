@@ -80,7 +80,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPut]
-    public async Task<IActionResult> UpdateUser(EditUserDTO editUserDto, CancellationToken cancellationToken)
+    public async Task<ActionResult<EditedUserDTO>> UpdateUser(EditUserDTO editUserDto, CancellationToken cancellationToken)
     {
         try
         {
@@ -92,9 +92,9 @@ public class UserController : ControllerBase
                 EditUserDto = editUserDto
             };
             
-            await _mediator.Send(command, cancellationToken);
+            var user = await _mediator.Send(command, cancellationToken);
             
-            return Ok();
+            return Ok(user);
         }
         catch (UnauthorizedAccessException ex)
         {
