@@ -12,7 +12,7 @@ import { Router, RouterModule } from '@angular/router';
       <li class="dropdown__item" (click)="selectOption.emit(userProfileUrl)">
         <p class="dropdown__text">Profile</p>
       </li>
-      <li class="dropdown__item">
+      <li class="dropdown__item" (click)="selectOption.emit(userProfileSettingsUrl)">
         <p class="dropdown__text">Settings</p>
       </li>
       <li class="dropdown__item" (click)="logout()">
@@ -26,6 +26,7 @@ export class ProfileDropdownComponent {
   selectOption = output<string>();
 
   protected userProfileUrl = '/authorized/user-profile';
+  protected userProfileSettingsUrl = '/authorized/user-profile/settings';
 
   private _cookieService = inject(CookieService);
   private _router = inject(Router);

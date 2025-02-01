@@ -12,6 +12,10 @@
   gap: 50px;
 }
 
+shared-flights-summary {
+  margin-top: 225px;
+}
+
 @include mobile-large {
   .posts-container {
     margin: 10px 30px;

@@ -1,10 +1,10 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
-import { ButtonComponent } from '../button/button.component';
+import { ButtonComponent } from '@shared/ui-components';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProfileDropdownDirective } from '../profile-dropdown/profile-dropdown.directive';
+import { ProfileDropdownDirective } from '../../../../ui/src/lib/profile-dropdown/profile-dropdown.directive';
 
 export type NavTypes = 'button' | 'list' | 'photo';
 

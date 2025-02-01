@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HomeService } from '@flight-saver/home/data-access';
 import { MapComponent } from '@flight-saver/home/ui';
-import { FlightsSummaryComponent } from '@flight-saver/home/ui';
+import { FlightsSummaryComponent } from '@shared/ui';
 
 import L from 'leaflet';
 
@@ -14,7 +14,10 @@ import L from 'leaflet';
     <div class="wrapper">
       <home-map [markerIcon]="markerIcon()" [flightData]="flightData()"></home-map>
       @defer(when basicStatistics()){
-      <home-flights-summary [statistics]="basicStatistics()"></home-flights-summary>
+      <shared-flights-summary
+        [statistics]="basicStatistics()"
+        [isAdvanced]="true"
+      ></shared-flights-summary>
       }
     </div>
     }

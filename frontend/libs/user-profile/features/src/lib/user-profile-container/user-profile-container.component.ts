@@ -1,13 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostComponent } from '@flight-saver/community/ui';
 import { AvatarComponent } from '@flight-saver/user-profile/ui';
+import { FlightsSummaryComponent } from '@shared/ui';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { HomeService } from '@flight-saver/home/data-access';
+import { SettingsService } from '@flight-saver/user-profile/data-access';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, PostComponent, AvatarComponent],
+  imports: [CommonModule, PostComponent, AvatarComponent, FlightsSummaryComponent],
   template: `<div class="travel">
-    <user-profile-avatar></user-profile-avatar>
+    @defer(when userData()){
+    <user-profile-avatar
+      [profilePhotoUrl]="userData().profilePictureUrl"
+      [backgroundPhotoUrl]="userData().backgroundPictureUrl"
+      [isSettingsSection]="false"
+    ></user-profile-avatar>
+    <shared-flights-summary
+      [statistics]="basicStatistics()"
+      [isAdvanced]="false"
+    ></shared-flights-summary>
     <div class="posts-container">
       @for(post of mockedUsersPosts; track post){
       <community-post
@@ -19,10 +32,16 @@ import { AvatarComponent } from '@flight-saver/user-profile/ui';
       ></community-post>
       }
     </div>
+    }
   </div>`,
   styleUrl: './user-profile-container.component.scss',
+  providers: [SettingsService],
 })
 export class UserProfileContainerComponent {
+  //TO FIX (this endpoint should be in shared data access library)
+  protected userData = toSignal(inject(SettingsService).getUserProfileData());
+  protected basicStatistics = toSignal(inject(HomeService).getBasicStatistics());
+
   mockedUsersPosts = [
     {
       user: {

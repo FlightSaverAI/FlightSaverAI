@@ -1,0 +1,30 @@
+.body-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  border: 1px solid white;
+}
+
+.body-container.dragging {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px dotted white;
+  transition: 0.3s;
+}
+
+img {
+  margin: 25px;
+  align-self: center;
+}
+
+.paste-photo-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.drag-and-drop {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-left: 30px;
+}

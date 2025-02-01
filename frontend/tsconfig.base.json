@@ -36,14 +36,17 @@
       "@flight-saver/home/ui": ["libs/home/ui/src/index.ts"],
       "@flight-saver/statistics/data-access": ["libs/statistics/data-access/src/index.ts"],
       "@flight-saver/statistics/features": ["libs/statistics/features/src/index.ts"],
-      "@flight-saver/statistics/utils": ["libs/statistics/utils/src/index.ts"],
       "@flight-saver/statistics/routes": ["libs/statistics/routes/src/index.ts"],
       "@flight-saver/statistics/ui": ["libs/statistics/ui/src/index.ts"],
+      "@flight-saver/statistics/utils": ["libs/statistics/utils/src/index.ts"],
+      "@flight-saver/user-profile/data-access": ["libs/user-profile/data-access/src/index.ts"],
       "@flight-saver/user-profile/features": ["libs/user-profile/features/src/index.ts"],
       "@flight-saver/user-profile/routes": ["libs/user-profile/routes/src/index.ts"],
       "@flight-saver/user-profile/ui": ["libs/user-profile/ui/src/index.ts"],
+      "@flight-saver/user-profile/utils": ["libs/user-profile/utils/src/index.ts"],
       "@global/*": ["apps/global/*"],
       "@shared/data-access": ["libs/shared/data-access/src/index.ts"],
+      "@shared/ui": ["libs/shared/ui/src/index.ts"],
       "@shared/ui-components": ["libs/shared/ui-components/src/index.ts"]
     }
   }

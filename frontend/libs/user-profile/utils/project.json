@@ -1,0 +1,20 @@
+{
+  "name": "user-profile-utils",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/user-profile/utils/src",
+  "prefix": "user-profile",
+  "projectType": "library",
+  "tags": ["domain:user-profile", "type:utils"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/user-profile/utils/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
