@@ -24,10 +24,10 @@ public class BlobStorageService : IBlobStorageService
             throw new InvalidOperationException("Invalid file type.");
         }
 
-        if (image.Length > 5 * 1024 * 1024)
-        {
-            throw new InvalidOperationException("File size exceeds the 5 MB limit.");
-        }
+        // if (image.Length > 5 * 1024 * 1024)
+        // {
+        //     throw new InvalidOperationException("File size exceeds the 5 MB limit.");
+        // }
 
         var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
         var blobClient = _containerClient.GetBlobClient(fileName);
