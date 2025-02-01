@@ -20,6 +20,12 @@ export class SettingsService {
       return this._http.put<any>(`${environment.url}/user`, formBlob);
     }
 
-    return this._http.put<any>(`${environment.url}/user`, form);
+    return this._http.put<any>(
+      `${environment.url}/user`,
+      {},
+      {
+        params: { ...form },
+      }
+    );
   }
 }
