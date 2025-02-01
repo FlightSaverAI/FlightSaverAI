@@ -45,6 +45,9 @@ public class UserProfile : Profile
             .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) =>
                     srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+
+        CreateMap<User, EditedUserDTO>()
+            .ForMember(dest => dest.Password, opt => opt.Ignore());
         
         CreateMap<User, FriendDTO>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username))
