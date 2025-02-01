@@ -10,7 +10,16 @@ export class SettingsService {
     return this._http.get<any>(`${environment.url}/user/info`);
   }
 
-  public updateUserProfileData(form: any) {
+  public updateUserProfileData(form: any, photoType?: any) {
+    //TOFIX
+    if (form instanceof Blob) {
+      const formBlob = new FormData();
+      const type = photoType === 'Profile' ? 'ProfilePictureImage' : 'BackgroundPictureImage';
+
+      formBlob.append(type, form, 'image.png');
+      return this._http.put<any>(`${environment.url}/user`, formBlob);
+    }
+
     return this._http.put<any>(`${environment.url}/user`, form);
   }
 }
