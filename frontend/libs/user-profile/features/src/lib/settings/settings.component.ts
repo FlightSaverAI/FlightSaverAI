@@ -13,13 +13,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   standalone: true,
   imports: [CommonModule, AvatarComponent, UserProfileEditComponent, MatDialogModule],
   template: `
-    <!-- TOFIX -->
     @defer(when userData()) {
     <div class="settings-container">
       <user-profile-avatar
         [isSettingsSection]="true"
-        [backgroundPhotoUrl]="userData().backgroundPictureUrl"
-        [profilePhotoUrl]="userData().profilePictureUrl"
+        [backgroundPhotoUrl]="
+          updatedUserPhotos()?.backgroundPictureUrl ?? userData().backgroundPictureUrl
+        "
+        [profilePhotoUrl]="updatedUserPhotos()?.profilePictureUrl ?? userData().profilePictureUrl"
         (openUploadPhotoModal)="openUploadPhotoModal($event)"
       ></user-profile-avatar>
       <user-profile-edit
@@ -42,10 +43,6 @@ export class SettingsComponent {
 
   protected userProfileForm = signal(userProfileUpdateForm());
   protected changePasswordForm = signal(changePasswordForm());
-
-  //TOFIX
-  protected updatedUserData = signal(null as any);
-
   protected userData = toSignal(
     this._settingsService.getUserProfileData().pipe(
       tap(({ username, email }) =>
@@ -56,6 +53,10 @@ export class SettingsComponent {
       )
     )
   );
+  protected updatedUserPhotos = signal<{
+    profilePictureUrl?: string;
+    backgroundPictureUrl?: string;
+  } | null>(null);
 
   protected saveUserData() {
     if (this.changePasswordForm().invalid) {
@@ -63,14 +64,13 @@ export class SettingsComponent {
       return;
     }
 
-    this._settingsService.updateUserProfileData(this.changePasswordForm().getRawValue()).subscribe({
+    this._settingsService.updatePassword(this.changePasswordForm().getRawValue()).subscribe({
       next: () => alert('Successfuly updated password'),
       error: () => alert('Error'),
       complete: () => this._router.navigateByUrl('/authorized/user-profile'),
     });
   }
 
-  // TOFIX
   protected openUploadPhotoModal(photoType: 'Background' | 'Profile') {
     const modalRef = this._dialog.open(CroppedPhotoModalComponent, {
       width: '700px',
@@ -81,9 +81,8 @@ export class SettingsComponent {
       .afterClosed()
       .pipe(
         filter((blob) => !!blob),
-        concatMap((blob) => this._settingsService.updateUserProfileData(blob, photoType)),
-        concatMap(() => this._settingsService.getUserProfileData())
+        concatMap((blob) => this._settingsService.updateUserPhoto(blob, photoType))
       )
-      .subscribe((newUserData) => this.updatedUserData.set(newUserData));
+      .subscribe((newUserPhoto) => this.updatedUserPhotos.set(newUserPhoto));
   }
 }

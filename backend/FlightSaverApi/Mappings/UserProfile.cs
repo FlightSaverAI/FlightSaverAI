@@ -45,6 +45,58 @@ public class UserProfile : Profile
             .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) =>
                     srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+
+        CreateMap<User, EditedUserDTO>()
+            .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+        CreateMap<User, UpdateBasicInfoDTO>();
+
+        CreateMap<UpdateBasicInfoDTO, User>()
+            .ForMember(dest => dest.ProfilePictureUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.BackgroundPictureUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.AirportReviews, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
+            .ForMember(dest => dest.Role, opt => opt.Ignore())
+            .ForMember(dest => dest.Comments, opt => opt.Ignore())
+            .ForMember(dest => dest.Flights, opt => opt.Ignore())
+            .ForMember(dest => dest.AirlineReviews, opt => opt.Ignore())
+            .ForMember(dest => dest.SocialPosts, opt => opt.Ignore())
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) =>
+                    srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+        
+        CreateMap<UpdatePasswordDTO, User>()
+            .ForMember(dest => dest.ProfilePictureUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.BackgroundPictureUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.Username, opt => opt.Ignore())
+            .ForMember(dest => dest.Email, opt => opt.Ignore())
+            .ForMember(dest => dest.AirportReviews, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
+            .ForMember(dest => dest.Role, opt => opt.Ignore())
+            .ForMember(dest => dest.Comments, opt => opt.Ignore())
+            .ForMember(dest => dest.Flights, opt => opt.Ignore())
+            .ForMember(dest => dest.AirlineReviews, opt => opt.Ignore())
+            .ForMember(dest => dest.SocialPosts, opt => opt.Ignore())
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) =>
+                    srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+        
+        CreateMap<UpdatePicturesDTO, User>()
+            .ForMember(dest => dest.Username, opt => opt.Ignore())
+            .ForMember(dest => dest.Email, opt => opt.Ignore())
+            .ForMember(dest => dest.AirportReviews, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+            .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
+            .ForMember(dest => dest.Role, opt => opt.Ignore())
+            .ForMember(dest => dest.Comments, opt => opt.Ignore())
+            .ForMember(dest => dest.Flights, opt => opt.Ignore())
+            .ForMember(dest => dest.AirlineReviews, opt => opt.Ignore())
+            .ForMember(dest => dest.SocialPosts, opt => opt.Ignore())
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) =>
+                    srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
         
         CreateMap<User, FriendDTO>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username))
@@ -54,5 +106,7 @@ public class UserProfile : Profile
             .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) =>
                     srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+
+        
     }
 }

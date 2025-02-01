@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Handlers.User;
 
-public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, EditUserDTO>
+public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, EditedUserDTO>
 {
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, EditU
         _blobStorageService = blobStorageService;
     }
     
-    public async Task<EditUserDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<EditedUserDTO> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _context.Users.FirstOrDefaultAsync(a => a.Id == request.UserId, cancellationToken);
 
@@ -75,6 +75,6 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, EditU
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<EditUserDTO>(user);
+        return _mapper.Map<EditedUserDTO>(user);
     }
 }
