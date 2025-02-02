@@ -32,4 +32,15 @@ export class UserProfileService {
   public getUserPosts() {
     return this._http.get<any>(`${environment.url}/post/user`);
   }
+
+  public addPost(form: any) {
+    const { City, Country, Content } = form;
+
+    return this._http.post<any>(`${environment.url}/post`, form.Image, {
+      params: {
+        'Post.Location': `${Country}, ${City}`,
+        'Post.Content': Content,
+      },
+    });
+  }
 }
