@@ -12,6 +12,7 @@
 
   &__user {
     display: flex;
+    justify-content: space-between;
     gap: 20px;
   }
 
@@ -23,6 +24,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  &__more-options {
+    cursor: pointer;
   }
 
   &__user-name {

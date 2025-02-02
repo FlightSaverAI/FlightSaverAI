@@ -9,19 +9,28 @@ import { CommentComponent } from '../ui-comment/comment.component';
   imports: [CommonModule, NgOptimizedImage, CommentComponent],
   template: `<div class="post">
     <div class="post__user">
-      <img
-        class="post__user-photo"
-        [ngSrc]="user().profilePictureUrl"
-        alt="user-photo"
-        width="50"
-        height="50"
-      />
-      <div class="post__user-info">
-        <span class="post__user-name">{{ user().username }}</span>
-        <span class="post__user-location"
-          >{{ post().postedAt | date: 'dd MMM yyyy, HH:mm:ss' }}, {{ post().location }}
-        </span>
+      <div class="u-flex u-gap-1">
+        <img
+          class="post__user-photo"
+          [ngSrc]="user().profilePictureUrl"
+          alt="user-photo"
+          width="50"
+          height="50"
+        />
+        <div class="post__user-info">
+          <span class="post__user-name">{{ user().username }}</span>
+          <span class="post__user-location"
+            >{{ post().postedAt | date: 'dd MMM yyyy, HH:mm:ss' }}, {{ post().location }}
+          </span>
+        </div>
       </div>
+      <img
+        class="post__more-options"
+        ngSrc="global/assets/assets-community/more-options.svg"
+        alt="user-photo"
+        width="40"
+        height="40"
+      />
     </div>
     <div class="post__content-container">
       <p
