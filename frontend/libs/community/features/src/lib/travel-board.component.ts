@@ -7,7 +7,7 @@ import { PostComponent } from '@flight-saver/community/ui';
   standalone: true,
   imports: [CommonModule, PostComponent],
   template: `<section class="travel-board">
-    @for(post of mockedUsersPosts; track post){
+    <!-- @for(post of mockedUsersPosts; track post){
     <community-post
       [user]="post.user"
       [content]="post.content"
@@ -15,7 +15,7 @@ import { PostComponent } from '@flight-saver/community/ui';
       [interactions]="post.interactions"
       [comments]="post.commentsList"
     ></community-post>
-    }
+    } -->
   </section>`,
   styleUrl: './travel-board.component.scss',
 })
