@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { AvatarComponent, CroppedPhotoModalComponent } from '@flight-saver/user-profile/ui';
 import { UserProfileEditComponent } from '@flight-saver/user-profile/ui';
-import { SettingsService } from '@flight-saver/user-profile/data-access';
+import { UserProfileService } from '@flight-saver/user-profile/data-access';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { changePasswordForm, userProfileUpdateForm } from '@flight-saver/user-profile/utils';
@@ -34,17 +34,17 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   `,
   styleUrl: './settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SettingsService],
+  providers: [UserProfileService],
 })
 export class SettingsComponent {
-  private _settingsService = inject(SettingsService);
+  private _userProfileService = inject(UserProfileService);
   private _dialog = inject(MatDialog);
   private _router = inject(Router);
 
   protected userProfileForm = signal(userProfileUpdateForm());
   protected changePasswordForm = signal(changePasswordForm());
   protected userData = toSignal(
-    this._settingsService.getUserProfileData().pipe(
+    this._userProfileService.getUserProfileData().pipe(
       tap(({ username, email }) =>
         this.userProfileForm().patchValue({
           username: username,
@@ -64,7 +64,7 @@ export class SettingsComponent {
       return;
     }
 
-    this._settingsService.updatePassword(this.changePasswordForm().getRawValue()).subscribe({
+    this._userProfileService.updatePassword(this.changePasswordForm().getRawValue()).subscribe({
       next: () => alert('Successfuly updated password'),
       error: () => alert('Error'),
       complete: () => this._router.navigateByUrl('/authorized/user-profile'),
@@ -81,7 +81,7 @@ export class SettingsComponent {
       .afterClosed()
       .pipe(
         filter((blob) => !!blob),
-        concatMap((blob) => this._settingsService.updateUserPhoto(blob, photoType))
+        concatMap((blob) => this._userProfileService.updateUserPhoto(blob, photoType))
       )
       .subscribe((newUserPhoto) => this.updatedUserPhotos.set(newUserPhoto));
   }

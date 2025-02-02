@@ -5,7 +5,7 @@ import { AvatarComponent } from '@flight-saver/user-profile/ui';
 import { FlightsSummaryComponent } from '@shared/ui';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HomeService } from '@flight-saver/home/data-access';
-import { SettingsService } from '@flight-saver/user-profile/data-access';
+import { UserProfileService } from '@flight-saver/user-profile/data-access';
 
 @Component({
   standalone: true,
@@ -22,12 +22,11 @@ import { SettingsService } from '@flight-saver/user-profile/data-access';
       [isAdvanced]="false"
     ></shared-flights-summary>
     <div class="posts-container">
-      @for(post of mockedUsersPosts; track post){
+      @for(post of userPosts(); track post){
       <community-post
-        [user]="post.user"
-        [content]="post.content"
-        [flightDetails]="post.content.flightDetails"
-        [interactions]="post.interactions"
+        class="u-justify-center u-w-100"
+        [user]="userData()"
+        [post]="post"
         [comments]="post.commentsList"
       ></community-post>
       }
@@ -35,87 +34,11 @@ import { SettingsService } from '@flight-saver/user-profile/data-access';
     }
   </div>`,
   styleUrl: './user-profile-container.component.scss',
-  providers: [SettingsService],
+  providers: [UserProfileService],
 })
 export class UserProfileContainerComponent {
   //TO FIX (this endpoint should be in shared data access library)
-  protected userData = toSignal(inject(SettingsService).getUserProfileData());
+  protected userData = toSignal(inject(UserProfileService).getUserProfileData());
   protected basicStatistics = toSignal(inject(HomeService).getBasicStatistics());
-
-  mockedUsersPosts = [
-    {
-      user: {
-        name: 'Emily Johnson',
-        photo: 'global/assets/images/user-photo.png',
-        location: {
-          city: 'Paris',
-          country: 'France',
-          date: 'July 20, 2024',
-        },
-      },
-      content: {
-        description:
-          'Paris is magical! The Eiffel Tower at night is truly a sight to behold. Loved the croissants and coffee in quaint little cafes. Only downside was the long lines at some attractions, but totally worth it. 🗼🥐',
-        flightDetails: {
-          departure: {
-            date: 'July 10, 2024',
-            time: '09:00',
-            location: 'LHR',
-          },
-          arrival: {
-            time: '14:15',
-            location: 'Thira',
-          },
-        },
-        image: 'global/assets/images/city.png',
-      },
-      interactions: {
-        likes: {
-          count: 123,
-          likedBy: 'Kaiya Curtis',
-        },
-        comments: {
-          count: 5,
-        },
-      },
-      commentsList: [],
-    },
-    {
-      user: {
-        name: 'Emily Johnson',
-        photo: 'global/assets/images/user-photo.png',
-        location: {
-          city: 'Sydney',
-          country: 'Australia',
-          date: 'July 18, 2024',
-        },
-      },
-      content: {
-        description:
-          'Sydney is fantastic! The Opera House is as impressive as I imagined. Loved the beaches and the vibrant city life. The long flight was tough, but the experience here makes it all worthwhile. 🏖️🎭',
-        flightDetails: {
-          departure: {
-            date: 'July 17, 2024',
-            time: '23:00',
-            location: 'LAX',
-          },
-          arrival: {
-            time: '03:30',
-            location: 'NRT',
-          },
-        },
-        image: 'global/assets/images/building.png',
-      },
-      interactions: {
-        likes: {
-          count: 123,
-          likedBy: 'Natalia Brown',
-        },
-        comments: {
-          count: 5,
-        },
-      },
-      commentsList: [],
-    },
-  ];
+  protected userPosts = toSignal(inject(UserProfileService).getUserPosts());
 }

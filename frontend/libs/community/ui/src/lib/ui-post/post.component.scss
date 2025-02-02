@@ -5,6 +5,8 @@
   flex-direction: column;
   border-radius: 20px;
   background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+  max-width: 850px;
+  flex: auto;
   padding: 25px;
   color: white;
 
@@ -33,30 +35,26 @@
     color: #b7c2e8;
   }
 
-  &__content {
+  &__content-container {
     padding: 15px 0;
   }
 
-  &__content-description {
+  &__content {
     padding-bottom: 15px;
-  }
-
-  &__content-flight-details {
-    color: #b7c2e8;
-    padding-bottom: 15px;
+    line-height: 1.2;
   }
 
   &__content-image {
     width: 100%;
     border-radius: 16px;
     max-height: 550px;
+    object-fit: contain;
   }
 
   &__interaction {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     gap: 10px;
-    align-items: flex-end;
   }
 
   &__interaction-likes {
