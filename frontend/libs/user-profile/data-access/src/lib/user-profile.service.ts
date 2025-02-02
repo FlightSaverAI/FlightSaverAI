@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environments';
 
 @Injectable()
-export class SettingsService {
+export class UserProfileService {
   private _http = inject(HttpClient);
 
   public getUserProfileData() {
@@ -27,5 +27,9 @@ export class SettingsService {
     formBlob.append(type, photo, 'image.png');
 
     return this._http.put<any>(`${environment.url}/user`, formBlob);
+  }
+
+  public getUserPosts() {
+    return this._http.get<any>(`${environment.url}/post/user`);
   }
 }
