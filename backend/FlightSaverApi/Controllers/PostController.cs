@@ -88,7 +88,7 @@ public class PostController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdatePost(EditSocialPostDTO editSocialPostDTO,
+    public async Task<IActionResult> UpdatePost([FromBody]EditSocialPostDTO editSocialPostDTO,
         CancellationToken cancellationToken)
     {
         try
@@ -117,12 +117,18 @@ public class PostController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<SocialPostDTO>> CreatePost(CreatePostCommand command,
+    public async Task<ActionResult<SocialPostDTO>> CreatePost([FromBody]NewPostDTO post,
         CancellationToken cancellationToken)
     {
         try
         {
             var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+
+            var command = new CreatePostCommand()
+            {
+                Post = post
+            };
+            
             command.Post.UserId = userId;
 
             if (!ModelState.IsValid)
