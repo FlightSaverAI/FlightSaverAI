@@ -1,16 +1,15 @@
 import { Component, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../input/input.component';
-import { ValidationSignComponent } from '../validation-sign/validation-sign.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shared-textarea',
   standalone: true,
-  imports: [CommonModule, ValidationSignComponent, FormsModule],
-  template: `<label for="textarea">{{ label() }}</label>
-
+  imports: [CommonModule, FormsModule],
+  template: `
+    <label for="input" *ngIf="label()">{{ label() }}{{ hasRequiredValidator ? '*' : '' }}</label>
     <div id="textarea" class="textarea-container">
       <textarea
         [ngModel]="value"
@@ -22,11 +21,8 @@ import { FormsModule } from '@angular/forms';
         autocomplete="off"
         role="presentation"
       ></textarea>
-
-      @if(formField){
-      <shared-validation-sign [formField]="formField"></shared-validation-sign>
-      }
-    </div> `,
+    </div>
+  `,
   styleUrl: './textarea.component.scss',
   providers: [
     {
