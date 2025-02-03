@@ -29,8 +29,17 @@ public class UpdatePicturesCommandHandler : IRequestHandler<UpdatePicturesComman
             {
                 throw new KeyNotFoundException($"User with Id {request.UserId} does not exist.");
             }
+
+            if (request.UpdatePicturesDto.ProfilePictureImage == null)
+            {
+                user.ProfilePictureUrl = null;
+            }
+
+            if (request.UpdatePicturesDto.BackgroundPictureImage == null)
+            {
+                user.BackgroundPictureUrl = null;
+            }
             
-            // Handle profile picture update if provided
             if (request.UpdatePicturesDto.ProfilePictureImage != null)
             {
                 var profileUrl = await _blobStorageService.UploadImageAsync(request.UpdatePicturesDto.ProfilePictureImage);
@@ -42,7 +51,6 @@ public class UpdatePicturesCommandHandler : IRequestHandler<UpdatePicturesComman
                 user.ProfilePictureUrl = profileUrl;
             }
             
-            // Handle background picture update if provided
             if (request.UpdatePicturesDto.BackgroundPictureImage != null)
             {
                 var backgroundUrl = await _blobStorageService.UploadImageAsync(request.UpdatePicturesDto.BackgroundPictureImage);
