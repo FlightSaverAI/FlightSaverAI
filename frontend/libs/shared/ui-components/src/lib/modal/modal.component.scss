@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
-  // height: 100%;
   background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
   color: white;
 
@@ -40,4 +39,8 @@ img {
 
 ::ng-deep .mdc-dialog__surface {
   display: unset;
+}
+
+::ng-deep .cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.6);
 }
