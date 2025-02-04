@@ -24,7 +24,7 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
         
         if(comment == null)
         {
-            throw new KeyNotFoundException($"Comment with Id {request.EditCommentDTO.Id} does not exist.");
+            throw new KeyNotFoundException($"Comment with Id {request.EditCommentDTO.id} does not exist.");
         }
 
         if (comment.UserId != request.UserId)

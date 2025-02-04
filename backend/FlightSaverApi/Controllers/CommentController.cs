@@ -43,7 +43,7 @@ public class CommentController : ControllerBase
             var command = new UpdateCommentCommand()
             {
                 UserId = userId,
-                Id = editCommentDTO.Id,
+                Id = editCommentDTO.id,
                 EditCommentDTO = editCommentDTO
             };
         
@@ -62,13 +62,20 @@ public class CommentController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<CommentDTO>> CreateComment([FromBody] CreateCommentCommand command,
+    public async Task<ActionResult<CommentDTO>> CreateComment(NewCommentDTO comment,
         CancellationToken cancellationToken)
     {
         try
         {
             var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
-            command.Comment.UserId = userId;
+
+            var command = new CreateCommentCommand()
+            {
+                UserId = userId,
+                Comment = comment
+            };
+            
+            command.UserId = userId;
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

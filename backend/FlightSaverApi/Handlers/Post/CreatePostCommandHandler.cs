@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FlightSaverApi.Handlers.Post;
 
-public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, NewPostDTO>
+public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, SocialPostDTO>
 {
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
@@ -21,18 +21,18 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, NewPo
         _blobStorageService = blobStorageService;
     }
 
-    public async Task<NewPostDTO> Handle(CreatePostCommand request, CancellationToken cancellationToken)
+    public async Task<SocialPostDTO> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
         var post = _mapper.Map<SocialPost>(request.Post);
 
-        post.UserId = request.Post.UserId.Value;
+        post.UserId = request.UserId;
         post.PostedAt = DateTime.UtcNow;
         post.LikesCount = 0;
         post.CommentsCount = 0;
 
-        if (request.Post.Image is not null)
+        if (request.Post.image is not null)
         {
-            var imageUrl = await _blobStorageService.UploadImageAsync(request.Post.Image);
+            var imageUrl = await _blobStorageService.UploadImageAsync(request.Post.image);
 
             var imageRecord = new ImageRecord()
             {
@@ -48,6 +48,6 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, NewPo
         _context.SocialPosts.Add(post);
         await _context.SaveChangesAsync(cancellationToken);
         
-        return _mapper.Map<NewPostDTO>(post);
+        return _mapper.Map<SocialPostDTO>(post);
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlightSaverApi.Handlers.Post;
 
-public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, EditSocialPostDTO>
+public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, SocialPostDTO>
 {
     private readonly FlightSaverContext _context;
     private readonly IMapper _mapper;
@@ -23,23 +23,28 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, EditS
         _blobStorageService = blobStorageService;
     }
 
-    public async Task<EditSocialPostDTO> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+    public async Task<SocialPostDTO> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
     {
         var posts = await _context.SocialPosts.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
         
         if(posts == null)
         {
-            throw new KeyNotFoundException($"Post with Id {request.EditSocialPostDTO.Id} does not exist.");
+            throw new KeyNotFoundException($"Post with Id {request.EditSocialPostDTO.id} does not exist.");
         }
 
         if (posts.UserId != request.UserId)
         {
             throw new UnauthorizedAccessException("You are not authorized to edit this post.");
         }
-        
-        if (request.EditSocialPostDTO.Image is not null)
+
+        if (request.EditSocialPostDTO.image == null)
         {
-            var imageUrl = await _blobStorageService.UploadImageAsync(request.EditSocialPostDTO.Image);
+            posts.ImageUrl = "";
+        }
+        
+        if (request.EditSocialPostDTO.image != null)
+        {
+            var imageUrl = await _blobStorageService.UploadImageAsync(request.EditSocialPostDTO.image);
 
             var imageRecord = new ImageRecord()
             {
@@ -58,6 +63,6 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, EditS
         
         await _context.SaveChangesAsync(cancellationToken);
         
-        return _mapper.Map<EditSocialPostDTO>(posts);
+        return _mapper.Map<SocialPostDTO>(posts);
     }
 }

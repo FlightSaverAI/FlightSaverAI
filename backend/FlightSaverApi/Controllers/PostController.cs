@@ -19,14 +19,14 @@ public class PostController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetPosts(CancellationToken cancellationToken)
-    {
-        var query = new GetPostsQuery();
-        var posts = await _mediator.Send(query, cancellationToken);
-        
-        return Ok(posts);
-    }
+    // [HttpGet]
+    // public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetPosts(CancellationToken cancellationToken)
+    // {
+    //     var query = new GetPostsQuery();
+    //     var posts = await _mediator.Send(query, cancellationToken);
+    //     
+    //     return Ok(posts);
+    // }
 
     [HttpGet("user")]
     public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetPostsByUserId(CancellationToken cancellationToken, 
@@ -88,7 +88,7 @@ public class PostController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdatePost([FromBody]EditSocialPostDTO editSocialPostDTO,
+    public async Task<ActionResult<SocialPostDTO>> UpdatePost(EditSocialPostDTO editSocialPostDTO,
         CancellationToken cancellationToken)
     {
         try
@@ -98,7 +98,7 @@ public class PostController : ControllerBase
             var command = new UpdatePostCommand()
             {
                 UserId = userId,
-                Id = editSocialPostDTO.Id,
+                Id = editSocialPostDTO.id,
                 EditSocialPostDTO = editSocialPostDTO
             };
         
@@ -117,7 +117,7 @@ public class PostController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<SocialPostDTO>> CreatePost([FromBody]NewPostDTO post,
+    public async Task<ActionResult<SocialPostDTO>> CreatePost(NewPostDTO post,
         CancellationToken cancellationToken)
     {
         try
@@ -126,11 +126,10 @@ public class PostController : ControllerBase
 
             var command = new CreatePostCommand()
             {
+                UserId = userId,
                 Post = post
             };
             
-            command.Post.UserId = userId;
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

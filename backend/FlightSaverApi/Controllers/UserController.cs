@@ -25,13 +25,13 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("info")]
-    public async Task<ActionResult<UserInfoDTO>> GetUserInfo(CancellationToken cancellationToken)
+    public async Task<ActionResult<UserInfoDTO>> GetUserInfo(CancellationToken cancellationToken, int? userId = null)
     {
         try
         {
-            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
             
-            var query = new GetUserInfoQuery(userId);
+            var query = new GetUserInfoQuery(userId.Value);
         
             var user = await _mediator.Send(query, cancellationToken);
         
