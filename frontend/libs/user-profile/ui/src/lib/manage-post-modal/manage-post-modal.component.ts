@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '@shared/ui-components';
@@ -22,11 +22,13 @@ import { InputComponent } from '@shared/ui-components';
     TextareaComponent,
     InputComponent,
   ],
-  template: `<shared-modal [title]="title()" (confirmEvent)="confirmEvent()">
+  template: `<shared-modal [title]="modalData.title" (confirmEvent)="confirmEvent()">
     <form [formGroup]="createPostForm()">
       <div
         class="paste-photo-container"
-        [ngClass]="isDragging() ? 'dragging' : ''"
+        [ngClass]="{
+          dragging: isDragging(),
+        }"
         (dragover)="onDragOver($event)"
         (dragleave)="onDragLeave($event)"
         (drop)="onDrop($event)"
@@ -49,8 +51,17 @@ import { InputComponent } from '@shared/ui-components';
           />
         </div>
         } @else {
-        <div class="image-preview">
-          <img [src]="imageUrl" alt="Selected Image" />
+        <img
+          (click)="this.imageUrl = null"
+          class="cancel-image-icon"
+          ngSrc="global/assets/cancel.svg"
+          width="20"
+          height="20"
+          alt=""
+        />
+        <div class="shadow"></div>
+        <div class="image-preview-container">
+          <img class="image-preview" [src]="imageUrl" alt="Selected Image" />
         </div>
         }
       </div>
@@ -58,22 +69,22 @@ import { InputComponent } from '@shared/ui-components';
         <shared-select
           label="Country"
           placeholder="Select Country"
-          formControlName="Country"
-          fieldName="Country"
+          formControlName="country"
+          fieldName="country"
           [options]="modalData.countries"
           [parentForm]="createPostForm()"
         ></shared-select>
         <shared-input
           label="City"
           placeholder="Select City"
-          formControlName="City"
-          fieldName="City"
+          formControlName="city"
+          fieldName="city"
           [parentForm]="createPostForm()"
         ></shared-input>
         <shared-textarea
           label="Description"
-          formControlName="Content"
-          fieldName="Content"
+          formControlName="content"
+          fieldName="content"
           placeholder="Share your opinion..."
           [parentForm]="createPostForm()"
         >
@@ -81,16 +92,45 @@ import { InputComponent } from '@shared/ui-components';
       </div>
     </form>
   </shared-modal>`,
-  styleUrl: './add-post-modal.component.scss',
+  styleUrl: './manage-post-modal.component.scss',
 })
-export class AddPostModalComponent {
+export class ManagePostModalComponent implements OnInit {
   private _modalRef = inject(MatDialogRef);
 
   protected modalData = inject(MAT_DIALOG_DATA);
-  protected title = signal('Add Post');
   protected createPostForm = signal(createPostForm());
   protected imageUrl: any = null;
   protected isDragging = signal(false);
+
+  public ngOnInit(): void {
+    if (this.modalData?.post) {
+      this.imageUrl = this.modalData.post.imageUrl;
+
+      const location = this._divideLocation(this.modalData.post.location);
+
+      this.createPostForm().patchValue({
+        country: location.country,
+        city: location.city,
+        content: this.modalData.post.content,
+      });
+    }
+  }
+
+  private _divideLocation(location: string) {
+    if (!location) {
+      return {
+        country: '',
+        city: '',
+      };
+    }
+
+    const updateLocation = location.split(',');
+
+    return {
+      country: updateLocation?.[0],
+      city: updateLocation?.[1],
+    };
+  }
 
   protected triggerFileInput(fileInput: HTMLInputElement) {
     fileInput.click();
@@ -140,31 +180,10 @@ export class AddPostModalComponent {
       return;
     }
 
-    if (this.imageUrl) {
-      const blob = this._dataURLtoBlob(this.imageUrl);
-      const file = new File([blob], 'uploaded-image.png', { type: blob.type });
-
-      const formData = new FormData();
-      formData.append('Post.Image', file, 'image.png');
-
-      this.createPostForm().controls.Image.setValue(formData);
+    if (!this.imageUrl.includes('flightsaverblobstorage')) {
+      this.createPostForm().controls.image.setValue(this.imageUrl);
     }
 
     this._modalRef.close(this.createPostForm().getRawValue());
-  }
-
-  private _dataURLtoBlob(dataURL: string): Blob {
-    const arr = dataURL.split(',');
-    const mimeMatch = arr[0].match(/:(.*?);/);
-    const mime = mimeMatch ? mimeMatch[1] : 'image/png';
-    const byteString = atob(arr[1]);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const uint8Array = new Uint8Array(arrayBuffer);
-
-    for (let i = 0; i < byteString.length; i++) {
-      uint8Array[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([arrayBuffer], { type: mime });
   }
 }
