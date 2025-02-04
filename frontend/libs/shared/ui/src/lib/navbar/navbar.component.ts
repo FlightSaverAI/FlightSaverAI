@@ -4,7 +4,8 @@ import { ButtonComponent } from '@shared/ui-components';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProfileDropdownDirective } from '../../../../ui/src/lib/profile-dropdown/profile-dropdown.directive';
+import { DropdownDirective } from '@shared/ui-components';
+import { CookieService } from 'ngx-cookie-service';
 
 export type NavTypes = 'button' | 'list' | 'photo';
 
@@ -25,24 +26,24 @@ export interface ImageNavConfig {
 @Component({
   selector: 'shared-navbar',
   standalone: true,
-  imports: [
-    NgClass,
-    ButtonComponent,
-    RouterModule,
-    NgIf,
-    NgOptimizedImage,
-    ProfileDropdownDirective,
-  ],
+  imports: [NgClass, ButtonComponent, RouterModule, NgIf, NgOptimizedImage, DropdownDirective],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
   navConfig = input.required<NavConfig[]>();
+  dropdownConfig = input<any[]>();
 
   activeIndex = 0;
   isNavbarOpen!: boolean;
 
   private _router = inject(Router);
+  private _cookieService = inject(CookieService);
+  private _routeUrls: any = {
+    Profile: '/authorized/user-profile',
+    Settings: '/authorized/user-profile/settings',
+    Logout: '/login',
+  };
 
   public ngOnInit(): void {
     this.activeIndex = this._findActiveNavIndex();
@@ -56,8 +57,16 @@ export class NavbarComponent implements OnInit {
     this.isNavbarOpen = !this.isNavbarOpen;
   }
 
-  public navigateToPassedUrl(url: string, index: number) {
-    this.activeIndex = index;
-    this._router.navigateByUrl(url);
+  public navigateToPassedUrl(field: string) {
+    this._router.navigateByUrl(this._routeUrls[field]);
+
+    if (field === 'Logout') {
+      this._cookieService.delete('AuthToken');
+
+      setTimeout(() => {
+        this._router.navigateByUrl('/login');
+        document.location.reload();
+      }, 0);
+    }
   }
 }
