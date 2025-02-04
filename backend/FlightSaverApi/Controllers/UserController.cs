@@ -24,6 +24,12 @@ public class UserController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Retrieves user information for a specific user.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <param name="userId">Optional query parameter to specify the user ID (if not provided, the logged-in user's ID is used).</param>
+    /// <returns>The details of the specified user.</returns>
     [HttpGet("info")]
     public async Task<ActionResult<UserInfoDTO>> GetUserInfo(CancellationToken cancellationToken, int? userId = null)
     {
@@ -47,6 +53,13 @@ public class UserController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Retrieves a paginated list of all users.
+    /// </summary>
+    /// <param name="pageNumber">The page number for pagination.</param>
+    /// <param name="pageSize">The number of users per page.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>A paginated list of users.</returns>
     [HttpGet]
     public async Task<ActionResult<PagedUserResult>> GetUsers([FromQuery] int? pageNumber,
         [FromQuery] int? pageSize, CancellationToken cancellationToken)
@@ -65,6 +78,13 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
+    /// <summary>
+    /// Retrieves a paginated list of friends for the logged-in user.
+    /// </summary>
+    /// <param name="pageNumber">The page number for pagination.</param>
+    /// <param name="pageSize">The number of friends per page.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>A paginated list of friends.</returns>
     [HttpGet("/friend")]
     public async Task<ActionResult<PagedUserResult>> GetFriends([FromQuery] int? pageNumber,
         [FromQuery] int? pageSize, CancellationToken cancellationToken)
@@ -83,33 +103,38 @@ public class UserController : ControllerBase
         return Ok(users);
     }
     
-    [HttpPut]
-    public async Task<ActionResult<EditedUserDTO>> UpdateUser(EditUserDTO editUserDto, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
-            
-            var command = new UpdateUserCommand
-            {
-                UserId = userId,
-                EditUserDto = editUserDto
-            };
-            
-            var user = await _mediator.Send(command, cancellationToken);
-            
-            return Ok(user);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return Unauthorized(ex.Message);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
+    // [HttpPut]
+    // public async Task<ActionResult<EditedUserDTO>> UpdateUser(EditUserDTO editUserDto, CancellationToken cancellationToken)
+    // {
+    //     try
+    //     {
+    //         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+    //         
+    //         var command = new UpdateUserCommand
+    //         {
+    //             UserId = userId,
+    //             EditUserDto = editUserDto
+    //         };
+    //         
+    //         var user = await _mediator.Send(command, cancellationToken);
+    //         
+    //         return Ok(user);
+    //     }
+    //     catch (UnauthorizedAccessException ex)
+    //     {
+    //         return Unauthorized(ex.Message);
+    //     }
+    //     catch (InvalidOperationException ex)
+    //     {
+    //         return BadRequest(ex.Message);
+    //     }
+    // }
     
+    /// <summary>
+    /// Adds a new friend by their ID.
+    /// </summary>
+    /// <param name="friendId">The ID of the user to add as a friend.</param>
+    /// <returns>No content if the friend was successfully added.</returns>
     [HttpPost("/friend/add")]
     public async Task<IActionResult> AddFriend(int friendId)
     {
@@ -135,6 +160,11 @@ public class UserController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Removes a friend by their ID.
+    /// </summary>
+    /// <param name="friendId">The ID of the user to remove from the friend list.</param>
+    /// <returns>No content if the friend was successfully removed.</returns>
     [HttpDelete("/friend/remove")]
     public async Task<IActionResult> RemoveFriend(int friendId)
     {

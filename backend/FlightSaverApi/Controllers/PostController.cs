@@ -28,6 +28,14 @@ public class PostController : ControllerBase
     //     return Ok(posts);
     // }
 
+    /// <summary>
+    /// Fetch posts created by a specific user, with optional pagination.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <param name="lastPostId">Optional query parameter to specify the ID of the last post for pagination.</param>
+    /// <param name="pageSize">Optional query parameter to specify the number of posts per page (default is 10).</param>
+    /// <param name="userId">Optional query parameter to specify the user ID (if not provided, the logged-in user's ID is used).</param>
+    /// <returns>A list of posts created by the user.</returns>
     [HttpGet("user")]
     public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetPostsByUserId(CancellationToken cancellationToken, 
         [FromQuery] int? lastPostId, [FromQuery] int pageSize = 10, int? userId = null)
@@ -52,6 +60,13 @@ public class PostController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Fetch posts from friends and logged user, with optional pagination.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <param name="lastPostId">Optional query parameter to specify the ID of the last post for pagination.</param>
+    /// <param name="pageSize">Optional query parameter to specify the number of posts per page (default is 10).</param>
+    /// <returns>A list of posts from friends and logged user.</returns>
     [HttpGet("friend")]
     public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetFriendsPosts(CancellationToken cancellationToken,
         [FromQuery] int? lastPostId = null, [FromQuery] int pageSize = 10)
@@ -76,6 +91,12 @@ public class PostController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Fetch a single post by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the post to retrieve.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>The details of a specific post.</returns>
     [HttpGet("{id:int}")]
     public async Task<ActionResult<SocialPostDTO>> GetPost([FromRoute] int id, CancellationToken cancellationToken)
     {
@@ -87,6 +108,12 @@ public class PostController : ControllerBase
         return Ok(post);
     }
 
+    /// <summary>
+    /// Update an existing post.
+    /// </summary>
+    /// <param name="editSocialPostDTO">The data for the post update.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>The details of the updated post.</returns>
     [HttpPut]
     public async Task<ActionResult<SocialPostDTO>> UpdatePost(EditSocialPostDTO editSocialPostDTO,
         CancellationToken cancellationToken)
@@ -116,6 +143,12 @@ public class PostController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Create a new post.
+    /// </summary>
+    /// <param name="post">The post data to be created.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>The details of the created post.</returns>
     [HttpPost]
     public async Task<ActionResult<SocialPostDTO>> CreatePost(NewPostDTO post,
         CancellationToken cancellationToken)
@@ -143,6 +176,12 @@ public class PostController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Delete a post by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the post to delete.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>No content if the post was successfully deleted.</returns>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeletePost([FromRoute] int id, CancellationToken cancellationToken)
     {
@@ -166,6 +205,12 @@ public class PostController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Like a post by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the post to like.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>No content if the post was successfully liked.</returns>
     [HttpPost("{id:int}/like")]
     public async Task<IActionResult> LikePost([FromRoute] int id, CancellationToken cancellationToken)
     {
@@ -186,6 +231,12 @@ public class PostController : ControllerBase
         }
     }
     
+    /// <summary>
+    /// Unlike a post by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the post to unlike.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    /// <returns>No content if the post was successfully unliked.</returns>
     [HttpPost("{id:int}/unlike")]
     public async Task<IActionResult> UnlikePost([FromRoute] int id, CancellationToken cancellationToken)
     {
