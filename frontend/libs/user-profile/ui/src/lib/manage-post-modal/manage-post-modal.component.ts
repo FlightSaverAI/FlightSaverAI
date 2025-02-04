@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '@shared/ui-components';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { createPostForm } from '@flight-saver/user-profile/utils';
+import { postForm } from '@flight-saver/user-profile/utils';
 import { ButtonComponent } from '@shared/ui-components';
 import { NgOptimizedImage } from '@angular/common';
 import { SelectComponent } from '@shared/ui-components';
@@ -23,7 +23,7 @@ import { InputComponent } from '@shared/ui-components';
     InputComponent,
   ],
   template: `<shared-modal [title]="modalData.title" (confirmEvent)="confirmEvent()">
-    <form [formGroup]="createPostForm()">
+    <form [formGroup]="postForm()">
       <div
         class="paste-photo-container"
         [ngClass]="{
@@ -72,21 +72,21 @@ import { InputComponent } from '@shared/ui-components';
           formControlName="country"
           fieldName="country"
           [options]="modalData.countries"
-          [parentForm]="createPostForm()"
+          [parentForm]="postForm()"
         ></shared-select>
         <shared-input
           label="City"
           placeholder="Select City"
           formControlName="city"
           fieldName="city"
-          [parentForm]="createPostForm()"
+          [parentForm]="postForm()"
         ></shared-input>
         <shared-textarea
           label="Description"
           formControlName="content"
           fieldName="content"
           placeholder="Share your opinion..."
-          [parentForm]="createPostForm()"
+          [parentForm]="postForm()"
         >
         </shared-textarea>
       </div>
@@ -98,7 +98,7 @@ export class ManagePostModalComponent implements OnInit {
   private _modalRef = inject(MatDialogRef);
 
   protected modalData = inject(MAT_DIALOG_DATA);
-  protected createPostForm = signal(createPostForm());
+  protected postForm = signal(postForm());
   protected imageUrl: any = null;
   protected isDragging = signal(false);
 
@@ -108,7 +108,7 @@ export class ManagePostModalComponent implements OnInit {
 
       const location = this._divideLocation(this.modalData.post.location);
 
-      this.createPostForm().patchValue({
+      this.postForm().patchValue({
         country: location.country,
         city: location.city,
         content: this.modalData.post.content,
@@ -175,15 +175,15 @@ export class ManagePostModalComponent implements OnInit {
   }
 
   protected confirmEvent() {
-    if (this.createPostForm().invalid) {
+    if (this.postForm().invalid) {
       alert('Incorrect form');
       return;
     }
 
     if (!this.imageUrl.includes('flightsaverblobstorage')) {
-      this.createPostForm().controls.image.setValue(this.imageUrl);
+      this.postForm().controls.image.setValue(this.imageUrl);
     }
 
-    this._modalRef.close(this.createPostForm().getRawValue());
+    this._modalRef.close(this.postForm().getRawValue());
   }
 }
