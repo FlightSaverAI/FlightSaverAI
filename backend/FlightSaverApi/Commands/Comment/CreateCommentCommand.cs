@@ -6,5 +6,6 @@ namespace FlightSaverApi.Commands.Comment;
 
 public class CreateCommentCommand : IRequest<NewCommentDTO>
 {
+    public int UserId { get; set; }
     public NewCommentDTO Comment { get; set; }
 }

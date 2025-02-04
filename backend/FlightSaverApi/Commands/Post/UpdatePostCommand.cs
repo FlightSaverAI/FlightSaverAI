@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace FlightSaverApi.Commands.Post;
 
-public class UpdatePostCommand : IRequest<EditSocialPostDTO>
+public class UpdatePostCommand : IRequest<SocialPostDTO>
 {
     public int Id { get; set; }
     
