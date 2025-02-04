@@ -1,4 +1,5 @@
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using FlightSaverApi.Interfaces.Services;
 
 namespace FlightSaverApi.Services;
@@ -37,6 +38,36 @@ public class BlobStorageService : IBlobStorageService
             await blobClient.UploadAsync(stream, overwrite: true);
         }
 
-        return blobClient.Uri.AbsoluteUri;
+        BlobDownloadInfo downloadInfo = await blobClient.DownloadAsync();
+        using (var memoryStream = new MemoryStream())
+        {
+            await downloadInfo.Content.CopyToAsync(memoryStream);
+            byte[] imageBytes = memoryStream.ToArray();
+            return Convert.ToBase64String(imageBytes);
+        }
     }
+    
+    // public async Task<string> UploadImageAsync(IFormFile image)
+    // {
+    //     var allowedTypes = new[] { "image/jpeg", "image/png", "image/gif" };
+    //     if (!allowedTypes.Contains(image.ContentType))
+    //     {
+    //         throw new InvalidOperationException("Invalid file type.");
+    //     }
+    //
+    //     if (image.Length > 5 * 1024 * 1024)
+    //     {
+    //         throw new InvalidOperationException("File size exceeds the 5 MB limit.");
+    //     }
+    //
+    //     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+    //     var blobClient = _containerClient.GetBlobClient(fileName);
+    //
+    //     using (var stream = image.OpenReadStream())
+    //     {
+    //         await blobClient.UploadAsync(stream, overwrite: true);
+    //     }
+    //
+    //     return blobClient.Uri.AbsoluteUri;
+    // }
 }
