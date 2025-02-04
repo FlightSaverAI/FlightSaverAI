@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { CommentComponent } from '../ui-comment/comment.component';
+import { DropdownDirective } from '@shared/ui-components';
 
 @Component({
   selector: 'community-post',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, CommentComponent],
+  imports: [CommonModule, NgOptimizedImage, CommentComponent, DropdownDirective],
   template: `<div class="post">
     <div class="post__user">
       <div class="u-flex u-gap-1">
@@ -30,6 +31,9 @@ import { CommentComponent } from '../ui-comment/comment.component';
         alt="user-photo"
         width="40"
         height="40"
+        sharedDropdown
+        [dropdownConfig]="dropdownConfig()"
+        (selectOption)="selectedDropdownOption.emit($event)"
       />
     </div>
     <div class="post__content-container">
@@ -89,7 +93,9 @@ import { CommentComponent } from '../ui-comment/comment.component';
 export class PostComponent {
   user = input.required<any>();
   post = input<any>();
+  dropdownConfig = input<any>();
   comments = input.required<any>();
+  selectedDropdownOption = output<string>();
 
   isCommentSectionOpen = signal(false);
 
