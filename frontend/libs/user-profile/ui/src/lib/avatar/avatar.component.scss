@@ -86,9 +86,3 @@
     transform: translate(50%, 50%);
   }
 }
-
-@include laptop {
-  .background {
-    object-fit: fill;
-  }
-}

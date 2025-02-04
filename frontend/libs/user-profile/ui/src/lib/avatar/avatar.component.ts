@@ -37,7 +37,7 @@ import { NgOptimizedImage } from '@angular/common';
         <shared-button
           class="add-post"
           content="Add Post"
-          (emitEvent)="openAddPostModal.emit()"
+          (emitEvent)="addPost.emit('add')"
         ></shared-button>
         <shared-button
           class="edit-profile"
@@ -58,5 +58,5 @@ export class AvatarComponent {
   backgroundPhotoUrl = input.required<string>();
   selectedOption = output();
   openUploadPhotoModal = output<'Profile' | 'Background'>();
-  openAddPostModal = output<void>();
+  addPost = output<string>();
 }
