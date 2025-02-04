@@ -2,9 +2,8 @@ namespace FlightSaverApi.DTOs.Post;
 
 public class EditSocialPostDTO
 {
-    public int Id { get; set; }
-    public string? Location { get; set; }
-    public string? Content { get; set; }
-    public IFormFile? Image { get; set; }
-    public string? ImageUrl { get; set; }
+    public int id { get; set; }
+    public string? location { get; set; }
+    public string? content { get; set; }
+    public IFormFile? image { get; set; }
 }

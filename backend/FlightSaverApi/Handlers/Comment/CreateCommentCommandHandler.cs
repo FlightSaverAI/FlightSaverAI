@@ -21,8 +21,8 @@ public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand,
     {
         var comment = _mapper.Map<Models.Comment>(request.Comment);
 
-        comment.UserId = request.Comment.UserId.Value;
-        comment.SocialPostId = request.Comment.PostId;
+        comment.UserId = request.UserId;
+        comment.SocialPostId = request.Comment.postId;
         comment.PostedAt = DateTime.UtcNow;
         comment.LikesCount = 0;
 
