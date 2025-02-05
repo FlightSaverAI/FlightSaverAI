@@ -108,38 +108,106 @@ public class PostController : ControllerBase
         return Ok(post);
     }
 
+    // /// <summary>
+    // /// Update an existing post.
+    // /// </summary>
+    // /// <param name="editSocialPostDTO">The data for the post update.</param>
+    // /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
+    // /// <returns>The details of the updated post.</returns>
+    // [HttpPut]
+    // public async Task<ActionResult<SocialPostDTO>> UpdatePost(EditSocialPostDTO editSocialPostDTO,
+    //     CancellationToken cancellationToken)
+    // {
+    //     try
+    //     {
+    //         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+    //         
+    //         var command = new UpdatePostCommand()
+    //         {
+    //             UserId = userId,
+    //             Id = editSocialPostDTO.id,
+    //             EditSocialPostDTO = editSocialPostDTO
+    //         };
+    //     
+    //         var post = await _mediator.Send(command, cancellationToken);
+    //     
+    //         return Ok(post);
+    //     }
+    //     catch (UnauthorizedAccessException ex)
+    //     {
+    //         return Unauthorized(ex.Message);
+    //     }
+    //     catch (InvalidOperationException ex)
+    //     {
+    //         return BadRequest(ex.Message);
+    //     }
+    // }
+    
     /// <summary>
-    /// Update an existing post.
+    /// Updates the content of an existing post, including location and text content.
     /// </summary>
-    /// <param name="editSocialPostDTO">The data for the post update.</param>
-    /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
-    /// <returns>The details of the updated post.</returns>
-    [HttpPut]
-    public async Task<ActionResult<SocialPostDTO>> UpdatePost(EditSocialPostDTO editSocialPostDTO,
-        CancellationToken cancellationToken)
+    /// <param name="editSocialPostContentDTO">The DTO containing the updated content details.</param>
+    /// <param name="cancellationToken">Token to cancel the request if needed.</param>
+    /// <returns>The updated post details.</returns>
+    /// <response code="200">Returns the updated post details.</response>
+    /// <response code="401">If the user is not authorized to update the post.</response>
+    /// <response code="404">If the post with the specified ID is not found.</response>
+    [HttpPut("content")]
+    public async Task<ActionResult<SocialPostDTO>> UpdatePostContent(EditSocialPostContentDTO editSocialPostContentDTO, CancellationToken cancellationToken)
     {
         try
         {
             var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
-            
-            var command = new UpdatePostCommand()
+            var command = new UpdatePostContentCommand()
             {
                 UserId = userId,
-                Id = editSocialPostDTO.id,
-                EditSocialPostDTO = editSocialPostDTO
+                EditPostContentDto = editSocialPostContentDTO
             };
-        
             var post = await _mediator.Send(command, cancellationToken);
-        
             return Ok(post);
         }
         catch (UnauthorizedAccessException ex)
         {
             return Unauthorized(ex.Message);
         }
-        catch (InvalidOperationException ex)
+        catch (KeyNotFoundException ex)
         {
-            return BadRequest(ex.Message);
+            return NotFound(ex.Message);
+        }
+    }
+    
+    /// <summary>
+    /// Updates the image of an existing post, either by uploading a new image or deleting the current one.
+    /// </summary>
+    /// <param name="editSocialPostImageDto">The DTO containing the image update details.</param>
+    /// <param name="cancellationToken">Token to cancel the request if needed.</param>
+    /// <returns>The updated post details.</returns>
+    /// <response code="200">Returns the updated post details.</response>
+    /// <response code="401">If the user is not authorized to update the post.</response>
+    /// <response code="404">If the post with the specified ID is not found.</response>
+    [HttpPut("image")]
+    public async Task<ActionResult<SocialPostDTO>> UpdatePostImage(EditSocialPostImageDTO editSocialPostImageDto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+
+            var command = new UpdatePostImageCommand
+            {
+                UserId = userId,
+                EditPostImageDTO = editSocialPostImageDto
+            };
+
+            var post = await _mediator.Send(command, cancellationToken);
+            return Ok(post);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
         }
     }
 

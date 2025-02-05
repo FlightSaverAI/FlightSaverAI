@@ -24,10 +24,16 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PagedUserResu
     
     public async Task<PagedUserResult> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
-        var users = await _context.Users
+        var usersQuery = _context.Users
             .Include(u => u.Friends)
-            .Where(x => x.Id != request.UserId)
-            .ToListAsync(cancellationToken);
+            .Where(x => x.Id != request.UserId);
+
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            usersQuery = usersQuery.Where(u => EF.Functions.Like(u.Username.ToLower(), $"%{request.Name.ToLower()}%"));
+        }
+
+        var users = await usersQuery.ToListAsync(cancellationToken);
 
         var loggedUser = await _context.Users
             .Include(u => u.Friends)
@@ -48,28 +54,19 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PagedUserResu
             user.Statistics = await _statisticsService.GetBasicFlightStatisticsAsync(user.Id, cancellationToken);
         }
 
-        var totalRecords = 0;
-        var totalPages = 0;
+        var totalRecords = usersDTO.Count();
         
-        if (request.PageNumber.HasValue && request.PageSize.HasValue && request.PageNumber > 0 && request.PageSize > 0)
+        var pageNumber = request.PageNumber ?? 1;
+        var pageSize = request.PageSize ?? 10;
+
+        var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+        return new PagedUserResult()
         {
-            totalRecords = usersDTO.Count();
-            totalPages = (int)Math.Ceiling((double)totalRecords / (request.PageSize ?? 10));
-            return new PagedUserResult()
-            {
-                Users = usersDTO.Skip((request.PageNumber.Value - 1) * request.PageSize.Value)
-                    .Take(request.PageSize.Value)
-                    .ToList(),
-                TotalPages = totalPages
-            };
-        }
-        
-        totalPages = (int)Math.Ceiling((double)totalRecords / (request.PageSize ?? 10));
-            
-        return new PagedUserResult
-        {
-            Users = usersDTO,
-            TotalPages = totalPages,
+            Users = usersDTO.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList(),
+            TotalPages = totalPages
         };
     }
 }

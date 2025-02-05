@@ -58,11 +58,12 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="pageNumber">The page number for pagination.</param>
     /// <param name="pageSize">The number of users per page.</param>
+    /// <param name="name">An optional name filter to search users by name.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
     /// <returns>A paginated list of users.</returns>
     [HttpGet]
     public async Task<ActionResult<PagedUserResult>> GetUsers([FromQuery] int? pageNumber,
-        [FromQuery] int? pageSize, CancellationToken cancellationToken)
+        [FromQuery] int? pageSize, [FromQuery] string? name, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
         
@@ -70,7 +71,8 @@ public class UserController : ControllerBase
         {
             UserId = userId,
             PageNumber = pageNumber,
-            PageSize = pageSize
+            PageSize = pageSize,
+            Name = name
         };
         
         var users = await _mediator.Send(query, cancellationToken);
@@ -83,11 +85,12 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="pageNumber">The page number for pagination.</param>
     /// <param name="pageSize">The number of friends per page.</param>
+    /// <param name="name">An optional name filter to search friends by name.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
     /// <returns>A paginated list of friends.</returns>
     [HttpGet("/friend")]
     public async Task<ActionResult<PagedUserResult>> GetFriends([FromQuery] int? pageNumber,
-        [FromQuery] int? pageSize, CancellationToken cancellationToken)
+        [FromQuery] int? pageSize, [FromQuery] string? name, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
         
@@ -95,40 +98,14 @@ public class UserController : ControllerBase
         {
             UserId = userId,
             PageNumber = pageNumber,
-            PageSize = pageSize
+            PageSize = pageSize,
+            Name = name
         };
         
         var users = await _mediator.Send(query, cancellationToken);
         
         return Ok(users);
     }
-    
-    // [HttpPut]
-    // public async Task<ActionResult<EditedUserDTO>> UpdateUser(EditUserDTO editUserDto, CancellationToken cancellationToken)
-    // {
-    //     try
-    //     {
-    //         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
-    //         
-    //         var command = new UpdateUserCommand
-    //         {
-    //             UserId = userId,
-    //             EditUserDto = editUserDto
-    //         };
-    //         
-    //         var user = await _mediator.Send(command, cancellationToken);
-    //         
-    //         return Ok(user);
-    //     }
-    //     catch (UnauthorizedAccessException ex)
-    //     {
-    //         return Unauthorized(ex.Message);
-    //     }
-    //     catch (InvalidOperationException ex)
-    //     {
-    //         return BadRequest(ex.Message);
-    //     }
-    // }
     
     /// <summary>
     /// Adds a new friend by their ID.
@@ -281,6 +258,46 @@ public class UserController : ControllerBase
             
             var result = await _mediator.Send(command, cancellationToken);
             return Ok(result);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Sets the role for a user. Only accessible by users with the Admin role. 
+    /// The only valid role values are "Admin" and "User".
+    /// </summary>
+    /// <param name="setUserRoleDto">The data transfer object containing the user ID and the role to be assigned. 
+    /// Only the roles "Admin" and "User" are valid.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the result of the operation.</returns>
+    /// <response code="200">Successfully updated the user's role.</response>
+    /// <response code="400">The role is invalid, the request body is incorrect, or the provided role is not "Admin" or "User".</response>
+    /// <response code="404">The user with the specified ID was not found.</response>
+    /// <response code="401">Unauthorized access due to insufficient permissions. The Admin role is required.</response>
+    /// <response code="500">An unexpected error occurred on the server.</response>
+    [Authorize(Policy = "RequireAdminRole")]
+    [HttpPost("user-role")]
+    public async Task<IActionResult> SetUserRole([FromForm]UpdateUserRoleDTO updateUserRoleDto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var command = new SetUserRoleCommand
+            {
+                UpdateUserRoleDto = updateUserRoleDto
+            };
+            await _mediator.Send(command, cancellationToken);
+            return Ok();
         }
         catch (UnauthorizedAccessException ex)
         {
