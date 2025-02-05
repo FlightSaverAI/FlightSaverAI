@@ -41,6 +41,28 @@ public class PostProfile : Profile
         CreateMap<SocialPost, EditSocialPostDTO>()
             .ForMember(dest => dest.location, opt => opt.MapFrom(src => src.Location))
             .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Content));
+        
+        CreateMap<EditSocialPostContentDTO, SocialPost>()
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.location))
+            .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.content))
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) =>
+                    srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+
+        CreateMap<SocialPost, EditSocialPostContentDTO>()
+            .ForMember(dest => dest.location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Content));
+        
+        CreateMap<EditSocialPostDTO, SocialPost>()
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.location))
+            .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.content))
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) =>
+                    srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+
+        CreateMap<SocialPost, EditSocialPostDTO>()
+            .ForMember(dest => dest.location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Content));
 
         CreateMap<EditCommentDTO, Comment>()
             .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.content))
