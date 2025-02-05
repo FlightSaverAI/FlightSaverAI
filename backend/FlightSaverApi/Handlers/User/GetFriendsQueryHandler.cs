@@ -23,44 +23,48 @@ public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, PagedUser
     }
     
     public async Task<PagedUserResult> Handle(GetFriendsQuery request, CancellationToken cancellationToken)
+{
+    var user = await _context.Users
+        .Include(u => u.Friends)
+        .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
+
+    if (user == null)
     {
-        var user = await _context.Users
-            .Include(u => u.Friends)
-            .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
-
-        if (user == null)
-        {
-            return new PagedUserResult();
-        }
-
-        var friendsDTO = _mapper.Map<IEnumerable<FriendDTO>>(user.Friends);
-
-        foreach (var friend in friendsDTO)
-        {
-            friend.IsLoggedUserFriend = true;
-            friend.Statistics = await _statisticsService.GetBasicFlightStatisticsAsync(friend.Id, cancellationToken);
-        }
-        
-        var totalRecords = 0;
-        var totalPages = 0;
-        
-        if (request.PageNumber.HasValue && request.PageSize.HasValue && request.PageNumber > 0 && request.PageSize > 0)
-        {
-            totalRecords = friendsDTO.Count();
-            totalPages = (int)Math.Ceiling((double)totalRecords / (request.PageSize ?? 10));
-            return new PagedUserResult()
-            {
-                Users = friendsDTO.Skip((request.PageNumber.Value - 1) * request.PageSize.Value)
-                    .Take(request.PageSize.Value)
-                    .ToList(),
-                TotalPages = totalPages
-            };
-        }
-
-        return new PagedUserResult()
-        {
-            Users = friendsDTO,
-            TotalPages = totalPages
-        };
+        return new PagedUserResult();
     }
+
+    var friendsQuery = _context.Users
+        .Where(u => u.Id == request.UserId)
+        .SelectMany(u => u.Friends)
+        .AsQueryable();
+
+    if (!string.IsNullOrEmpty(request.Name))
+    {
+        friendsQuery = friendsQuery.Where(f => EF.Functions.Like(f.Username.ToLower(), $"%{request.Name.ToLower()}%"));
+    }
+
+    var friendsDTO = _mapper.Map<IEnumerable<FriendDTO>>(await friendsQuery.ToListAsync(cancellationToken));
+
+    foreach (var friend in friendsDTO)
+    {
+        friend.IsLoggedUserFriend = true;
+        friend.Statistics = await _statisticsService.GetBasicFlightStatisticsAsync(friend.Id, cancellationToken);
+    }
+
+    var totalRecords = friendsDTO.Count();
+    
+    var pageNumber = request.PageNumber ?? 1;
+    var pageSize = request.PageSize ?? 10;
+
+    var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+    return new PagedUserResult()
+    {
+        Users = friendsDTO.Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList(),
+        TotalPages = totalPages
+    };
+}
+
 }
