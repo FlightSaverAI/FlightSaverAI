@@ -58,11 +58,12 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="pageNumber">The page number for pagination.</param>
     /// <param name="pageSize">The number of users per page.</param>
+    /// <param name="name">An optional name filter to search users by name.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
     /// <returns>A paginated list of users.</returns>
     [HttpGet]
     public async Task<ActionResult<PagedUserResult>> GetUsers([FromQuery] int? pageNumber,
-        [FromQuery] int? pageSize, CancellationToken cancellationToken)
+        [FromQuery] int? pageSize, [FromQuery] string? name, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
         
@@ -70,7 +71,8 @@ public class UserController : ControllerBase
         {
             UserId = userId,
             PageNumber = pageNumber,
-            PageSize = pageSize
+            PageSize = pageSize,
+            Name = name
         };
         
         var users = await _mediator.Send(query, cancellationToken);
@@ -83,11 +85,12 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="pageNumber">The page number for pagination.</param>
     /// <param name="pageSize">The number of friends per page.</param>
+    /// <param name="name">An optional name filter to search friends by name.</param>
     /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
     /// <returns>A paginated list of friends.</returns>
     [HttpGet("/friend")]
     public async Task<ActionResult<PagedUserResult>> GetFriends([FromQuery] int? pageNumber,
-        [FromQuery] int? pageSize, CancellationToken cancellationToken)
+        [FromQuery] int? pageSize, [FromQuery] string? name, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
         
@@ -95,40 +98,14 @@ public class UserController : ControllerBase
         {
             UserId = userId,
             PageNumber = pageNumber,
-            PageSize = pageSize
+            PageSize = pageSize,
+            Name = name
         };
         
         var users = await _mediator.Send(query, cancellationToken);
         
         return Ok(users);
     }
-    
-    // [HttpPut]
-    // public async Task<ActionResult<EditedUserDTO>> UpdateUser(EditUserDTO editUserDto, CancellationToken cancellationToken)
-    // {
-    //     try
-    //     {
-    //         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
-    //         
-    //         var command = new UpdateUserCommand
-    //         {
-    //             UserId = userId,
-    //             EditUserDto = editUserDto
-    //         };
-    //         
-    //         var user = await _mediator.Send(command, cancellationToken);
-    //         
-    //         return Ok(user);
-    //     }
-    //     catch (UnauthorizedAccessException ex)
-    //     {
-    //         return Unauthorized(ex.Message);
-    //     }
-    //     catch (InvalidOperationException ex)
-    //     {
-    //         return BadRequest(ex.Message);
-    //     }
-    // }
     
     /// <summary>
     /// Adds a new friend by their ID.
