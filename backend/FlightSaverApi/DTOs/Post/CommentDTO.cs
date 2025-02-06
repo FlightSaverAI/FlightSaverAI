@@ -6,7 +6,7 @@ public class CommentDTO
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public EditUserDTO User { get; set; }
+    public EditedUserDTO User { get; set; }
     public DateTime PostedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public string Content { get; set; }
