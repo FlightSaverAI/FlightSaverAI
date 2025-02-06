@@ -1,4 +1,4 @@
-# Flight Saver API
+# Flight Saver API [Obsolete]
 
 ### Prerequisites
 

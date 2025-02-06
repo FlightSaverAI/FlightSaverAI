@@ -19,15 +19,6 @@ public class PostController : ControllerBase
         _mediator = mediator;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<SocialPostDTO>>> GetPosts(CancellationToken cancellationToken)
-    // {
-    //     var query = new GetPostsQuery();
-    //     var posts = await _mediator.Send(query, cancellationToken);
-    //     
-    //     return Ok(posts);
-    // }
-
     /// <summary>
     /// Fetch posts created by a specific user, with optional pagination.
     /// </summary>
@@ -108,41 +99,6 @@ public class PostController : ControllerBase
         return Ok(post);
     }
 
-    // /// <summary>
-    // /// Update an existing post.
-    // /// </summary>
-    // /// <param name="editSocialPostDTO">The data for the post update.</param>
-    // /// <param name="cancellationToken">Cancellation token to cancel the request.</param>
-    // /// <returns>The details of the updated post.</returns>
-    // [HttpPut]
-    // public async Task<ActionResult<SocialPostDTO>> UpdatePost(EditSocialPostDTO editSocialPostDTO,
-    //     CancellationToken cancellationToken)
-    // {
-    //     try
-    //     {
-    //         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
-    //         
-    //         var command = new UpdatePostCommand()
-    //         {
-    //             UserId = userId,
-    //             Id = editSocialPostDTO.id,
-    //             EditSocialPostDTO = editSocialPostDTO
-    //         };
-    //     
-    //         var post = await _mediator.Send(command, cancellationToken);
-    //     
-    //         return Ok(post);
-    //     }
-    //     catch (UnauthorizedAccessException ex)
-    //     {
-    //         return Unauthorized(ex.Message);
-    //     }
-    //     catch (InvalidOperationException ex)
-    //     {
-    //         return BadRequest(ex.Message);
-    //     }
-    // }
-    
     /// <summary>
     /// Updates the content of an existing post, including location and text content.
     /// </summary>
