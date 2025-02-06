@@ -21,6 +21,7 @@ public class GetPostsByUserIdQueryHandler : IRequestHandler<GetPostsByUserIdQuer
     public async Task<IEnumerable<SocialPostDTO>> Handle(GetPostsByUserIdQuery request, CancellationToken cancellationToken)
     {
         var query = _context.SocialPosts
+            .Include(p => p.Likes)
             .Where(p => p.UserId == request.UserId);
 
         if (request.LastPostId.HasValue)
@@ -38,6 +39,14 @@ public class GetPostsByUserIdQueryHandler : IRequestHandler<GetPostsByUserIdQuer
             .Take(request.PageSize)
             .ToListAsync(cancellationToken);
 
-        return _mapper.Map<IEnumerable<SocialPostDTO>>(posts);
+        var postDtos = _mapper.Map<IEnumerable<SocialPostDTO>>(posts);
+
+        foreach (var postDto in postDtos)
+        {
+            var postEntity = posts.First(p => p.Id == postDto.Id);
+            postDto.IsLikedByCurrentUser = postEntity.Likes.Any(like => like.UserId == request.UserId);
+        }
+
+        return postDtos;
     }
 }
