@@ -22,6 +22,7 @@ public class GetPostsByUserIdQueryHandler : IRequestHandler<GetPostsByUserIdQuer
     {
         var query = _context.SocialPosts
             .Include(p => p.Likes)
+            .Include(p => p.Comments)
             .Where(p => p.UserId == request.UserId);
 
         if (request.LastPostId.HasValue)
