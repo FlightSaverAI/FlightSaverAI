@@ -7,7 +7,7 @@ import { LoaderService } from './loader.service';
 export const loaderInterceptor: HttpInterceptorFn = (req, next) => {
   const _loaderService = inject(LoaderService);
 
-  const delayTimer = timer(100).subscribe(() => {
+  const delayTimer = timer(300).subscribe(() => {
     _loaderService.show();
   });
 
