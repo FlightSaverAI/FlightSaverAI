@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environments';
+import { forkJoin } from 'rxjs';
 
 @Injectable()
 export class PostService {
@@ -31,9 +32,42 @@ export class PostService {
     });
   }
 
-  public editPost(form: any, postId: string) {
-    const { city, country, content, image } = form;
+  public managePostEdition(updatedPost: any) {
+    if (updatedPost.image === updatedPost.prevImage) {
+      return this.editPost(updatedPost);
+    }
 
+    return forkJoin([
+      this.editPostImage(updatedPost.image, updatedPost.postId),
+      this.editPost(updatedPost),
+    ]);
+  }
+
+  public editPost(updatedPost: any) {
+    const { city, country, content, postId } = updatedPost;
+
+    const params: any = {
+      id: postId,
+      location: `${country}, ${city.trim()}`,
+      content,
+    };
+
+    return this._http.put<any>(
+      `${environment.url}/post/content`,
+      {},
+      {
+        params: {
+          ...params,
+        },
+      }
+    );
+  }
+
+  public deletePost(postId: string) {
+    return this._http.delete<any>(`${environment.url}/post/${postId}`);
+  }
+
+  public editPostImage(image: string, postId: string) {
     const formData = new FormData();
 
     if (image) {
@@ -42,19 +76,9 @@ export class PostService {
       formData.append('image', file, 'image.png');
     }
 
-    const params: any = {
-      id: postId,
-      location: `${country}, ${city.trim()}`,
-      content,
-    };
+    const imagePayload = image ? formData : image;
 
-    return this._http.put<any>(`${environment.url}/post`, formData, {
-      params,
-    });
-  }
-
-  public deletePost(postId: string) {
-    return this._http.delete<any>(`${environment.url}/post/${postId}`);
+    return this._http.put<any>(`${environment.url}/post/image?id=${postId}`, imagePayload);
   }
 
   private _dataURLtoBlob(dataURL: string): Blob {

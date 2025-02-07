@@ -180,10 +180,14 @@ export class ManagePostModalComponent implements OnInit {
       return;
     }
 
-    if (!this.imageUrl.includes('flightsaverblobstorage')) {
-      this.postForm().controls.image.setValue(this.imageUrl);
-    }
+    this.postForm().controls.image.setValue(this.imageUrl);
 
-    this._modalRef.close(this.postForm().getRawValue());
+    const params: any = {
+      postId: this.modalData?.post?.id ? this.modalData?.post?.id : undefined,
+      prevImage: this.modalData?.post?.imageUrl ? this.modalData?.post?.imageUrl : undefined,
+      ...this.postForm().getRawValue(),
+    };
+
+    this._modalRef.close(params);
   }
 }

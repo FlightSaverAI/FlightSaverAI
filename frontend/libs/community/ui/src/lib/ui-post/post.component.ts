@@ -3,11 +3,18 @@ import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { CommentComponent } from '../ui-comment/comment.component';
 import { DropdownDirective } from '@shared/ui-components';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'community-post',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, CommentComponent, DropdownDirective],
+  imports: [
+    CommonModule,
+    NgOptimizedImage,
+    CommentComponent,
+    DropdownDirective,
+    ReactiveFormsModule,
+  ],
   template: `<div class="post">
     <div class="post__user">
       <div class="u-flex u-gap-1">
@@ -49,15 +56,14 @@ import { DropdownDirective } from '@shared/ui-components';
     </div>
     <div class="post__interaction">
       <div class="post__interaction-likes">
-        <img
-          ngSrc="global/assets/assets-community/like.svg"
-          alt="Like icon"
-          width="25"
-          height="25"
-        />
+        <div
+          class="like-icon"
+          [ngClass]="post().isLikedByCurrentUser ? 'active' : ''"
+          (click)="toggleActive(post().id, post().isLikedByCurrentUser)"
+        ></div>
         <p>{{ post().likesCount }} likes</p>
       </div>
-      <div class="post__interaction-comments" (click)="toggleCommentSection()">
+      <div class="post__interaction-comments" (click)="toggleCommentSection(post().id)">
         <img
           ngSrc="global/assets/assets-community/comment.svg"
           alt="Comment icon"
@@ -69,18 +75,23 @@ import { DropdownDirective } from '@shared/ui-components';
     </div>
     @if(isCommentSectionOpen()){
     <div class="post__comments-list">
-      @for(comment of comments(); track comment){
+      @if(comments()?.[0]?.socialPostId === post().id){ @for(comment of comments(); track
+      comment.id){
       <community-comment class="comment" [comment]="comment"></community-comment>
-      }
-
+      } }
       <div class="container">
         <img [ngSrc]="user().profilePictureUrl" alt="" width="40" height="40" />
         <div class="hehe">
-          <textarea name="" id="" placeholder="Write the comment..."></textarea>
+          <textarea [formControl]="content" placeholder="Write the comment..."></textarea>
           <div class="icons">
-            <img ngSrc="global/assets/assets-community/photo.svg" alt="" width="15" height="15" />
             <img ngSrc="global/assets/assets-community/emoji.svg" alt="" width="15" height="15" />
-            <img ngSrc="global/assets/assets-community/save.svg" alt="" width="15" height="15" />
+            <img
+              ngSrc="global/assets/assets-community/save.svg"
+              alt=""
+              width="15"
+              height="15"
+              (click)="saveComment(post().id)"
+            />
           </div>
         </div>
       </div>
@@ -95,11 +106,30 @@ export class PostComponent {
   post = input<any>();
   dropdownConfig = input<any>();
   comments = input.required<any>();
+
   selectedDropdownOption = output<string>();
+  loadComments = output<string>();
+  addComment = output<any>();
+  likePost = output<string>();
+  unlikePost = output<string>();
 
   isCommentSectionOpen = signal(false);
+  content = new FormControl('');
 
-  protected toggleCommentSection() {
+  protected toggleActive(postId: string, isLikedByCurrentUser: boolean) {
+    isLikedByCurrentUser ? this.unlikePost.emit(postId) : this.likePost.emit(postId);
+  }
+
+  protected toggleCommentSection(postId: string) {
     this.isCommentSectionOpen.update((state) => !state);
+
+    if (this.isCommentSectionOpen()) {
+      this.loadComments.emit(postId);
+    }
+  }
+
+  protected saveComment(postId: string) {
+    const content = this.content.value;
+    this.addComment.emit({ postId, content });
   }
 }
