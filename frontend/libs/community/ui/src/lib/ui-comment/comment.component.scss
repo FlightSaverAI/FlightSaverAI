@@ -19,6 +19,7 @@
   &__userName {
     font-size: 1.1rem;
     font-weight: 600;
+    margin-bottom: 5px;
   }
 
   &__actions {
@@ -26,5 +27,10 @@
     margin-left: 15px;
     gap: 15px;
     margin: 5px;
+    font-size: 0.9rem;
+
+    & > span:first-child {
+      color: lightgrey;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '@shared/ui-components';
 import { RouterModule } from '@angular/router';
@@ -25,7 +25,13 @@ import { NgOptimizedImage } from '@angular/common';
       ></shared-button>
       }
       <div class="avatar">
-        <img class="avatar-picture" [ngSrc]="profilePhotoUrl()" width="250" height="250" alt="" />
+        <img
+          class="avatar-picture"
+          [ngSrc]="profilePhotoUrl() || defaultUserPhoto()"
+          width="250"
+          height="250"
+          alt=""
+        />
         @if(isSettingsSection()) {
         <shared-button
           class="update-picture"
@@ -34,7 +40,11 @@ import { NgOptimizedImage } from '@angular/common';
           (emitEvent)="openUploadPhotoModal.emit('Profile')"
         ></shared-button>
         } @else {
-        <shared-button class="add-post" content="Add Post"></shared-button>
+        <shared-button
+          class="add-post"
+          content="Add Post"
+          (emitEvent)="addPost.emit('add')"
+        ></shared-button>
         <shared-button
           class="edit-profile"
           content="Edit Profile"
@@ -54,4 +64,7 @@ export class AvatarComponent {
   backgroundPhotoUrl = input.required<string>();
   selectedOption = output();
   openUploadPhotoModal = output<'Profile' | 'Background'>();
+  addPost = output<string>();
+
+  defaultUserPhoto = signal('global/assets/default-user-photo.png');
 }

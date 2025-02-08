@@ -7,3 +7,4 @@ export * from './lib/select/select.component';
 export * from './lib/date-picker/date-picker.component';
 export * from './lib/loader/loader.component';
 export * from './lib/modal/modal.component';
+export * from './lib/dropdown/dropdown.directive';

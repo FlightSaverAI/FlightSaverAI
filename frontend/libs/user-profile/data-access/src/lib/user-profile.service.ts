@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environments';
 
 @Injectable()
-export class SettingsService {
+export class UserProfileService {
   private _http = inject(HttpClient);
 
   public getUserProfileData() {

@@ -6,7 +6,7 @@ import { NavbarComponent, NavConfig } from '@shared/ui';
   standalone: true,
   imports: [RouterModule, NavbarComponent],
   template: `
-    <shared-navbar [navConfig]="navConfig"></shared-navbar>
+    <shared-navbar [navConfig]="navConfig" [dropdownConfig]="dropdownConfig"></shared-navbar>
     <main>
       <router-outlet></router-outlet>
     </main>
@@ -44,6 +44,18 @@ export class AuthorizedUserComponent {
         width: 50,
         height: 50,
       },
+    },
+  ];
+
+  dropdownConfig = [
+    {
+      field: 'Profile',
+    },
+    {
+      field: 'Settings',
+    },
+    {
+      field: 'Logout',
     },
   ];
 }

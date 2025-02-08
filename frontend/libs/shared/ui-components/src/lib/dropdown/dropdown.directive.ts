@@ -1,13 +1,14 @@
 import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Directive, ElementRef, HostListener, inject, output } from '@angular/core';
-import { ProfileDropdownComponent } from './profile-dropdown.component';
+import { Directive, ElementRef, HostListener, inject, input, output } from '@angular/core';
+import { DropdownComponent } from './dropdown.component';
 
 @Directive({
-  selector: '[sharedProfileDropdown]',
+  selector: '[sharedDropdown]',
   standalone: true,
 })
-export class ProfileDropdownDirective {
+export class DropdownDirective {
+  dropdownConfig = input.required<any>();
   selectOption = output<string>();
 
   positions: ConnectedPosition[] = [
@@ -36,9 +37,10 @@ export class ProfileDropdownDirective {
 
       this._overlayRef = this._overlay.create({ positionStrategy });
 
-      const portal = new ComponentPortal(ProfileDropdownComponent);
+      const portal = new ComponentPortal(DropdownComponent);
       const componentRef = this._overlayRef.attach(portal);
 
+      componentRef.instance.dropdownConfig = this.dropdownConfig();
       componentRef.instance.selectOption.subscribe((url) => this.selectOption.emit(url));
     }
   }

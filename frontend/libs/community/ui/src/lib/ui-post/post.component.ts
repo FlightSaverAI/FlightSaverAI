@@ -1,77 +1,104 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { CommentComponent } from '../ui-comment/comment.component';
+import { DropdownDirective } from '@shared/ui-components';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'community-post',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, CommentComponent],
+  imports: [
+    CommonModule,
+    NgOptimizedImage,
+    CommentComponent,
+    DropdownDirective,
+    ReactiveFormsModule,
+  ],
   template: `<div class="post">
     <div class="post__user">
+      <div class="u-flex u-gap-1">
+        <img
+          class="post__user-photo"
+          [ngSrc]="user().profilePictureUrl || defaultUserPhoto()"
+          alt="user-photo"
+          width="50"
+          height="50"
+        />
+        <div class="post__user-info">
+          <span class="post__user-name">{{ user().username }}</span>
+          <span class="post__user-location"
+            >{{ post().postedAt | date: 'dd MMM yyyy, HH:mm:ss' }}, {{ post().location }}
+          </span>
+        </div>
+      </div>
+      @if(dropdownConfig()){
       <img
-        class="post__user-photo"
-        [ngSrc]="user().photo"
+        class="post__more-options"
+        ngSrc="global/assets/assets-community/more-options.svg"
         alt="user-photo"
-        width="50"
-        height="50"
+        width="40"
+        height="40"
+        sharedDropdown
+        [dropdownConfig]="dropdownConfig()"
+        (selectOption)="selectedDropdownOption.emit($event)"
       />
-      <div class="post__user-info">
-        <span class="post__user-name">{{ user().name }}</span>
-        <span class="post__user-location"
-          >{{ user().location.date }}, {{ user().location.city }},
-          {{ user().location.country }}</span
-        >
-      </div>
+      }
     </div>
-    <div class="post__content">
-      <p class="post__content-description">{{ content().description }}</p>
-      <div class="post__content-flight-details">
-        <p>
-          Flight:
-          <span
-            >{{ flightDetails().departure.date }}, {{ flightDetails().departure.location }} ({{
-              flightDetails().departure.time
-            }})</span
-          >
-          ->
-          <span>{{ flightDetails().arrival.location }} ({{ flightDetails().arrival.time }})</span>
-        </p>
-      </div>
-      <img class="post__content-image u-w-100" [src]="content().image" alt="" />
+    <div class="post__content-container">
+      <p
+        class="post__content"
+        [ngStyle]="post().imageUrl ? { paddingBottom: '15px' } : { padding: '15px 0' }"
+      >
+        {{ post().content }}
+      </p>
+      @if(post().imageUrl){
+      <img class="post__content-image u-w-100" [src]="post().imageUrl" alt="" />
+      }
     </div>
     <div class="post__interaction">
       <div class="post__interaction-likes">
-        <img src="global/assets/assets-community/like.svg" alt="Like icon" width="25" height="25" />
-        <p>
-          Liked by {{ interactions().likes.likedBy }} and
-          <span>{{ interactions().likes.count }} others</span>
-        </p>
+        <div
+          class="like-icon"
+          [ngClass]="post().isLikedByCurrentUser ? 'active' : ''"
+          (click)="toggleActive(post().id, post().isLikedByCurrentUser)"
+        ></div>
+        <p>{{ post().likesCount }} likes</p>
       </div>
-      <div class="post__interaction-comments" (click)="toggleCommentSection()">
+      <div class="post__interaction-comments" (click)="toggleCommentSection(post().id)">
         <img
           ngSrc="global/assets/assets-community/comment.svg"
           alt="Comment icon"
           width="25"
           height="25"
         />
-        <span>{{ interactions().comments.count }} comments</span>
+        <span>{{ post().commentsCount }} comments</span>
       </div>
     </div>
     @if(isCommentSectionOpen()){
     <div class="post__comments-list">
-      @for(comment of comments(); track comment){
+      @if(comments()?.[0]?.socialPostId === post().id){ @for(comment of comments(); track
+      comment.id){
       <community-comment class="comment" [comment]="comment"></community-comment>
-      }
-
+      } }
       <div class="container">
-        <img src="global/assets/images/user-photo.png" alt="" width="40" height="40" />
+        <img
+          [ngSrc]="currentUserProfilePicture() || defaultUserPhoto()"
+          alt=""
+          width="40"
+          height="40"
+        />
         <div class="hehe">
-          <textarea name="" id="" placeholder="Write the comment..."></textarea>
+          <textarea [formControl]="content" placeholder="Write the comment..."></textarea>
           <div class="icons">
-            <img ngSrc="global/assets/assets-community/photo.svg" alt="" width="15" height="15" />
             <img ngSrc="global/assets/assets-community/emoji.svg" alt="" width="15" height="15" />
-            <img ngSrc="global/assets/assets-community/save.svg" alt="" width="15" height="15" />
+            <img
+              ngSrc="global/assets/assets-community/save.svg"
+              alt=""
+              width="15"
+              height="15"
+              (click)="saveComment(post().id)"
+            />
           </div>
         </div>
       </div>
@@ -83,14 +110,35 @@ import { CommentComponent } from '../ui-comment/comment.component';
 })
 export class PostComponent {
   user = input.required<any>();
-  content = input.required<any>();
-  flightDetails = input.required<any>();
-  interactions = input.required<any>();
+  post = input<any>();
+  dropdownConfig = input<any>();
   comments = input.required<any>();
+  currentUserProfilePicture = input.required<string>();
+
+  selectedDropdownOption = output<string>();
+  loadComments = output<string>();
+  addComment = output<any>();
+  likePost = output<string>();
+  unlikePost = output<string>();
 
   isCommentSectionOpen = signal(false);
+  defaultUserPhoto = signal('global/assets/default-user-photo.png');
+  content = new FormControl('');
 
-  toggleCommentSection() {
+  protected toggleActive(postId: string, isLikedByCurrentUser: boolean) {
+    isLikedByCurrentUser ? this.unlikePost.emit(postId) : this.likePost.emit(postId);
+  }
+
+  protected toggleCommentSection(postId: string) {
     this.isCommentSectionOpen.update((state) => !state);
+
+    if (this.isCommentSectionOpen()) {
+      this.loadComments.emit(postId);
+    }
+  }
+
+  protected saveComment(postId: string) {
+    const content = this.content.value;
+    this.addComment.emit({ postId, content });
   }
 }

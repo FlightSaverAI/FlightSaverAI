@@ -1,11 +1,7 @@
-
-
 .modal {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 16px;
-  height: 100%;
   background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
   color: white;
 
@@ -21,6 +17,7 @@
 
   &__body {
     margin: 16px 0;
+    height: 100%;
   }
 
   &__footer {
@@ -38,4 +35,12 @@ shared-button:first-child {
 img {
   margin-right: 15px;
   cursor: pointer;
+}
+
+::ng-deep .mdc-dialog__surface {
+  display: unset;
+}
+
+::ng-deep .cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.6);
 }

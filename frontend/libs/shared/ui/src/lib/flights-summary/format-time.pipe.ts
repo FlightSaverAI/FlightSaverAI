@@ -5,14 +5,20 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class FormatTimePipe implements PipeTransform {
-  transform(value: any): unknown {
-    if (!value) return '';
+  transform(timeString: any): unknown {
+    if (!timeString) return '';
 
-    const [daysPart, timePart] = value.split('.');
-    const days = parseInt(daysPart, 10);
-    const [hours, minutes] = timePart.split(':').map(Number);
-    const totalHours = days * 24 + hours;
+    const timeParts = timeString.split(':');
 
-    return `${totalHours} h ${minutes} min`;
+    if (timeParts.length !== 3) {
+      return 'Invalid format';
+    }
+
+    let hours = parseInt(timeParts[0], 10);
+
+    const days = Math.floor(hours / 24);
+    hours = hours % 24;
+
+    return `${days} Days ${hours} Hours`.trim();
   }
 }

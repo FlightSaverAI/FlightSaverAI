@@ -9,27 +9,17 @@
 .posts-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 50px;
+  margin: 10px 15px;
 }
 
 shared-flights-summary {
   margin-top: 225px;
 }
 
-@include mobile-large {
+@include mobile-medium {
   .posts-container {
     margin: 10px 30px;
-  }
-}
-
-@include laptop {
-  .posts-container {
-    margin: 10px 100px;
-  }
-}
-
-@include laptop {
-  .posts-container {
-    margin: 10px 200px;
   }
 }

@@ -4,7 +4,12 @@
   text-align: center;
 }
 
+.u-flex {
+  display: flex;
+}
+
 .u-justify-center {
+  display: flex;
   justify-content: center;
 }
 
@@ -14,6 +19,7 @@
 }
 
 .u-flex-column {
+  display: flex;
   flex-direction: column;
 }
 
@@ -54,6 +60,14 @@
 
 .u-rotate-180 {
   transform: rotate(180deg);
+}
+
+.u-gap-1 {
+  gap: 10px;
+}
+
+.u-gap-2 {
+  gap: 20px;
 }
 
 /* MARGINS */

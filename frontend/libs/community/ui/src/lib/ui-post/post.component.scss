@@ -5,11 +5,14 @@
   flex-direction: column;
   border-radius: 20px;
   background: radial-gradient(circle, #3d4460 0%, #1e212e 100%);
+  max-width: 850px;
+  flex: auto;
   padding: 25px;
   color: white;
 
   &__user {
     display: flex;
+    justify-content: space-between;
     gap: 20px;
   }
 
@@ -23,6 +26,10 @@
     justify-content: center;
   }
 
+  &__more-options {
+    cursor: pointer;
+  }
+
   &__user-name {
     font-size: 1.2rem;
     font-weight: 600;
@@ -33,30 +40,26 @@
     color: #b7c2e8;
   }
 
-  &__content {
+  &__content-container {
     padding: 15px 0;
   }
 
-  &__content-description {
+  &__content {
     padding-bottom: 15px;
-  }
-
-  &__content-flight-details {
-    color: #b7c2e8;
-    padding-bottom: 15px;
+    line-height: 1.2;
   }
 
   &__content-image {
     width: 100%;
     border-radius: 16px;
     max-height: 550px;
+    object-fit: contain;
   }
 
   &__interaction {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     gap: 10px;
-    align-items: flex-end;
   }
 
   &__interaction-likes {
@@ -81,7 +84,7 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-top: 30px;
+    margin-top: 25px;
   }
 }
 
@@ -135,4 +138,19 @@ textarea::placeholder {
 .icons > img {
   margin: 0 5px;
   cursor: pointer;
+}
+
+.like-icon {
+  width: 40px;
+  height: 40px;
+  background: url('https://cssanimation.rocks/images/posts/steps/heart.png') no-repeat;
+  background-position: -30px -30px;
+  cursor: pointer;
+  transition: background-position 0.8s steps(28);
+  transition-duration: 0s;
+
+  &.active {
+    transition-duration: 1s;
+    background-position: -2830px -30px;
+  }
 }

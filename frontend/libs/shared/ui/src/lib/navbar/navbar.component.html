@@ -23,13 +23,15 @@
       *ngIf="item.type === 'button'"
       class="nav__list-btn"
       [content]="item.name"
-      (emitEvent)="navigateToPassedUrl(item.routerLink, index)"
+      [routerLink]="item.routerLink"
+      (emitEvent)="activeIndex = index"
     ></shared-button>
     <div
       *ngIf="item.image && item.type === 'photo'"
       class="nav__list-photo"
-      sharedProfileDropdown
-      (selectOption)="navigateToPassedUrl($event, index)"
+      sharedDropdown
+      [dropdownConfig]="dropdownConfig()"
+      (selectOption)="navigateToPassedUrl($event)"
     >
       <img
         [ngSrc]="item.image.src"
