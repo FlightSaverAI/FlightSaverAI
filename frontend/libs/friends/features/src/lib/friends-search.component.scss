@@ -1,0 +1,32 @@
+@use '@global/styles/styles.scss' as *;
+
+.friends-board {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin: 10px 15px;
+}
+
+.friends-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.no-user-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 50vh;
+  width: 100%;
+  font-size: 1.4rem;
+  color: var(--color-secondary);
+}
+
+@include mobile-medium {
+  .friends-board {
+    margin: 10px 30px;
+  }
+}
