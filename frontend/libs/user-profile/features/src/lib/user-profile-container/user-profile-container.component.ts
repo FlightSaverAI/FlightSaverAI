@@ -37,6 +37,7 @@ import { filter, switchMap, tap } from 'rxjs';
         [post]="post"
         [comments]="postComments()[post.id] || []"
         [dropdownConfig]="dropdownConfig()"
+        [currentUserProfilePicture]="userData().profilePictureUrl"
         (selectedDropdownOption)="openManagePostModal($event, post)"
         (likePost)="likePost($event)"
         (unlikePost)="unlikePost($event)"
@@ -89,7 +90,7 @@ export class UserProfileContainerComponent implements OnInit {
     },
   };
 
-  public ngOnInit(): void {
+  public ngOnInit() {
     this.getPosts();
   }
 
@@ -109,7 +110,7 @@ export class UserProfileContainerComponent implements OnInit {
       .afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((form) => (callback.length > 0 ? callback(form) : callback())),
+        switchMap((form) => (callback.length > 0 ? callback(form) : callback(post.id))),
         tap(() => this.getPosts()),
         tap(() => (this.selectedPostId = null))
       )

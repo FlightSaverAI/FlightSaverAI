@@ -11,6 +11,10 @@ export class PostService {
     return this._http.get<any>(`${environment.url}/post/user`);
   }
 
+  public getAllPosts() {
+    return this._http.get<any>(`${environment.url}/post/friend`);
+  }
+
   public addPost(form: any) {
     const { city, country, image, content } = form;
 

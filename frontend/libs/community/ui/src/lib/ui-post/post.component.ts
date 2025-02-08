@@ -20,7 +20,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       <div class="u-flex u-gap-1">
         <img
           class="post__user-photo"
-          [ngSrc]="user().profilePictureUrl"
+          [ngSrc]="user().profilePictureUrl || defaultUserPhoto()"
           alt="user-photo"
           width="50"
           height="50"
@@ -32,6 +32,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
           </span>
         </div>
       </div>
+      @if(dropdownConfig()){
       <img
         class="post__more-options"
         ngSrc="global/assets/assets-community/more-options.svg"
@@ -42,6 +43,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
         [dropdownConfig]="dropdownConfig()"
         (selectOption)="selectedDropdownOption.emit($event)"
       />
+      }
     </div>
     <div class="post__content-container">
       <p
@@ -80,7 +82,12 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       <community-comment class="comment" [comment]="comment"></community-comment>
       } }
       <div class="container">
-        <img [ngSrc]="user().profilePictureUrl" alt="" width="40" height="40" />
+        <img
+          [ngSrc]="currentUserProfilePicture() || defaultUserPhoto()"
+          alt=""
+          width="40"
+          height="40"
+        />
         <div class="hehe">
           <textarea [formControl]="content" placeholder="Write the comment..."></textarea>
           <div class="icons">
@@ -106,6 +113,7 @@ export class PostComponent {
   post = input<any>();
   dropdownConfig = input<any>();
   comments = input.required<any>();
+  currentUserProfilePicture = input.required<string>();
 
   selectedDropdownOption = output<string>();
   loadComments = output<string>();
@@ -114,6 +122,7 @@ export class PostComponent {
   unlikePost = output<string>();
 
   isCommentSectionOpen = signal(false);
+  defaultUserPhoto = signal('global/assets/default-user-photo.png');
   content = new FormControl('');
 
   protected toggleActive(postId: string, isLikedByCurrentUser: boolean) {
