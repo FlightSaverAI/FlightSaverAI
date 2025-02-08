@@ -7,7 +7,7 @@ import { StreamlinedSoaringSectionComponent } from './components/streamlined-soa
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { SocialsComponent } from './components/socials/socials.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { NavbarComponent, NavConfig } from '@shared/ui-components';
+import { NavbarComponent, NavConfig } from '@shared/ui';
 
 @Component({
   selector: 'web-root',
