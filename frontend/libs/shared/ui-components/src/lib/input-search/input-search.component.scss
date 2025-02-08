@@ -1,0 +1,39 @@
+@use '@global/styles/styles.scss' as *;
+
+.input-container {
+  position: relative;
+  display: flex;
+  border-radius: 8px;
+  height: 35px;
+  background-color: var(--color-secondary);
+  padding-right: 5px;
+  border: 2px solid white;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  background-color: transparent;
+  width: 100%;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+}
+
+@include laptop {
+  .input-container {
+    height: unset;
+  }
+}
