@@ -5,7 +5,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { ButtonComponent } from '@shared/ui-components';
 
 @Component({
-  selector: 'friend-card',
+  selector: 'friends-card',
   standalone: true,
   imports: [CommonModule, FormatTimePipe, NgOptimizedImage, ButtonComponent],
   template: ` <div class="card">
@@ -50,9 +50,9 @@ import { ButtonComponent } from '@shared/ui-components';
       </div>
     </div>
   </div>`,
-  styleUrl: './friend-card.component.scss',
+  styleUrl: './friends-card.component.scss',
 })
-export class FriendCardComponent {
+export class FriendsCardComponent {
   friend = input.required<any>();
   totalDistance = computed(() => Math.round(this.friend().statistics.distance.totalDistance));
 

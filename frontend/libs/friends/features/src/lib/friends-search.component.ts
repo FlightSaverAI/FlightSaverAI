@@ -2,12 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputSearchComponent } from '@shared/ui-components';
 import { FriendsService } from '@flight-saver/friends/data-access';
-import { FriendCardComponent } from '@flight-saver/friends/ui';
-import { NgOptimizedImage } from '@angular/common';
+import { FriendsCardComponent } from '@flight-saver/friends/ui';
+import { NoUserFoundComponent } from '@flight-saver/friends/ui';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, InputSearchComponent, FriendCardComponent, NgOptimizedImage],
+  imports: [CommonModule, InputSearchComponent, FriendsCardComponent, NoUserFoundComponent],
   template: ` <div class="friends-board">
     <shared-input-search
       placeholder="Seach new friends"
@@ -15,18 +15,12 @@ import { NgOptimizedImage } from '@angular/common';
       (valueChangeListener)="searchFriends($event)"
     ></shared-input-search>
     <div class="friends-container">
-      @if(users().length !== 0){ @for(friend of users(); track friend.id){
-      <friend-card [friend]="friend" (addFriend)="addFriend($event)"></friend-card>
+      <!-- prettier-ignore -->
+      @if(users().length > 0){ 
+        @for(friend of users(); track friend.id){
+      <friends-card [friend]="friend" (addFriend)="addFriend($event)"></friends-card>
       } } @else{
-      <div class="no-user-found">
-        <img
-          ngSrc="global/assets/assets-community/user-not-found.svg"
-          width="100"
-          height="100"
-          alt="No user found"
-        />
-        <p>No friends found</p>
-      </div>
+      <friends-no-user-found class="u-w-100"></friends-no-user-found>
       }
     </div>
   </div>`,
