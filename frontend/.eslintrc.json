@@ -21,8 +21,41 @@
                 "onlyDependOnLibsWithTags": ["domain:community", "domain:shared"]
               },
               {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "sourceTag": "domain:community",
+                "onlyDependOnLibsWithTags": [
+                  "domain:community",
+                  "domain:user-profile",
+                  "domain:shared"
+                ]
+              },
+              {
+                "sourceTag": "domain:auth",
+                "onlyDependOnLibsWithTags": ["domain:auth", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:home",
+                "onlyDependOnLibsWithTags": ["domain:home", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:statistics",
+                "onlyDependOnLibsWithTags": ["domain:statistics", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:friends",
+                "onlyDependOnLibsWithTags": ["domain:friends", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:flight-creation",
+                "onlyDependOnLibsWithTags": ["domain:flight-creation", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:user-profile",
+                "onlyDependOnLibsWithTags": [
+                  "domain:user-profile",
+                  "domain:community",
+                  "domain:home",
+                  "domain:shared"
+                ]
               }
             ]
           }
