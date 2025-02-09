@@ -50,9 +50,9 @@ public class LineChartStatistics
 
 public class BasicFlightStatistics
 {
-    public FlightCount FlightCount { get; set; }
+    public FlightCount FlightCount { get; set; } = new FlightCount();
     public Distance Distance { get; set; } = new Distance();
-    public FlightTime TotalFlightTime { get; set; }
+    public FlightTime TotalFlightTime { get; set; } = new FlightTime();
 }
 
 public class FlightCount

@@ -2,6 +2,7 @@ using AutoMapper;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs.User;
 using FlightSaverApi.Interfaces.Services;
+using FlightSaverApi.Models;
 using FlightSaverApi.Queries.User;
 using FlightSaverApi.Results;
 using MediatR;
