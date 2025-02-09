@@ -10,6 +10,7 @@ import {
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loaderInterceptor } from '@shared/data-access';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,5 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideStore({ auth: authReducer.reducer }),
     provideEffects(AuthEffects),
     provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor])),
+    provideAnimations()
   ],
 };
