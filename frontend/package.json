@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "nx": "nx",
-    "lint": "nx lint flight-saver",
-    "serve": "nx lint flight-saver && nx serve flight-saver",
+    "lint": "nx run-many --target=lint --all",
+    "serve": "nx run-many --target=lint --all && nx serve flight-saver",
     "build": "nx build",
     "watch": "nx build --watch --configuration development",
     "test": "nx test",
