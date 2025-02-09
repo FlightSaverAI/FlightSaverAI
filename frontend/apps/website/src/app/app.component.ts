@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MainComponent } from './components/main/main.component';
 import { OfferSectionComponent } from './components/offer-section/offer-section.component';
 import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
@@ -13,7 +12,6 @@ import { NavbarComponent, NavConfig } from '@shared/ui';
   selector: 'web-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     MainComponent,
     OfferSectionComponent,
     NavbarComponent,

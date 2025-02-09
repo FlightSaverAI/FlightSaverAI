@@ -27,7 +27,8 @@
         "rebuildDelay": 0,
         "dev": true,
         "port": 0
-      }
+      },
+      "dependsOn": ["lint"]
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

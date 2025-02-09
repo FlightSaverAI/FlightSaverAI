@@ -21,6 +21,10 @@
                 "onlyDependOnLibsWithTags": ["domain:community", "domain:shared"]
               },
               {
+                "sourceTag": "type:app-website",
+                "onlyDependOnLibsWithTags": ["domain:shared"]
+              },
+              {
                 "sourceTag": "domain:community",
                 "onlyDependOnLibsWithTags": [
                   "domain:community",
@@ -56,6 +60,10 @@
                   "domain:home",
                   "domain:shared"
                 ]
+              },
+              {
+                "sourceTag": "domain:shared",
+                "onlyDependOnLibsWithTags": ["domain:shared"]
               }
             ]
           }

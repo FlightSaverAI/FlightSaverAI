@@ -9,7 +9,7 @@
   },
   "sourceRoot": "apps/website/src",
   "prefix": "app",
-  "tags": ["type:app"],
+  "tags": ["type:app-website"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
