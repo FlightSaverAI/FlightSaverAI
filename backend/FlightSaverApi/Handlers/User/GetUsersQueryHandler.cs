@@ -1,6 +1,7 @@
 using AutoMapper;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs.User;
+using FlightSaverApi.Enums;
 using FlightSaverApi.Interfaces.Services;
 using FlightSaverApi.Models;
 using FlightSaverApi.Queries.User;
@@ -28,6 +29,11 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PagedUserResu
         var usersQuery = _context.Users
             .Include(u => u.Friends)
             .Where(x => x.Id != request.UserId);
+        
+        if (request.UserRole != UserRole.Admin)
+        {
+            usersQuery = usersQuery.Where(u => u.Role != UserRole.Admin);
+        }
 
         if (!string.IsNullOrEmpty(request.Name))
         {

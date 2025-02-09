@@ -66,13 +66,15 @@ public class UserController : ControllerBase
         [FromQuery] int? pageSize, [FromQuery] string? name, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+        var role = ClaimsHelper.GetUserTokenFromClaims(HttpContext.User);
         
         var query = new GetUsersQuery()
         {
             UserId = userId,
             PageNumber = pageNumber,
             PageSize = pageSize,
-            Name = name
+            Name = name,
+            UserRole = role
         };
         
         var users = await _mediator.Send(query, cancellationToken);
@@ -93,13 +95,15 @@ public class UserController : ControllerBase
         [FromQuery] int? pageSize, [FromQuery] string? name, CancellationToken cancellationToken)
     {
         var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+        var role = ClaimsHelper.GetUserTokenFromClaims(HttpContext.User);
         
         var query = new GetFriendsQuery()
         {
             UserId = userId,
             PageNumber = pageNumber,
             PageSize = pageSize,
-            Name = name
+            Name = name,
+            UserRole = role
         };
         
         var users = await _mediator.Send(query, cancellationToken);
