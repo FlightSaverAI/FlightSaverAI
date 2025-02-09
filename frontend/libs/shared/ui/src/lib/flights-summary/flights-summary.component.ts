@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormatTimePipe } from './format-time.pipe';
+import { FormatTimePipe } from '@shared/utils';
 
 @Component({
   selector: 'shared-flights-summary',

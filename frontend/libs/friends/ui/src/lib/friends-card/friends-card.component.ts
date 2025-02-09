@@ -1,6 +1,6 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormatTimePipe } from '@shared/ui';
+import { FormatTimePipe } from '@shared/utils';
 import { NgOptimizedImage } from '@angular/common';
 import { ButtonComponent } from '@shared/ui-components';
 
