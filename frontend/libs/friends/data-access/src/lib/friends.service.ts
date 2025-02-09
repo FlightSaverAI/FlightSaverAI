@@ -19,6 +19,10 @@ export class FriendsService {
     return this._http.post(`${environment.url}/friend/add?friendId=${friendId}`, null);
   }
 
+  public removeFriend(friendId: string): Observable<any> {
+    return this._http.delete(`${environment.url}/friend/remove?friendId=${friendId}`);
+  }
+
   public getAllFriends(): Observable<any> {
     return this._http.get(`${environment.url}/friend`);
   }
