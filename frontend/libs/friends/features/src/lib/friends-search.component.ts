@@ -4,6 +4,7 @@ import { InputSearchComponent } from '@shared/ui-components';
 import { FriendsService } from '@flight-saver/friends/data-access';
 import { FriendsCardComponent } from '@flight-saver/friends/ui';
 import { NoUserFoundComponent } from '@flight-saver/friends/ui';
+import { AlertService } from '@shared/data-access';
 
 @Component({
   standalone: true,
@@ -14,11 +15,16 @@ import { NoUserFoundComponent } from '@flight-saver/friends/ui';
       iconSrc="global/assets/assets-community/search.svg"
       (valueChangeListener)="searchFriends($event)"
     ></shared-input-search>
+    <p>Search results: {{ users().length }}</p>
     <div class="friends-container">
       <!-- prettier-ignore -->
       @if(users().length > 0){ 
         @for(friend of users(); track friend.id){
-      <friends-card [friend]="friend" (addFriend)="addFriend($event)"></friends-card>
+      <friends-card
+        [friend]="friend"
+        (addFriend)="addFriend($event)"
+        (removeFriend)="removeFriend($event)"
+      ></friends-card>
       } } @else{
       <friends-no-user-found class="u-w-100"></friends-no-user-found>
       }
@@ -29,13 +35,24 @@ import { NoUserFoundComponent } from '@flight-saver/friends/ui';
 })
 export class FriendsSearchComponent {
   private _friendsService = inject(FriendsService);
+  private _alertService = inject(AlertService);
 
   private _currentSearchQuery = '';
   protected users: any = signal([]);
 
   protected addFriend(friendId: string) {
-    this._friendsService.addFriend(friendId).subscribe(() => {
-      this.searchFriends(this._currentSearchQuery);
+    this._friendsService.addFriend(friendId).subscribe({
+      next: () => this._alertService.showAlert('success', 'Friend added successfully'),
+      error: () => this._alertService.showAlert('error', 'Error adding friend'),
+      complete: () => this.searchFriends(this._currentSearchQuery),
+    });
+  }
+
+  protected removeFriend(friendId: string) {
+    this._friendsService.removeFriend(friendId).subscribe({
+      next: () => this._alertService.showAlert('success', 'Friend removed successfully'),
+      error: () => this._alertService.showAlert('error', 'Error removing friend'),
+      complete: () => this.searchFriends(this._currentSearchQuery),
     });
   }
 

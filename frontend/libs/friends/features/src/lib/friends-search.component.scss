@@ -3,13 +3,14 @@
 .friends-board {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 30px;
   margin: 10px 15px;
 }
 
 .friends-container {
   display: flex;
   gap: 30px;
+  margin-top: 20px;
   flex-wrap: wrap;
 }
 
@@ -17,4 +18,10 @@
   .friends-board {
     margin: 10px 30px;
   }
+}
+
+p {
+  font-size: 1.2rem;
+  color: white;
+  padding: 5px;
 }

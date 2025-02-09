@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormatTimePipe } from '@shared/ui';
 import { NgOptimizedImage } from '@angular/common';
@@ -12,9 +12,8 @@ import { ButtonComponent } from '@shared/ui-components';
     <div class="card__image-container">
       <img
         class="card__image"
-        src="global/assets/assets-community/user-photo-3.png"
-        alt=""
-        srcset=""
+        [src]="friend().profilePictureUrl || defaultUserPhoto()"
+        alt="User photo"
       />
       <div class="card__title">
         <p>{{ friend().name }}</p>
@@ -45,7 +44,11 @@ import { ButtonComponent } from '@shared/ui-components';
         <shared-button content="View Wall"></shared-button>
         <shared-button
           [content]="friend().isLoggedUserFriend ? '✓ Friends' : '+ Add Friend'"
-          (emitEvent)="!friend().isLoggedUserFriend && addFriend.emit(friend().id)"
+          (emitEvent)="
+            friend().isLoggedUserFriend
+              ? removeFriend.emit(friend().id)
+              : addFriend.emit(friend().id)
+          "
         ></shared-button>
       </div>
     </div>
@@ -57,4 +60,7 @@ export class FriendsCardComponent {
   totalDistance = computed(() => Math.round(this.friend().statistics.distance.totalDistance));
 
   addFriend = output<string>();
+  removeFriend = output<string>();
+
+  defaultUserPhoto = signal('global/assets/default-user-photo.png');
 }
