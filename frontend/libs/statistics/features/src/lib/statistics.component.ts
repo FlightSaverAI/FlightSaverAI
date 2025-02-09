@@ -19,6 +19,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
     ActivityOverviewComponent,
   ],
   template: `
+    @defer(when flightOverviewChartConfig() && topOverviewChartConfig() &&
+    activityOverviewChartConfig()){
     <div class="wrapper">
       <statistics-flight-passenger-overview
         [flightPassangerOverview]="flightOverviewChartConfig()"
@@ -28,11 +30,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
         [activityOverview]="activityOverviewChartConfig()"
       ></statistics-activity-overview>
     </div>
+    }
   `,
   styleUrl: './statistics.component.scss',
 })
 export class StatisticsComponent {
-  flightOverviewChartConfig = toSignal(createFlightOverviewChartConfig());
-  topOverviewChartConfig = toSignal(createTopOverviewChartConfig());
-  activityOverviewChartConfig = toSignal(createActivityOverviewChartConfig());
+  protected readonly flightOverviewChartConfig = toSignal(createFlightOverviewChartConfig());
+  protected readonly topOverviewChartConfig = toSignal(createTopOverviewChartConfig());
+  protected readonly activityOverviewChartConfig = toSignal(createActivityOverviewChartConfig());
 }

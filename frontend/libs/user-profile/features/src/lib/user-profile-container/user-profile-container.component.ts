@@ -18,7 +18,7 @@ import { filter, switchMap, tap } from 'rxjs';
   standalone: true,
   imports: [CommonModule, PostComponent, AvatarComponent, FlightsSummaryComponent],
   template: ` <div class="travel">
-    @defer(when userData()){
+    @defer(when userData() && basicStatistics()){
     <user-profile-avatar
       [profilePhotoUrl]="userData().profilePictureUrl"
       [backgroundPhotoUrl]="userData().backgroundPictureUrl"
