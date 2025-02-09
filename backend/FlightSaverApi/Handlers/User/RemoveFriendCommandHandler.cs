@@ -21,6 +21,7 @@ public class RemoveFriendCommandHandler : IRequestHandler<RemoveFriendCommand, U
             .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
         var friend = await _context.Users
+            .Include(u => u.Friends)    
             .FirstOrDefaultAsync(u => u.Id == request.FriendId, cancellationToken);
 
         if (user == null || friend == null)
@@ -30,6 +31,8 @@ public class RemoveFriendCommandHandler : IRequestHandler<RemoveFriendCommand, U
             throw new InvalidOperationException("This user is not your friend.");
 
         user.Friends.Remove(friend);
+        friend.Friends.Remove(user);
+        
         await _context.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
