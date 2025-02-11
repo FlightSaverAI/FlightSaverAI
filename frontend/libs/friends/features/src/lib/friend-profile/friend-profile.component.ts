@@ -43,7 +43,7 @@ import { NgOptimizedImage } from '@angular/common';
           class="u-justify-center u-w-100"
           [user]="userData()"
           [post]="post"
-          [currentUserProfilePicture]="userData().profilePictureUrl"
+          [currentUserProfilePicture]="currentUser().profilePictureUrl"
           [comments]="postComments()[post.id] || []"
           (likePost)="likePost($event)"
           (unlikePost)="unlikePost($event)"
@@ -75,6 +75,8 @@ export class FriendProfileComponent implements OnInit {
   private _likesAndCommentsService = inject(LikesAndCommentsService);
 
   protected userData = toSignal(this._userProfileService.getUserProfileData(this._selectedUserId));
+  protected currentUser = toSignal(this._userProfileService.getUserProfileData());
+
   protected basicStatistics = toSignal(
     inject(HomeService).getBasicStatistics(this._selectedUserId)
   );
