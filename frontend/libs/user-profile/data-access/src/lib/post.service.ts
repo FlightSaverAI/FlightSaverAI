@@ -7,8 +7,10 @@ import { forkJoin } from 'rxjs';
 export class PostService {
   private _http = inject(HttpClient);
 
-  public getUserPosts() {
-    return this._http.get<any>(`${environment.url}/post/user`);
+  public getUserPosts(userId?: any) {
+    return this._http.get<any>(`${environment.url}/post/user`, {
+      params: userId ? { userId } : {},
+    });
   }
 
   public getAllPosts() {

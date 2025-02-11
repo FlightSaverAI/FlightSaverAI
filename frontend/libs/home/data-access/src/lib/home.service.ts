@@ -13,7 +13,9 @@ export class HomeService {
     return this._http.get(`${environment.url}/flights/user/minimal`);
   }
 
-  public getBasicStatistics(): Observable<any> {
-    return this._http.get(`${environment.url}/statistic/basic`);
+  public getBasicStatistics(userId?: any): Observable<any> {
+    return this._http.get(`${environment.url}/statistic/basic`, {
+      params: userId ? { userId } : {},
+    });
   }
 }

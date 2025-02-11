@@ -6,8 +6,12 @@ import { environment } from '@environments/environments';
 export class UserProfileService {
   private _http = inject(HttpClient);
 
-  public getUserProfileData() {
-    return this._http.get<any>(`${environment.url}/user/info`);
+  public getUserProfileData(userId?: any | null) {
+    console.log(userId);
+
+    return this._http.get<any>(`${environment.url}/user/info`, {
+      params: userId ? { userId } : {},
+    });
   }
 
   public updatePassword(form: any) {
