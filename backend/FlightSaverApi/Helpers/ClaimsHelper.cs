@@ -1,9 +1,12 @@
 using System.Security.Claims;
+using FlightSaverApi.Enums;
 
 namespace FlightSaverApi.Helpers;
 
 public static class ClaimsHelper
 {
+    private const string _role = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    
     /// <summary>
     /// Extracts the UserId from the claims in the HttpContext.
     /// </summary>
@@ -25,5 +28,21 @@ public static class ClaimsHelper
         }
 
         return parsedUserId;
+    }
+    
+    public static UserRole GetUserTokenFromClaims(ClaimsPrincipal user)
+    {
+        var userRoleClaim = user.Claims.FirstOrDefault(c => c.Type == _role);
+        if (userRoleClaim == null)
+        {
+            throw new UnauthorizedAccessException("User role claim not found in token.");
+        }
+
+        if (!UserRole.TryParse(userRoleClaim.Value, out UserRole parsedUserRole))
+        {
+            throw new InvalidOperationException("Invalid UserId in token.");
+        }
+
+        return parsedUserRole;
     }
 }

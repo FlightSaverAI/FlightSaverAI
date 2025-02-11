@@ -1,3 +1,4 @@
+import * as jwt_decode from 'jwt-decode';
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { authActions } from './auth.actions';
@@ -5,7 +6,8 @@ import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import * as jwt_decode from 'jwt-decode';
+import { AlertService } from '@shared/data-access';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class AuthEffects {
@@ -13,7 +15,7 @@ export class AuthEffects {
   private _authService = inject(AuthService);
   private _cookieService = inject(CookieService);
   private _router = inject(Router);
-
+  private _alertService = inject(AlertService);
   private _homeUrl = '/authorized/home';
 
   register$ = createEffect(() =>
@@ -48,7 +50,10 @@ export class AuthEffects {
       tap(({ token }) => this._cookieService.set('AuthToken', token)),
       map(({ token }) => jwt_decode.jwtDecode(token)),
       map((response: any) => authActions.loginSuccess({ response })),
-      catchError(({ details }) => of(authActions.loginError({ error: details || 'Unknown error' })))
+      catchError(({ error }: HttpErrorResponse) => {
+        this._alertService.showAlert('error', error.details);
+        return of(authActions.loginError({ error: error || 'Unknown error' }));
+      })
     );
   }
 }

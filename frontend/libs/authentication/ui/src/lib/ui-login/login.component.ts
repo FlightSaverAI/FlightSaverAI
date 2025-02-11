@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { BannerComponent } from '../ui-banner/banner.component';
-import { NgOptimizedImage } from '@angular/common';
 import { InputComponent } from '@shared/ui-components';
 import { ButtonComponent } from '@shared/ui-components';
 import { ExternalLoginsComponent } from '../../../../ui/src/lib/ui-external-logins/external-logins.component';
@@ -13,7 +12,6 @@ import { LoginForm } from '@flight-saver/authentication/utils';
   standalone: true,
   imports: [
     BannerComponent,
-    NgOptimizedImage,
     InputComponent,
     ButtonComponent,
     ExternalLoginsComponent,

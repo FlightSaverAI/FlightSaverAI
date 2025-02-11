@@ -1,0 +1,13 @@
+{
+  "name": "friends-features",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/friends/features/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["domain:friends", "type:features"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

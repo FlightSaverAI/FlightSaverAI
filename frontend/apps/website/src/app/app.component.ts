@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MainComponent } from './components/main/main.component';
 import { OfferSectionComponent } from './components/offer-section/offer-section.component';
 import { WhyUsSectionComponent } from './components/why-us-section/why-us-section.component';
@@ -7,13 +6,12 @@ import { StreamlinedSoaringSectionComponent } from './components/streamlined-soa
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { SocialsComponent } from './components/socials/socials.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { NavbarComponent, NavConfig } from '@shared/ui-components';
+import { NavbarComponent, NavConfig } from '@shared/ui';
 
 @Component({
   selector: 'web-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     MainComponent,
     OfferSectionComponent,
     NavbarComponent,

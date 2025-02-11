@@ -45,7 +45,7 @@ public class GetPostsByUserIdQueryHandler : IRequestHandler<GetPostsByUserIdQuer
         foreach (var postDto in postDtos)
         {
             var postEntity = posts.First(p => p.Id == postDto.Id);
-            postDto.IsLikedByCurrentUser = postEntity.Likes.Any(like => like.UserId == request.UserId);
+            postDto.IsLikedByCurrentUser = postEntity.Likes.Any(like => like.UserId == request.LoggedUserId);
         }
 
         return postDtos;

@@ -35,7 +35,9 @@ public class PostController : ControllerBase
         {
             userId ??= ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
             
-            var query = new GetPostsByUserIdQuery(userId.Value, lastPostId, pageSize);
+            var loggedUserId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+            
+            var query = new GetPostsByUserIdQuery(userId.Value, loggedUserId, lastPostId, pageSize);
         
             var posts = await _mediator.Send(query, cancellationToken);
         

@@ -90,7 +90,6 @@
       "!{projectRoot}/tsconfig.storybook.json"
     ]
   },
-  "nxCloudAccessToken": "YWNmMDhmYTAtNzY4My00OGQ2LWEwMTUtNjc4MDkzZTEyMGRkfHJlYWQtd3JpdGU=",
   "plugins": [
     {
       "plugin": "@nx/playwright/plugin",

@@ -21,8 +21,55 @@
                 "onlyDependOnLibsWithTags": ["domain:community", "domain:shared"]
               },
               {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "sourceTag": "type:app-website",
+                "onlyDependOnLibsWithTags": ["domain:shared"]
+              },
+              {
+                "sourceTag": "domain:community",
+                "onlyDependOnLibsWithTags": [
+                  "domain:community",
+                  "domain:user-profile",
+                  "domain:shared"
+                ]
+              },
+              {
+                "sourceTag": "domain:auth",
+                "onlyDependOnLibsWithTags": ["domain:auth", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:home",
+                "onlyDependOnLibsWithTags": ["domain:home", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:statistics",
+                "onlyDependOnLibsWithTags": ["domain:statistics", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:friends",
+                "onlyDependOnLibsWithTags": [
+                  "domain:friends",
+                  "domain:user-profile",
+                  "domain:home",
+                  "domain:shared",
+                  "domain:community"
+                ]
+              },
+              {
+                "sourceTag": "domain:flight-creation",
+                "onlyDependOnLibsWithTags": ["domain:flight-creation", "domain:shared"]
+              },
+              {
+                "sourceTag": "domain:user-profile",
+                "onlyDependOnLibsWithTags": [
+                  "domain:user-profile",
+                  "domain:community",
+                  "domain:home",
+                  "domain:shared"
+                ]
+              },
+              {
+                "sourceTag": "domain:shared",
+                "onlyDependOnLibsWithTags": ["domain:shared"]
               }
             ]
           }

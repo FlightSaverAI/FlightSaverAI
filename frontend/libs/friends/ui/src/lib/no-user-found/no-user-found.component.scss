@@ -1,0 +1,11 @@
+.no-user-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 50vh;
+  width: 100%;
+  font-size: 1.4rem;
+  color: var(--color-secondary);
+}

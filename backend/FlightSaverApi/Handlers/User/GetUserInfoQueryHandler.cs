@@ -22,13 +22,15 @@ public class GetUserInfoQueryHandler : IRequestHandler<GetUserInfoQuery, UserInf
     public async Task<UserInfoDTO> Handle(GetUserInfoQuery request,
         CancellationToken cancellationToken)
     {
-        var user = await _context.Users.FindAsync(request.Id, cancellationToken);
+        var user = await _context.Users.Include(u => u.Friends).FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
         if (user == null)
         {
             throw new KeyNotFoundException($"User with Id {request.Id} does not exist.");
         }
         
         var userDto = _mapper.Map<UserInfoDTO>(user);
+        
+        userDto.FriendsCount = user.Friends.Count;
         
         return userDto;
     }

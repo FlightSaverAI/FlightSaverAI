@@ -30,6 +30,11 @@ export class AuthorizedUserComponent {
       routerLink: '/authorized/community',
     },
     {
+      type: 'list',
+      name: 'Search',
+      routerLink: '/authorized/users-search',
+    },
+    {
       type: 'button',
       name: 'Add Flight',
       routerLink: '/authorized/flight-creation',

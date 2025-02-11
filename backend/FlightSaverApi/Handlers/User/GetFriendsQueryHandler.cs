@@ -1,7 +1,9 @@
 using AutoMapper;
 using FlightSaverApi.Data;
 using FlightSaverApi.DTOs.User;
+using FlightSaverApi.Enums;
 using FlightSaverApi.Interfaces.Services;
+using FlightSaverApi.Models;
 using FlightSaverApi.Queries.User;
 using FlightSaverApi.Results;
 using MediatR;
@@ -37,6 +39,11 @@ public class GetFriendsQueryHandler : IRequestHandler<GetFriendsQuery, PagedUser
         .Where(u => u.Id == request.UserId)
         .SelectMany(u => u.Friends)
         .AsQueryable();
+    
+    if (request.UserRole != UserRole.Admin)
+    {
+        friendsQuery = friendsQuery.Where(u => u.Role != UserRole.Admin);
+    }
 
     if (!string.IsNullOrEmpty(request.Name))
     {

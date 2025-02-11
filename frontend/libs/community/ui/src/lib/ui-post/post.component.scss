@@ -117,7 +117,7 @@
 }
 
 textarea {
-  margin: 10px;
+  padding: 3px 15px;
   height: 20px;
   background-color: transparent;
   color: white;
@@ -133,6 +133,7 @@ textarea::placeholder {
 
 .icons {
   display: flex;
+  padding: 15px;
 }
 
 .icons > img {

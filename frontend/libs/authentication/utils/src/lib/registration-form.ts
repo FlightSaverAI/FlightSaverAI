@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
-import { passwordMatchValidator } from './password-match-validator';
+import { passwordMatchValidator } from '@shared/utils';
 
 export type RegistrationForm = ReturnType<typeof registrationForm>;
 

@@ -35,6 +35,12 @@ export const authorizedUserRoutes: Route[] = [
         loadChildren: async () =>
           await import('@flight-saver/user-profile/routes').then((m) => m.userProfileRoutes),
       },
+      {
+        path: 'users-search',
+        loadChildren: async () =>
+          await import('@flight-saver/friends/routes').then((m) => m.friendsRoutes),
+      },
+
       { path: '**', component: PageNotFoundComponent },
     ],
   },

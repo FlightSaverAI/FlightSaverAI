@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
-//TO_FIX
-import { passwordMatchValidator } from '@flight-saver/authentication/utils';
+import { passwordMatchValidator } from '@shared/utils';
 
 export type ChangePasswordForm = ReturnType<typeof changePasswordForm>;
 

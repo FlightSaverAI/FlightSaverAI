@@ -8,3 +8,5 @@ export * from './lib/date-picker/date-picker.component';
 export * from './lib/loader/loader.component';
 export * from './lib/modal/modal.component';
 export * from './lib/dropdown/dropdown.directive';
+export * from './lib/input-search/input-search.component';
+export * from './lib/alert/alert.component';
