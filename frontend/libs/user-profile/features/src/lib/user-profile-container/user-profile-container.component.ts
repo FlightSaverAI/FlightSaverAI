@@ -22,6 +22,7 @@ import { filter, switchMap, tap } from 'rxjs';
     <user-profile-avatar
       [profilePhotoUrl]="userData().profilePictureUrl"
       [backgroundPhotoUrl]="userData().backgroundPictureUrl"
+      [username]="userData().username"
       [isSettingsSection]="false"
       (addPost)="openManagePostModal($event)"
     ></user-profile-avatar>

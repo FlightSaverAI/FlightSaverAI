@@ -44,6 +44,9 @@ import { NgOptimizedImage } from '@angular/common';
           <p>{{ username() }}</p>
         </div>
         } @else {
+        <div class="username">
+          <p>{{ username() }}</p>
+        </div>
         <shared-button
           class="add-post"
           content="Add Post"
