@@ -31,8 +31,8 @@ export class AuthorizedUserComponent {
     },
     {
       type: 'list',
-      name: 'Friends',
-      routerLink: '/authorized/friends',
+      name: 'Search',
+      routerLink: '/authorized/users-search',
     },
     {
       type: 'button',

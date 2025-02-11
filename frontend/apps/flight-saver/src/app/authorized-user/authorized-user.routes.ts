@@ -36,7 +36,7 @@ export const authorizedUserRoutes: Route[] = [
           await import('@flight-saver/user-profile/routes').then((m) => m.userProfileRoutes),
       },
       {
-        path: 'friends',
+        path: 'users-search',
         loadChildren: async () =>
           await import('@flight-saver/friends/routes').then((m) => m.friendsRoutes),
       },
