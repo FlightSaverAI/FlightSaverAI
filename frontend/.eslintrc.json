@@ -46,7 +46,13 @@
               },
               {
                 "sourceTag": "domain:friends",
-                "onlyDependOnLibsWithTags": ["domain:friends", "domain:shared"]
+                "onlyDependOnLibsWithTags": [
+                  "domain:friends",
+                  "domain:user-profile",
+                  "domain:home",
+                  "domain:shared",
+                  "domain:community"
+                ]
               },
               {
                 "sourceTag": "domain:flight-creation",

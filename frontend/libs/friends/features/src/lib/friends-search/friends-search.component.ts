@@ -5,6 +5,7 @@ import { FriendsService } from '@flight-saver/friends/data-access';
 import { FriendsCardComponent } from '@flight-saver/friends/ui';
 import { NoUserFoundComponent } from '@flight-saver/friends/ui';
 import { AlertService } from '@shared/data-access';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ import { AlertService } from '@shared/data-access';
         [friend]="friend"
         (addFriend)="addFriend($event)"
         (removeFriend)="removeFriend($event)"
+        (goToUserWall)="goToUserProfile($event)"
       ></friends-card>
       } } @else{
       <friends-no-user-found class="u-w-100"></friends-no-user-found>
@@ -36,6 +38,7 @@ import { AlertService } from '@shared/data-access';
 export class FriendsSearchComponent {
   private _friendsService = inject(FriendsService);
   private _alertService = inject(AlertService);
+  private _router = inject(Router);
 
   private _currentSearchQuery = '';
   protected users: any = signal([]);
@@ -62,5 +65,9 @@ export class FriendsSearchComponent {
     this._friendsService.searchFriends(query).subscribe(({ users }) => {
       this.users.set(users);
     });
+  }
+
+  protected goToUserProfile(friendId: any) {
+    this._router.navigate(['authorized/users-search', friendId]);
   }
 }
