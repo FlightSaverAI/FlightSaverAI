@@ -11,6 +11,11 @@ export const authorizedUserRoutes: Route[] = [
     canActivate: [authorizedUserGuard],
     children: [
       {
+        path: 'admin-panel',
+        loadComponent: () =>
+          loadRemoteModule('admin-panel', './Component').then((m) => m.AppComponent),
+      },
+      {
         path: 'home',
         loadChildren: async () =>
           await import('@flight-saver/home/routes').then((m) => m.homeRoutes),
