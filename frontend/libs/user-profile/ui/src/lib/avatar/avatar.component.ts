@@ -12,7 +12,7 @@ import { NgOptimizedImage } from '@angular/common';
     <div class="container">
       <img
         class="background"
-        [src]="backgroundPhotoUrl()"
+        [src]="backgroundPhotoUrl() || defaultBackgroundPhoto()"
         [style.--brightness-value]="isSettingsSection() ? 0.5 : 0.7"
         alt="background"
       />
@@ -39,6 +39,10 @@ import { NgOptimizedImage } from '@angular/common';
           category="secondary"
           (emitEvent)="openUploadPhotoModal.emit('Profile')"
         ></shared-button>
+        } @else if(isFriendsSection()){
+        <div class="username">
+          <p>{{ username() }}</p>
+        </div>
         } @else {
         <shared-button
           class="add-post"
@@ -60,11 +64,14 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class AvatarComponent {
   isSettingsSection = input.required<boolean>();
+  isFriendsSection = input<boolean>(false);
   profilePhotoUrl = input.required<string>();
   backgroundPhotoUrl = input.required<string>();
+  username = input<string>();
   selectedOption = output();
   openUploadPhotoModal = output<'Profile' | 'Background'>();
   addPost = output<string>();
 
   defaultUserPhoto = signal('global/assets/default-user-photo.png');
+  defaultBackgroundPhoto = signal('global/assets/assets-community/default-background.jpg');
 }
