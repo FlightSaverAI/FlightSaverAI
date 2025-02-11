@@ -10,11 +10,11 @@ import { AuthState } from './state/auth.state';
 export class AuthFacadeService {
   private _store = inject(Store<AuthState>);
 
-  login(loginFormData: LoginFormData) {
+  public login(loginFormData: LoginFormData) {
     this._store.dispatch(authActions.login({ loginFormData }));
   }
 
-  registration(registerFormData: RegistrationFormData) {
+  public registration(registerFormData: RegistrationFormData) {
     this._store.dispatch(authActions.register({ registerFormData }));
   }
 }
