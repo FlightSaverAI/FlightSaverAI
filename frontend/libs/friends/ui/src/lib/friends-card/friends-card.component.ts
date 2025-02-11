@@ -41,7 +41,7 @@ import { ButtonComponent } from '@shared/ui-components';
         </div>
       </div>
       <div class="card__info-btn-container">
-        <shared-button content="View Wall"></shared-button>
+        <shared-button content="View Wall" (emitEvent)="goToUserWall.emit(friend().id)"></shared-button>
         <shared-button
           [content]="friend().isLoggedUserFriend ? '✓ Friends' : '+ Add Friend'"
           (emitEvent)="
@@ -61,6 +61,7 @@ export class FriendsCardComponent {
 
   addFriend = output<string>();
   removeFriend = output<string>();
+  goToUserWall = output<string>();
 
   defaultUserPhoto = signal('global/assets/default-user-photo.png');
 }
