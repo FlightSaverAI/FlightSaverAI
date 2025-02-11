@@ -13,7 +13,7 @@ import { NgOptimizedImage } from '@angular/common';
       height="100"
       alt="No user found"
     />
-    <p>No friends found</p>
+    <p>No users found</p>
   </div>`,
   styleUrl: './no-user-found.component.scss',
 })
