@@ -106,6 +106,13 @@ public class UserProfile : Profile
             .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) =>
                     srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
+        
+        CreateMap<User, FriendBasicDTO>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Username))
+            .ForMember(dest => dest.ProfilePictureUrl, opt => opt.MapFrom(src => src.ProfilePictureUrl))
+            .ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) =>
+                    srcMember != null && !(srcMember is string str && string.IsNullOrEmpty(str))));
 
         CreateMap<User, UpdateUserRoleDTO>();
 

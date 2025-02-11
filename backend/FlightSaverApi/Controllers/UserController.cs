@@ -110,6 +110,24 @@ public class UserController : ControllerBase
         
         return Ok(users);
     }
+
+    [HttpGet("/friend-basic-info")]
+    public async Task<ActionResult<IEnumerable<FriendBasicDTO>>> GetBasicFriendsInfo(
+        CancellationToken cancellationToken)
+    {
+        var userId = ClaimsHelper.GetUserIdFromClaims(HttpContext.User);
+        var role = ClaimsHelper.GetUserTokenFromClaims(HttpContext.User);
+
+        var query = new GetFriendsBasicQuery()
+        {
+            UserId = userId,
+            UserRole = role
+        };
+        
+        var users = await _mediator.Send(query, cancellationToken);
+
+        return Ok(users);
+    }
     
     /// <summary>
     /// Adds a new friend by their ID.
