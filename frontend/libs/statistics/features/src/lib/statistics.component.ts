@@ -23,11 +23,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
     activityOverviewChartConfig()){
     <div class="wrapper">
       <statistics-flight-passenger-overview
-        [flightPassangerOverview]="flightOverviewChartConfig()"
+        [flightPassangerOverview]="flightOverviewChartConfig() || []"
       ></statistics-flight-passenger-overview>
-      <statistics-top-overview [topOverview]="topOverviewChartConfig()"></statistics-top-overview>
+      <statistics-top-overview
+        [topOverview]="topOverviewChartConfig() || []"
+      ></statistics-top-overview>
       <statistics-activity-overview
-        [activityOverview]="activityOverviewChartConfig()"
+        [activityOverview]="activityOverviewChartConfig() || []"
       ></statistics-activity-overview>
     </div>
     }

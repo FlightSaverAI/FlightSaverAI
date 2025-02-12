@@ -1,24 +1,18 @@
 import { inject } from '@angular/core';
 import { StatisticsService } from '@flight-saver/statistics/data-access';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { EChartsOption } from 'echarts';
+import { NameValue } from '@shared/models';
 
-export const createFlightOverviewChartConfig = () => {
+export const createFlightOverviewChartConfig = (): Observable<EChartsOption[]> => {
   return inject(StatisticsService)
     .getFlightPassangerOverview()
     .pipe(
-      map((data: any) => {
-        const classData = Object.fromEntries(
-          data.classDistribution.map(({ name, value }: any) => [name, value])
-        );
-        const seatData = Object.fromEntries(
-          data.seatDistribution.map(({ name, value }: any) => [name, value])
-        );
-        const reasonData = Object.fromEntries(
-          data.reasonDistribution.map(({ name, value }: any) => [name, value])
-        );
-        const continentsData = Object.fromEntries(
-          data.continents.map(({ name, value }: any) => [name, value])
-        );
+      map((data) => {
+        const classData = createDataObject(data.classDistribution);
+        const seatData = createDataObject(data.seatDistribution);
+        const reasonData = createDataObject(data.reasonDistribution);
+        const continentsData = createDataObject(data.continents);
 
         return [
           {
@@ -197,3 +191,6 @@ export const createFlightOverviewChartConfig = () => {
       })
     );
 };
+
+const createDataObject = (dataArray: NameValue[]) =>
+  Object.fromEntries(dataArray.map(({ name, value }) => [name, value]));
