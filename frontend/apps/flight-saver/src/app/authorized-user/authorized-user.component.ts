@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NavbarComponent, NavConfig } from '@shared/ui';
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { NavConfig } from '@shared/models';
+import { NavbarComponent } from '@shared/ui';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   standalone: true,
   imports: [RouterModule, NavbarComponent],
   template: `
-    <shared-navbar [navConfig]="navConfig" [dropdownConfig]="dropdownConfig"></shared-navbar>
+    <shared-navbar [navConfig]="navConfig()" [dropdownConfig]="navDropdownConfig()"></shared-navbar>
     <main>
       <router-outlet></router-outlet>
     </main>
   `,
 })
 export class AuthorizedUserComponent {
-  navConfig: NavConfig[] = [
+  private _cookieService = inject(CookieService);
+  private _router = inject(Router);
+
+  protected navConfig = signal<NavConfig[]>([
     {
       type: 'list',
       name: 'Home',
@@ -50,17 +55,26 @@ export class AuthorizedUserComponent {
         height: 50,
       },
     },
-  ];
+  ]);
 
-  dropdownConfig = [
+  protected navDropdownConfig = signal([
     {
       field: 'Profile',
+      action: () => this._router.navigateByUrl('/authorized/user-profile'),
     },
     {
       field: 'Settings',
+      action: () => this._router.navigateByUrl('/authorized/user-profile/settings'),
     },
     {
       field: 'Logout',
+      action: () => {
+        this._cookieService.delete('AuthToken', '/');
+        setTimeout(() => {
+          this._router.navigateByUrl('/login');
+          document.location.reload();
+        }, 0);
+      },
     },
-  ];
+  ]);
 }

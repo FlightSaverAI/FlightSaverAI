@@ -2,16 +2,17 @@ import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Directive, ElementRef, HostListener, inject, input, output } from '@angular/core';
 import { DropdownComponent } from './dropdown.component';
+import { DropdownConfig } from '@shared/models';
 
 @Directive({
   selector: '[sharedDropdown]',
   standalone: true,
 })
 export class DropdownDirective {
-  dropdownConfig = input.required<any>();
-  selectOption = output<string>();
+  dropdownConfig = input.required<DropdownConfig[]>();
+  selectedOption = output<string>();
 
-  positions: ConnectedPosition[] = [
+  private _positions: ConnectedPosition[] = [
     {
       originX: 'end',
       originY: 'bottom',
@@ -21,9 +22,7 @@ export class DropdownDirective {
       offsetY: 10,
     },
   ];
-
   private _overlayRef: OverlayRef | null = null;
-
   private _overlay = inject(Overlay);
   private _elementRef = inject(ElementRef);
 
@@ -33,7 +32,7 @@ export class DropdownDirective {
       const positionStrategy = this._overlay
         .position()
         .flexibleConnectedTo(this._elementRef)
-        .withPositions(this.positions);
+        .withPositions(this._positions);
 
       this._overlayRef = this._overlay.create({ positionStrategy });
 
@@ -41,7 +40,7 @@ export class DropdownDirective {
       const componentRef = this._overlayRef.attach(portal);
 
       componentRef.instance.dropdownConfig = this.dropdownConfig();
-      componentRef.instance.selectOption.subscribe((url) => this.selectOption.emit(url));
+      componentRef.instance.selectedOption.subscribe((url) => this.selectedOption.emit(url));
     }
   }
 
