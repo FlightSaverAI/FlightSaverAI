@@ -70,8 +70,8 @@ export class AuthorizedUserComponent {
       field: 'Logout',
       action: () => {
         this._cookieService.delete('AuthToken', '/');
+        this._router.navigateByUrl('/login');
         setTimeout(() => {
-          this._router.navigateByUrl('/login');
           document.location.reload();
         }, 0);
       },
