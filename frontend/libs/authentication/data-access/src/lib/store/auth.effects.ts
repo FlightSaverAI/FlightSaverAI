@@ -48,7 +48,9 @@ export class AuthEffects {
 
   private _processAuthentication(apiCall$: Observable<{ token: string }>) {
     return apiCall$.pipe(
-      tap(({ token }) => this._cookieService.set('AuthToken', token)),
+      tap(({ token }) =>
+        this._cookieService.set('AuthToken', token, { path: '/', sameSite: 'Lax' })
+      ),
       map(({ token }) => {
         const decodedToken = jwt_decode.jwtDecode(token) as jwt_decode.JwtPayload & CurrentUser;
         return <CurrentUser>{
