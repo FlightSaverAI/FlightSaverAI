@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { toSignal } from '@angular/core/rxjs-interop';
 import { HomeService } from '@flight-saver/home/data-access';
 import { MapComponent } from '@flight-saver/home/ui';
+import { UserService } from '@shared/data-access';
 import { FlightsSummaryComponent } from '@shared/ui';
 
 import L from 'leaflet';
@@ -33,9 +34,6 @@ export class HomeContainerComponent {
       iconAnchor: [20, 38],
     })
   );
-
-  private _homeService = inject(HomeService);
-
-  protected flightData = toSignal(this._homeService.getFlights());
-  protected basicStatistics = toSignal(this._homeService.getBasicStatistics());
+  protected flightData = toSignal(inject(HomeService).getFlights());
+  protected basicStatistics = toSignal(inject(UserService).getUserStatisticsPreview(null));
 }

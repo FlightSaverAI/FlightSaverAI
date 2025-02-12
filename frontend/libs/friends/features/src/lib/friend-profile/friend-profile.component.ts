@@ -11,8 +11,8 @@ import {
 import { PostComponent } from '@flight-saver/community/ui';
 import { AvatarComponent } from '@flight-saver/user-profile/ui';
 import { FlightsSummaryComponent } from '@shared/ui';
-import { HomeService } from '@flight-saver/home/data-access';
 import { NgOptimizedImage } from '@angular/common';
+import { UserService } from '@shared/data-access';
 
 @Component({
   standalone: true,
@@ -66,7 +66,7 @@ import { NgOptimizedImage } from '@angular/common';
     </div>
     }`,
   styleUrl: './friend-profile.component.scss',
-  providers: [UserProfileService, HomeService, PostService, LikesAndCommentsService],
+  providers: [UserProfileService, PostService, LikesAndCommentsService],
 })
 export class FriendProfileComponent implements OnInit {
   private _selectedUserId = inject(ActivatedRoute).snapshot.paramMap.get('id');
@@ -78,7 +78,7 @@ export class FriendProfileComponent implements OnInit {
   protected currentUser = toSignal(this._userProfileService.getUserProfileData());
 
   protected basicStatistics = toSignal(
-    inject(HomeService).getBasicStatistics(this._selectedUserId)
+    inject(UserService).getUserStatisticsPreview(this._selectedUserId)
   );
 
   protected userPosts: any = signal([]);

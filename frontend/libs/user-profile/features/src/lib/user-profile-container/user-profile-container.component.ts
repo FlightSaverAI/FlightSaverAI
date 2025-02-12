@@ -4,12 +4,12 @@ import { PostComponent } from '@flight-saver/community/ui';
 import { AvatarComponent, ManagePostModalComponent } from '@flight-saver/user-profile/ui';
 import { ConfirmModalComponent, FlightsSummaryComponent } from '@shared/ui';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { HomeService } from '@flight-saver/home/data-access';
 import {
   LikesAndCommentsService,
   PostService,
   UserProfileService,
 } from '@flight-saver/user-profile/data-access';
+import { UserService } from '@shared/data-access';
 import { MatDialog } from '@angular/material/dialog';
 import { PostConstants } from '../constants/post.constants';
 import { filter, switchMap, tap } from 'rxjs';
@@ -61,7 +61,7 @@ export class UserProfileContainerComponent implements OnInit {
 
   //TO FIX (this endpoint should be in shared data access library)
   protected userData = toSignal(this._userProfileService.getUserProfileData());
-  protected basicStatistics = toSignal(inject(HomeService).getBasicStatistics());
+  protected basicStatistics = toSignal(inject(UserService).getUserStatisticsPreview(null));
   protected dropdownConfig = signal(PostConstants.dropdownConfig);
   protected selectedPostId: any = null;
   protected userPosts: any = signal([]);
