@@ -82,7 +82,7 @@ export class NavbarComponent implements OnInit {
   }
 
   protected openNavbar() {
-    this.isNavbarOpen.set(!this.isNavbarOpen);
+    this.isNavbarOpen.update((state) => !state);
   }
 
   protected handleSelectedOption(selectedOption: string) {
