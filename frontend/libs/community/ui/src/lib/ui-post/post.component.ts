@@ -41,7 +41,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
         height="40"
         sharedDropdown
         [dropdownConfig]="dropdownConfig()"
-        (selectOption)="selectedDropdownOption.emit($event)"
+        (selectedOption)="selectedDropdownOption.emit($event)"
       />
       }
     </div>
