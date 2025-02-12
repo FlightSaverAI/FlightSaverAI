@@ -6,13 +6,6 @@
   "projectType": "library",
   "tags": ["type:ui", "domain:statistics"],
   "targets": {
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/statistics/ui/jest.config.ts"
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint"
     }
