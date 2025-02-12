@@ -1,5 +1,5 @@
 {
-  "name": "authentication-utils",
+  "name": "auth-utils",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/authentication/utils/src",
   "prefix": "lib",
