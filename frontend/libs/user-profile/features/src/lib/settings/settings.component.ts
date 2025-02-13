@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { changePasswordForm, userProfileUpdateForm } from '@flight-saver/user-profile/utils';
 import { concatMap, filter, tap } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AlertService } from '@shared/data-access';
 
 @Component({
   standalone: true,
@@ -40,6 +41,7 @@ export class SettingsComponent {
   private _userProfileService = inject(UserProfileService);
   private _dialog = inject(MatDialog);
   private _router = inject(Router);
+  private _alertService = inject(AlertService);
 
   protected userProfileForm = signal(userProfileUpdateForm());
   protected changePasswordForm = signal(changePasswordForm());
@@ -60,13 +62,13 @@ export class SettingsComponent {
 
   protected saveUserData() {
     if (this.changePasswordForm().invalid) {
-      alert('Invalid form');
+      this._alertService.showAlert('warning', 'Invalid form');
       return;
     }
 
     this._userProfileService.updatePassword(this.changePasswordForm().getRawValue()).subscribe({
-      next: () => alert('Successfuly updated password'),
-      error: () => alert('Error'),
+      next: () => this._alertService.showAlert('success', 'Successfully updated password'),
+      error: () => this._alertService.showAlert('error', 'Failed to update password'),
       complete: () => this._router.navigateByUrl('/authorized/user-profile'),
     });
   }
