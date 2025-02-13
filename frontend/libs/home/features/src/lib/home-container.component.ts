@@ -13,7 +13,7 @@ import L from 'leaflet';
   template: `
     @defer(when flightData()){
     <div class="wrapper">
-      <home-map [markerIcon]="markerIcon()" [flightData]="flightData()"></home-map>
+      <home-map [markerIcon]="markerIcon()" [flightData]="flightData() || []"></home-map>
       @defer(when basicStatistics()){
       <shared-flights-summary
         [statistics]="basicStatistics()"

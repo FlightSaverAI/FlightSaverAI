@@ -1,8 +1,9 @@
+import L from 'leaflet';
 import dayjs from 'dayjs';
 
 import { Component, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import L from 'leaflet';
+import { Flight } from '@flight-saver/home/models';
 
 @Component({
   selector: 'home-map',
@@ -12,9 +13,9 @@ import L from 'leaflet';
   styleUrl: './map.component.scss',
 })
 export class MapComponent implements OnInit {
-  markerIcon = input.required<any>();
-  flightData = input.required<any[]>();
-  flightsMap: any;
+  markerIcon = input.required<L.Icon<L.IconOptions>>();
+  flightData = input.required<Flight[]>();
+  flightsMap!: L.Map;
 
   public ngOnInit() {
     this._initMap();
@@ -31,8 +32,11 @@ export class MapComponent implements OnInit {
     }).addTo(this.flightsMap);
 
     this.flightData().forEach((flight) => {
-      const departureLatLng = [flight.departureAirportLatitude, flight.departureAirportLongitude];
-      const arrivalLatLng = [flight.arrivalAirportLatitude, flight.arrivalAirportLongitude];
+      const departureLatLng = L.latLng(
+        flight.departureAirportLatitude,
+        flight.departureAirportLongitude
+      );
+      const arrivalLatLng = L.latLng(flight.arrivalAirportLatitude, flight.arrivalAirportLongitude);
 
       const polyline = L.polyline([departureLatLng, arrivalLatLng], { color: 'red' }).addTo(
         this.flightsMap
@@ -60,9 +64,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  private _addMarker(latLng: number[], popupText: string) {
-    L.marker([latLng[0], latLng[1]], { icon: this.markerIcon() })
-      .addTo(this.flightsMap)
-      .bindPopup(popupText);
+  private _addMarker(latLng: L.LatLng, popupText: string) {
+    L.marker(latLng, { icon: this.markerIcon() }).addTo(this.flightsMap).bindPopup(popupText);
   }
 }
