@@ -1,0 +1,13 @@
+{
+  "name": "home-models",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/home/models/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["domain:home", "type:models"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
