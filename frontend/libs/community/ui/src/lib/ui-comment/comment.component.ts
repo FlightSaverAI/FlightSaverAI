@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -21,8 +21,15 @@ import { NgOptimizedImage } from '@angular/common';
       </div>
       <div class="comment__actions u-w-100">
         <span>{{ comment().postedAt | date: 'dd MMM yyyy, HH:mm:ss' }}</span>
-        <button class="edit-btn" (click)="editComment.emit(comment())">Edit</button>
+        @if(comment().user.username === loggedInUsername()){
+        <button
+          class="edit-btn"
+          (click)="editMode().state ? cancelEditing() : editComment.emit(comment())"
+        >
+          {{ editMode().state ? 'Cancel' : 'Edit' }}
+        </button>
         <button class="delete-btn" (click)="deleteComment.emit(comment().id)">Delete</button>
+        }
       </div>
     </div>
   </div>`,
@@ -33,6 +40,18 @@ export class CommentComponent {
   comment = input.required<any>();
   editComment = output<any>();
   deleteComment = output<string>();
+  loggedInUsername = input.required<string>();
+  editMode = model.required<any>();
+  cancelEditMode = output();
 
   defaultUserPhoto = signal('global/assets/default-user-photo.png');
+
+  protected cancelEditing() {
+    this.editMode.update(({ state, ...data }) => ({
+      state: !state,
+      ...data,
+    }));
+
+    this.cancelEditMode.emit();
+  }
 }

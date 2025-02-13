@@ -83,8 +83,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       <community-comment
         class="comment"
         [comment]="comment"
+        [loggedInUsername]="user().username"
+        [(editMode)]="editMode"
         (deleteComment)="removeComment($event, post().id)"
         (editComment)="editComment($event, post().id)"
+        (cancelEditMode)="cancelEditing()"
       ></community-comment>
       } }
       <div class="container">
@@ -160,14 +163,16 @@ export class PostComponent {
       postId,
     }));
 
-    console.log(this.editMode());
-
     this.commentFormControl().patchValue(comment.content);
   }
 
   protected updateCommentAction() {
     const content = this.commentFormControl().value;
     this.updateComment.emit({ content });
+  }
+
+  protected cancelEditing() {
+    this.commentFormControl().reset();
   }
 
   protected saveComment(postId: string) {
