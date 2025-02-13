@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -21,8 +21,8 @@ import { NgOptimizedImage } from '@angular/common';
       </div>
       <div class="comment__actions u-w-100">
         <span>{{ comment().postedAt | date: 'dd MMM yyyy, HH:mm:ss' }}</span>
-        <span>Like</span>
-        <span>Reply</span>
+        <button class="edit-btn" (click)="editComment.emit(comment())">Edit</button>
+        <button class="delete-btn" (click)="deleteComment.emit(comment().id)">Delete</button>
       </div>
     </div>
   </div>`,
@@ -31,5 +31,8 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class CommentComponent {
   comment = input.required<any>();
+  editComment = output<any>();
+  deleteComment = output<string>();
+
   defaultUserPhoto = signal('global/assets/default-user-photo.png');
 }

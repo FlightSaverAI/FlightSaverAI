@@ -25,4 +25,14 @@ export class LikesAndCommentsService {
       params: { postId, content },
     });
   }
+
+  public updateComment(commentId: string, content: string) {
+    return this._http.put<any>(`${environment.url}/comment/`, null, {
+      params: { id: commentId, content },
+    });
+  }
+
+  public deleteComment(commentId: string) {
+    return this._http.delete<any>(`${environment.url}/comment/${commentId}`);
+  }
 }

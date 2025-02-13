@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { CommentComponent } from '../ui-comment/comment.component';
@@ -77,9 +77,15 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     </div>
     @if(isCommentSectionOpen()){
     <div class="post__comments-list">
-      @if(comments()?.[0]?.socialPostId === post().id){ @for(comment of comments(); track
-      comment.id){
-      <community-comment class="comment" [comment]="comment"></community-comment>
+      @if(comments()?.[0]?.socialPostId === post().id) {
+      <!-- prettier-ignore -->
+      @for(comment of comments(); track comment.id){
+      <community-comment
+        class="comment"
+        [comment]="comment"
+        (deleteComment)="removeComment($event, post().id)"
+        (editComment)="editComment($event, post().id)"
+      ></community-comment>
       } }
       <div class="container">
         <img
@@ -88,8 +94,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
           width="40"
           height="40"
         />
-        <div class="hehe">
-          <textarea [formControl]="content" placeholder="Write the comment..."></textarea>
+        <div class="comment-wrapper">
+          <textarea
+            [formControl]="commentFormControl()"
+            placeholder="Write the comment..."
+          ></textarea>
           <div class="icons">
             <img ngSrc="global/assets/assets-community/emoji.svg" alt="" width="15" height="15" />
             <img
@@ -97,7 +106,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
               alt=""
               width="15"
               height="15"
-              (click)="saveComment(post().id)"
+              (click)="editMode().state ? updateCommentAction() : saveComment(post().id)"
             />
           </div>
         </div>
@@ -114,16 +123,19 @@ export class PostComponent {
   dropdownConfig = input<any>();
   comments = input.required<any>();
   currentUserProfilePicture = input.required<string>();
+  commentFormControl = input.required<FormControl>();
 
   selectedDropdownOption = output<string>();
   loadComments = output<string>();
   addComment = output<any>();
   likePost = output<string>();
   unlikePost = output<string>();
+  deleteComment = output<any>();
+  updateComment = output<any>();
+  editMode = model.required<any>();
 
   isCommentSectionOpen = signal(false);
   defaultUserPhoto = signal('global/assets/default-user-photo.png');
-  content = new FormControl('');
 
   protected toggleActive(postId: string, isLikedByCurrentUser: boolean) {
     isLikedByCurrentUser ? this.unlikePost.emit(postId) : this.likePost.emit(postId);
@@ -137,8 +149,29 @@ export class PostComponent {
     }
   }
 
+  protected removeComment(commentId: string, postId: string) {
+    this.deleteComment.emit({ commentId, postId });
+  }
+
+  protected editComment(comment: any, postId: string) {
+    this.editMode.update(({ state }) => ({
+      state: !state,
+      commentId: comment.id,
+      postId,
+    }));
+
+    console.log(this.editMode());
+
+    this.commentFormControl().patchValue(comment.content);
+  }
+
+  protected updateCommentAction() {
+    const content = this.commentFormControl().value;
+    this.updateComment.emit({ content });
+  }
+
   protected saveComment(postId: string) {
-    const content = this.content.value;
+    const content = this.commentFormControl().value;
     this.addComment.emit({ postId, content });
   }
 }
