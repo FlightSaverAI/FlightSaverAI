@@ -1,19 +1,41 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NavbarComponent, NavConfig } from '@shared/ui';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '@shared/data-access';
+import { NavConfig } from '@shared/models';
+import { NavbarComponent } from '@shared/ui';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   standalone: true,
   imports: [RouterModule, NavbarComponent],
   template: `
-    <shared-navbar [navConfig]="navConfig" [dropdownConfig]="dropdownConfig"></shared-navbar>
+    <shared-navbar
+      [userPhotoSrc]="updatedUserPhoto() ?? userPhoto().profilePictureUrl"
+      [navConfig]="navConfig()"
+      [dropdownConfig]="navDropdownConfig()"
+    ></shared-navbar>
     <main>
       <router-outlet></router-outlet>
     </main>
   `,
 })
-export class AuthorizedUserComponent {
-  navConfig: NavConfig[] = [
+export class AuthorizedUserComponent implements OnInit {
+  private _cookieService = inject(CookieService);
+  private _router = inject(Router);
+  private _userService = inject(UserService);
+  private _destroyRef = inject(DestroyRef);
+
+  protected userPhoto = toSignal(inject(UserService).getUserProfileData());
+ protected updatedUserPhoto = signal<string | null>(null);
+
+  public ngOnInit() {
+    this._userService.userPhoto
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((updatedUserPhoto) => this.updatedUserPhoto.set(updatedUserPhoto));
+  }
+
+  protected navConfig = signal<NavConfig[]>([
     {
       type: 'list',
       name: 'Home',
@@ -44,23 +66,31 @@ export class AuthorizedUserComponent {
       name: '',
       routerLink: '/authorized/user-profile',
       image: {
-        src: 'global/assets/images/user-photo.png',
         alt: 'User Photo',
         width: 50,
         height: 50,
       },
     },
-  ];
+  ]);
 
-  dropdownConfig = [
+  protected navDropdownConfig = signal([
     {
       field: 'Profile',
+      action: () => this._router.navigateByUrl('/authorized/user-profile'),
     },
     {
       field: 'Settings',
+      action: () => this._router.navigateByUrl('/authorized/user-profile/settings'),
     },
     {
       field: 'Logout',
+      action: () => {
+        this._cookieService.delete('AuthToken', '/');
+        this._router.navigateByUrl('/login');
+        setTimeout(() => {
+          document.location.reload();
+        }, 0);
+      },
     },
-  ];
+  ]);
 }

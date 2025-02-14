@@ -11,8 +11,9 @@ import {
 import { PostComponent } from '@flight-saver/community/ui';
 import { AvatarComponent } from '@flight-saver/user-profile/ui';
 import { FlightsSummaryComponent } from '@shared/ui';
-import { HomeService } from '@flight-saver/home/data-access';
 import { NgOptimizedImage } from '@angular/common';
+import { AlertService, UserService } from '@shared/data-access';
+import { FormControl } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -44,11 +45,15 @@ import { NgOptimizedImage } from '@angular/common';
           [user]="userData()"
           [post]="post"
           [currentUserProfilePicture]="currentUser().profilePictureUrl"
+          [commentFormControl]="commentFormControl()"
           [comments]="postComments()[post.id] || []"
           (likePost)="likePost($event)"
           (unlikePost)="unlikePost($event)"
           (loadComments)="getPostComments($event)"
+          [(editMode)]="editMode"
           (addComment)="addNewComment($event)"
+          (updateComment)="updateNewComment($event)"
+          (deleteComment)="deleteComment($event)"
         ></community-post>
         }
       </div>
@@ -66,19 +71,22 @@ import { NgOptimizedImage } from '@angular/common';
     </div>
     }`,
   styleUrl: './friend-profile.component.scss',
-  providers: [UserProfileService, HomeService, PostService, LikesAndCommentsService],
+  providers: [UserProfileService, PostService, LikesAndCommentsService],
 })
 export class FriendProfileComponent implements OnInit {
   private _selectedUserId = inject(ActivatedRoute).snapshot.paramMap.get('id');
-  private _userProfileService = inject(UserProfileService);
+  private _userService = inject(UserService);
   private _postService = inject(PostService);
   private _likesAndCommentsService = inject(LikesAndCommentsService);
+  private _alertService = inject(AlertService);
 
-  protected userData = toSignal(this._userProfileService.getUserProfileData(this._selectedUserId));
-  protected currentUser = toSignal(this._userProfileService.getUserProfileData());
+  protected userData = toSignal(this._userService.getUserProfileData(this._selectedUserId));
+  protected currentUser = toSignal(this._userService.getUserProfileData());
+  protected commentFormControl = signal(new FormControl(''));
+  protected editMode = signal({ state: false, postId: '', commentId: '' });
 
   protected basicStatistics = toSignal(
-    inject(HomeService).getBasicStatistics(this._selectedUserId)
+    this._userService.getUserStatisticsPreview(this._selectedUserId)
   );
 
   protected userPosts: any = signal([]);
@@ -107,8 +115,47 @@ export class FriendProfileComponent implements OnInit {
   }
 
   protected addNewComment({ postId, content }: any) {
-    this._likesAndCommentsService.addComment(postId, content).subscribe(() => {
-      this.getPostComments(postId);
+    this._likesAndCommentsService.addComment(postId, content).subscribe({
+      next: () => {
+        this.getPostComments(postId);
+        this._getPosts();
+        this._alertService.showAlert('success', 'Comment added successfully');
+      },
+      error: () => {
+        this._alertService.showAlert('error', 'Failed to add comment');
+      },
+      complete: () => {
+        this.commentFormControl().reset();
+      },
+    });
+  }
+
+  protected updateNewComment({ content }: any) {
+    this._likesAndCommentsService.updateComment(this.editMode().commentId, content).subscribe({
+      next: () => {
+        this.getPostComments(this.editMode().postId);
+        this._alertService.showAlert('success', 'Comment updated successfully');
+      },
+      error: () => {
+        this._alertService.showAlert('error', 'Failed to update comment');
+      },
+      complete: () => {
+        this.commentFormControl().reset();
+        this.editMode.update(() => ({ state: false, postId: '', commentId: '' }));
+      },
+    });
+  }
+
+  protected deleteComment({ commentId, postId }: any) {
+    this._likesAndCommentsService.deleteComment(commentId).subscribe({
+      next: () => {
+        this.getPostComments(postId);
+        this._getPosts();
+        this._alertService.showAlert('success', 'Comment deleted successfully');
+      },
+      error: () => {
+        this._alertService.showAlert('error', 'Failed to delete comment');
+      },
     });
   }
 

@@ -1,10 +1,10 @@
 {
-  "name": "ui-components",
+  "name": "shared-ui-components",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/ui-components/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["domain:shared", "type:ui"],
+  "tags": ["domain:shared", "type:ui-components"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

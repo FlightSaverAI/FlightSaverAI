@@ -1,8 +1,9 @@
 import { inject } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { StatisticsService } from '@flight-saver/statistics/data-access';
-import { map } from 'rxjs';
+import { ActivityOverviewChartConfig } from '@flight-saver/statistics/models';
 
-export const createActivityOverviewChartConfig = () => {
+export const createActivityOverviewChartConfig = (): Observable<ActivityOverviewChartConfig[]> => {
   return inject(StatisticsService)
     .getActivityOverview()
     .pipe(

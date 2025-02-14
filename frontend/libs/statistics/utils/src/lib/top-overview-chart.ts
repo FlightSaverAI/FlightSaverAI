@@ -1,8 +1,9 @@
 import { inject } from '@angular/core';
 import { StatisticsService } from '@flight-saver/statistics/data-access';
-import { map } from 'rxjs';
+import { TopOverviewChartConfig } from '@flight-saver/statistics/models';
+import { map, Observable } from 'rxjs';
 
-export const createTopOverviewChartConfig = () => {
+export const createTopOverviewChartConfig = (): Observable<TopOverviewChartConfig[]> => {
   return inject(StatisticsService)
     .getTopOverview()
     .pipe(
@@ -23,10 +24,8 @@ export const createTopOverviewChartConfig = () => {
               type: 'category',
               data: Array.from(Object.keys(data.topAirports)),
               axisLabel: {
-                textStyle: {
-                  color: '#FFFFFF',
-                  fontWeight: 'bold',
-                },
+                color: '#FFFFFF',
+                fontWeight: 'bold',
               },
             },
             series: [

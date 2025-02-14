@@ -7,6 +7,8 @@ import {
   UserProfileService,
 } from '@flight-saver/user-profile/data-access';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { FormControl } from '@angular/forms';
+import { AlertService, UserService } from '@shared/data-access';
 
 @Component({
   selector: 'community-travel-board',
@@ -19,11 +21,15 @@ import { toSignal } from '@angular/core/rxjs-interop';
       [user]="post.user"
       [post]="post"
       [currentUserProfilePicture]="userData().profilePictureUrl"
+      [commentFormControl]="commentFormControl()"
       [comments]="postComments()[post.id] || []"
       (likePost)="likePost($event)"
       (unlikePost)="unlikePost($event)"
       (loadComments)="getPostComments($event)"
+      [(editMode)]="editMode"
       (addComment)="addNewComment($event)"
+      (updateComment)="updateNewComment($event)"
+      (deleteComment)="deleteComment($event)"
     ></community-post>
     }
   </section>`,
@@ -33,11 +39,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class TravelBoardComponent implements OnInit {
   private _postService = inject(PostService);
   private _likesAndCommentsService = inject(LikesAndCommentsService);
-  private _userProfileService = inject(UserProfileService);
+  private _userSevice = inject(UserService);
+  private _alertService = inject(AlertService);
 
   protected userPosts: any = signal([]);
+  protected commentFormControl = signal(new FormControl(''));
   protected postComments = signal<Record<string, any[]>>({});
-  protected userData = toSignal(this._userProfileService.getUserProfileData());
+  protected userData = toSignal(this._userSevice.getUserProfileData());
+  protected editMode = signal({ state: false, postId: '', commentId: '' });
 
   public ngOnInit() {
     this._getPosts();
@@ -61,9 +70,48 @@ export class TravelBoardComponent implements OnInit {
     });
   }
 
-  public addNewComment({ postId, content }: any) {
-    this._likesAndCommentsService.addComment(postId, content).subscribe(() => {
-      this.getPostComments(postId);
+  protected addNewComment({ postId, content }: any) {
+    this._likesAndCommentsService.addComment(postId, content).subscribe({
+      next: () => {
+        this.getPostComments(postId);
+        this._getPosts();
+        this._alertService.showAlert('success', 'Comment added successfully');
+      },
+      error: () => {
+        this._alertService.showAlert('error', 'Failed to add comment');
+      },
+      complete: () => {
+        this.commentFormControl().reset();
+      },
+    });
+  }
+
+  protected updateNewComment({ content }: any) {
+    this._likesAndCommentsService.updateComment(this.editMode().commentId, content).subscribe({
+      next: () => {
+        this.getPostComments(this.editMode().postId);
+        this._alertService.showAlert('success', 'Comment updated successfully');
+      },
+      error: () => {
+        this._alertService.showAlert('error', 'Failed to update comment');
+      },
+      complete: () => {
+        this.commentFormControl().reset();
+        this.editMode.update(() => ({ state: false, postId: '', commentId: '' }));
+      },
+    });
+  }
+
+  protected deleteComment({ commentId, postId }: any) {
+    this._likesAndCommentsService.deleteComment(commentId).subscribe({
+      next: () => {
+        this.getPostComments(postId);
+        this._getPosts();
+        this._alertService.showAlert('success', 'Comment deleted successfully');
+      },
+      error: () => {
+        this._alertService.showAlert('error', 'Failed to delete comment');
+      },
     });
   }
 

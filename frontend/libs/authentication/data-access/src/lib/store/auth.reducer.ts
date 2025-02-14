@@ -6,8 +6,8 @@ export const authReducer = createFeature({
   name: 'auth',
   reducer: createReducer<AuthState>(
     authInitialState,
-    on(authActions.loginSuccess, (_, { response }) => ({
-      currentUser: response,
+    on(authActions.loginSuccess, (_, { currentUser }) => ({
+      currentUser,
     }))
   ),
 });

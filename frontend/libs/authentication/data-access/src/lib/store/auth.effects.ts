@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AlertService } from '@shared/data-access';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CurrentUser } from '@flight-saver/authentication/models';
 
 @Injectable()
 export class AuthEffects {
@@ -45,11 +46,21 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  private _processAuthentication(apiCall$: Observable<any>) {
+  private _processAuthentication(apiCall$: Observable<{ token: string }>) {
     return apiCall$.pipe(
-      tap(({ token }) => this._cookieService.set('AuthToken', token)),
-      map(({ token }) => jwt_decode.jwtDecode(token)),
-      map((response: any) => authActions.loginSuccess({ response })),
+      tap(({ token }) =>
+        this._cookieService.set('AuthToken', token, { path: '/', sameSite: 'Lax' })
+      ),
+      map(({ token }) => {
+        const decodedToken = jwt_decode.jwtDecode(token) as jwt_decode.JwtPayload & CurrentUser;
+        return <CurrentUser>{
+          id: decodedToken.id,
+          name: decodedToken.name,
+          email: decodedToken.email,
+          role: decodedToken.role,
+        };
+      }),
+      map((currentUser) => authActions.loginSuccess({ currentUser })),
       catchError(({ error }: HttpErrorResponse) => {
         this._alertService.showAlert('error', error.details);
         return of(authActions.loginError({ error: error || 'Unknown error' }));

@@ -1,1 +1,1 @@
-export * from './lib/ui-map/map.component';
+export * from './lib/map.component';

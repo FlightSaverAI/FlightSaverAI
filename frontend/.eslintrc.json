@@ -49,7 +49,6 @@
                 "onlyDependOnLibsWithTags": [
                   "domain:friends",
                   "domain:user-profile",
-                  "domain:home",
                   "domain:shared",
                   "domain:community"
                 ]
@@ -63,7 +62,6 @@
                 "onlyDependOnLibsWithTags": [
                   "domain:user-profile",
                   "domain:community",
-                  "domain:home",
                   "domain:shared"
                 ]
               },

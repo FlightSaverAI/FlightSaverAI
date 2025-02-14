@@ -6,14 +6,6 @@ import { environment } from '@environments/environments';
 export class UserProfileService {
   private _http = inject(HttpClient);
 
-  public getUserProfileData(userId?: any | null) {
-    console.log(userId);
-
-    return this._http.get<any>(`${environment.url}/user/info`, {
-      params: userId ? { userId } : {},
-    });
-  }
-
   public updatePassword(form: any) {
     return this._http.put<any>(
       `${environment.url}/user`,
@@ -30,6 +22,6 @@ export class UserProfileService {
 
     formBlob.append(type, photo, 'image.png');
 
-    return this._http.put<any>(`${environment.url}/user`, formBlob);
+    return this._http.put<any>(`${environment.url}/user/pictures`, formBlob);
   }
 }

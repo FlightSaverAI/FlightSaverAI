@@ -1,6 +1,6 @@
 export interface CurrentUser {
   id: number;
-  username: string;
+  name: string;
   email: string;
-  userRole: string;
+  role: string;
 }

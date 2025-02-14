@@ -1,18 +1,11 @@
 {
-  "name": "authentication-utils",
+  "name": "auth-utils",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/authentication/utils/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": ["type:utils", "domain:auth"],
   "targets": {
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/authentication/utils/jest.config.ts"
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint"
     }

@@ -1,0 +1,13 @@
+{
+  "name": "statistics-models",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/statistics/models/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["domain:statistics", "type:models"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
