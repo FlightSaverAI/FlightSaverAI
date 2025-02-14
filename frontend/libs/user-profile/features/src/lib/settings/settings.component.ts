@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { changePasswordForm, userProfileUpdateForm } from '@flight-saver/user-profile/utils';
 import { concatMap, filter, tap } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { AlertService } from '@shared/data-access';
+import { AlertService, UserService } from '@shared/data-access';
 
 @Component({
   standalone: true,
@@ -39,6 +39,7 @@ import { AlertService } from '@shared/data-access';
 })
 export class SettingsComponent {
   private _userProfileService = inject(UserProfileService);
+  private _userService = inject(UserService);
   private _dialog = inject(MatDialog);
   private _router = inject(Router);
   private _alertService = inject(AlertService);
@@ -46,7 +47,7 @@ export class SettingsComponent {
   protected userProfileForm = signal(userProfileUpdateForm());
   protected changePasswordForm = signal(changePasswordForm());
   protected userData = toSignal(
-    this._userProfileService.getUserProfileData().pipe(
+    this._userService.getUserProfileData().pipe(
       tap(({ username, email }) =>
         this.userProfileForm().patchValue({
           username: username,
@@ -85,6 +86,9 @@ export class SettingsComponent {
         filter((blob) => !!blob),
         concatMap((blob) => this._userProfileService.updateUserPhoto(blob, photoType))
       )
-      .subscribe((newUserPhoto) => this.updatedUserPhotos.set(newUserPhoto));
+      .subscribe((newUserPhoto) => {
+        this._userService.userPhoto.next(newUserPhoto.profilePictureUrl);
+        this.updatedUserPhotos.set(newUserPhoto);
+      });
   }
 }

@@ -5,7 +5,6 @@ export interface NavConfig {
   name: string;
   routerLink: string;
   image?: {
-    src: string;
     alt: string;
     width: number;
     height: number;

@@ -8,7 +8,7 @@ import {
 } from '@flight-saver/user-profile/data-access';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
-import { AlertService } from '@shared/data-access';
+import { AlertService, UserService } from '@shared/data-access';
 
 @Component({
   selector: 'community-travel-board',
@@ -39,13 +39,13 @@ import { AlertService } from '@shared/data-access';
 export class TravelBoardComponent implements OnInit {
   private _postService = inject(PostService);
   private _likesAndCommentsService = inject(LikesAndCommentsService);
-  private _userProfileService = inject(UserProfileService);
+  private _userSevice = inject(UserService);
   private _alertService = inject(AlertService);
 
   protected userPosts: any = signal([]);
   protected commentFormControl = signal(new FormControl(''));
   protected postComments = signal<Record<string, any[]>>({});
-  protected userData = toSignal(this._userProfileService.getUserProfileData());
+  protected userData = toSignal(this._userSevice.getUserProfileData());
   protected editMode = signal({ state: false, postId: '', commentId: '' });
 
   public ngOnInit() {

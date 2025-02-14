@@ -52,7 +52,7 @@ import { DropdownConfig, NavConfig } from '@shared/models';
         (selectedOption)="handleSelectedOption($event)"
       >
         <img
-          [ngSrc]="item.image.src"
+          [ngSrc]="userPhotoSrc() || defaultUserPhotoSrc()"
           [alt]="item.image.alt"
           [width]="item.image.width"
           [height]="item.image.height"
@@ -67,9 +67,11 @@ import { DropdownConfig, NavConfig } from '@shared/models';
 export class NavbarComponent implements OnInit {
   public navConfig = input.required<NavConfig[]>();
   public dropdownConfig = input<DropdownConfig[] | undefined>();
+  public userPhotoSrc = input<string>();
 
   protected activeIndex = signal(0);
   protected isNavbarOpen = signal(false);
+  protected defaultUserPhotoSrc = signal('global/assets/default-user-photo.png');
 
   private _router = inject(Router);
 

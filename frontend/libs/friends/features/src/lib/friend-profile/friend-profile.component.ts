@@ -75,18 +75,18 @@ import { FormControl } from '@angular/forms';
 })
 export class FriendProfileComponent implements OnInit {
   private _selectedUserId = inject(ActivatedRoute).snapshot.paramMap.get('id');
-  private _userProfileService = inject(UserProfileService);
+  private _userService = inject(UserService);
   private _postService = inject(PostService);
   private _likesAndCommentsService = inject(LikesAndCommentsService);
   private _alertService = inject(AlertService);
 
-  protected userData = toSignal(this._userProfileService.getUserProfileData(this._selectedUserId));
-  protected currentUser = toSignal(this._userProfileService.getUserProfileData());
+  protected userData = toSignal(this._userService.getUserProfileData(this._selectedUserId));
+  protected currentUser = toSignal(this._userService.getUserProfileData());
   protected commentFormControl = signal(new FormControl(''));
   protected editMode = signal({ state: false, postId: '', commentId: '' });
 
   protected basicStatistics = toSignal(
-    inject(UserService).getUserStatisticsPreview(this._selectedUserId)
+    this._userService.getUserStatisticsPreview(this._selectedUserId)
   );
 
   protected userPosts: any = signal([]);

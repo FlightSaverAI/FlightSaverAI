@@ -1,5 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterModule } from '@angular/router';
+import { UserService } from '@shared/data-access';
 import { NavConfig } from '@shared/models';
 import { NavbarComponent } from '@shared/ui';
 import { CookieService } from 'ngx-cookie-service';
@@ -8,15 +10,30 @@ import { CookieService } from 'ngx-cookie-service';
   standalone: true,
   imports: [RouterModule, NavbarComponent],
   template: `
-    <shared-navbar [navConfig]="navConfig()" [dropdownConfig]="navDropdownConfig()"></shared-navbar>
+    <shared-navbar
+      [userPhotoSrc]="updatedUserPhoto() ?? userPhoto().profilePictureUrl"
+      [navConfig]="navConfig()"
+      [dropdownConfig]="navDropdownConfig()"
+    ></shared-navbar>
     <main>
       <router-outlet></router-outlet>
     </main>
   `,
 })
-export class AuthorizedUserComponent {
+export class AuthorizedUserComponent implements OnInit {
   private _cookieService = inject(CookieService);
   private _router = inject(Router);
+  private _userService = inject(UserService);
+  private _destroyRef = inject(DestroyRef);
+
+  protected userPhoto = toSignal(inject(UserService).getUserProfileData());
+ protected updatedUserPhoto = signal<string | null>(null);
+
+  public ngOnInit() {
+    this._userService.userPhoto
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((updatedUserPhoto) => this.updatedUserPhoto.set(updatedUserPhoto));
+  }
 
   protected navConfig = signal<NavConfig[]>([
     {
@@ -49,7 +66,6 @@ export class AuthorizedUserComponent {
       name: '',
       routerLink: '/authorized/user-profile',
       image: {
-        src: 'global/assets/images/user-photo.png',
         alt: 'User Photo',
         width: 50,
         height: 50,

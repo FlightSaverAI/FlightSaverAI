@@ -4,11 +4,7 @@ import { PostComponent } from '@flight-saver/community/ui';
 import { AvatarComponent, ManagePostModalComponent } from '@flight-saver/user-profile/ui';
 import { ConfirmModalComponent, FlightsSummaryComponent } from '@shared/ui';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  LikesAndCommentsService,
-  PostService,
-  UserProfileService,
-} from '@flight-saver/user-profile/data-access';
+import { LikesAndCommentsService, PostService } from '@flight-saver/user-profile/data-access';
 import { AlertService, UserService } from '@shared/data-access';
 import { MatDialog } from '@angular/material/dialog';
 import { PostConstants } from '../constants/post.constants';
@@ -55,19 +51,19 @@ import { FormControl } from '@angular/forms';
     }
   </div>`,
   styleUrl: './user-profile-container.component.scss',
-  providers: [UserProfileService, PostService, LikesAndCommentsService],
+  providers: [PostService, LikesAndCommentsService],
 })
 export class UserProfileContainerComponent implements OnInit {
   private _dialog = inject(MatDialog);
-  private _userProfileService = inject(UserProfileService);
+  private _userService = inject(UserService);
   private _postService = inject(PostService);
   private _likesAndCommentsService = inject(LikesAndCommentsService);
   private _countriesOptions = PostConstants.countries;
   private _alertService = inject(AlertService);
 
   //TO FIX (this endpoint should be in shared data access library)
-  protected userData = toSignal(this._userProfileService.getUserProfileData());
-  protected basicStatistics = toSignal(inject(UserService).getUserStatisticsPreview(null));
+  protected userData = toSignal(this._userService.getUserProfileData());
+  protected basicStatistics = toSignal(this._userService.getUserStatisticsPreview(null));
   protected dropdownConfig = signal(PostConstants.dropdownConfig);
   protected selectedPostId: any = null;
   protected userPosts: any = signal([]);
