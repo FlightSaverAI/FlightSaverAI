@@ -30,34 +30,29 @@ public class UpdatePicturesCommandHandler : IRequestHandler<UpdatePicturesComman
                 throw new KeyNotFoundException($"User with Id {request.UserId} does not exist.");
             }
 
-            if (request.UpdatePicturesDto.ProfilePictureImage == null)
+            if (request.UpdatePicturesDto.RemoveProfilePicture)
             {
                 user.ProfilePictureUrl = null;
             }
-
-            if (request.UpdatePicturesDto.BackgroundPictureImage == null)
-            {
-                user.BackgroundPictureUrl = null;
-            }
-            
-            if (request.UpdatePicturesDto.ProfilePictureImage != null)
+            else if (request.UpdatePicturesDto.ProfilePictureImage != null)
             {
                 var profileUrl = await _blobStorageService.UploadImageAsync(request.UpdatePicturesDto.ProfilePictureImage);
-                // Optionally, save a record for the image
                 var imageRecord = new ImageRecord { Url = profileUrl };
                 _context.Images.Add(imageRecord);
                 await _context.SaveChangesAsync(cancellationToken);
-                
                 user.ProfilePictureUrl = profileUrl;
             }
-            
-            if (request.UpdatePicturesDto.BackgroundPictureImage != null)
+
+            if (request.UpdatePicturesDto.RemoveBackgroundPicture)
+            {
+                user.BackgroundPictureUrl = null;
+            }
+            else if (request.UpdatePicturesDto.BackgroundPictureImage != null)
             {
                 var backgroundUrl = await _blobStorageService.UploadImageAsync(request.UpdatePicturesDto.BackgroundPictureImage);
                 var imageRecord = new ImageRecord { Url = backgroundUrl };
                 _context.Images.Add(imageRecord);
                 await _context.SaveChangesAsync(cancellationToken);
-                
                 user.BackgroundPictureUrl = backgroundUrl;
             }
             
