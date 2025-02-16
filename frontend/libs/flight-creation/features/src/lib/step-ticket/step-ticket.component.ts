@@ -19,7 +19,7 @@ type TicketForm = 'class' | 'seat' | 'reason';
 export class StepTicketComponent {
   ticketForm = ticketForm();
 
-  classOptions = ['Economy', 'Economy +', 'Business', 'First', 'Private'];
+  classOptions = ['Economy', 'Economy+', 'Business', 'First', 'Private'];
   seatOptions = ['Window', 'Middle', 'Aisle'];
   reasonOptions = ['Leisure', 'Business', 'Crew', 'Other'];
 
