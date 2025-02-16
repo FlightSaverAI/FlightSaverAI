@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { StepperComponent } from '@flight-saver/flight-creation/ui';
@@ -48,6 +48,7 @@ export const MAX_STEPS = 3;
   </div>`,
   styleUrl: './flight-creation-container.component.scss',
   providers: [FlightCreationFacadeService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlightCreationContainerComponent {
   private _router = inject(Router);
@@ -93,7 +94,7 @@ export class FlightCreationContainerComponent {
     }
 
     if (component instanceof StepRateAndReviewComponent) {
-      this.forms.rateAndReviewForm = component.rateAndReviewForm.getRawValue();
+      this.forms.rateAndReviewForm = component.rateAndReviewForm().getRawValue();
       return;
     }
   }
@@ -132,7 +133,7 @@ export class FlightCreationContainerComponent {
     let rateAndReviewForm;
 
     if (this.activeComponent instanceof StepRateAndReviewComponent) {
-      rateAndReviewForm = this.activeComponent.rateAndReviewForm.getRawValue();
+      rateAndReviewForm = this.activeComponent.rateAndReviewForm().getRawValue();
     }
 
     const { departureAirport, arrivalAirport, ...rest } = this.forms.flightDetailsForm;

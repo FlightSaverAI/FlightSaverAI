@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RateAndReviewComponent } from '@flight-saver/flight-creation/ui';
 import { rateAndReviewForm } from '@flight-saver/flight-creation/utils';
@@ -7,39 +7,57 @@ import { rateAndReviewForm } from '@flight-saver/flight-creation/utils';
   standalone: true,
   imports: [CommonModule, RateAndReviewComponent],
   template: `<flight-creation-rate-and-review
-    [rateAndReviewForm]="rateAndReviewForm"
-    [rateAndReviewFormConfig]="rateAndReviewFormConfig"
+    [rateAndReviewForm]="rateAndReviewForm()"
+    [rateAndReviewFormConfig]="rateAndReviewFormConfig()"
     (selectRate)="selectRate($event)"
   ></flight-creation-rate-and-review>`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepRateAndReviewComponent {
-  rateAndReviewForm = rateAndReviewForm();
-
-  rateAndReviewFormConfig = [
+  public rateAndReviewForm = signal(rateAndReviewForm());
+  protected rateAndReviewFormConfig = signal([
     {
       fieldName: 'departureAirportOpinion',
       imgSrc: 'global/assets/images/top-airports.jpg',
+      name: '',
     },
     {
       fieldName: 'arrivalAirportOpinion',
       imgSrc: 'global/assets/images/top-airports.jpg',
+      name: '',
     },
     {
       fieldName: 'airlinesOpinion',
       imgSrc: 'global/assets/images/top-airlines.jpg',
+      name: '',
     },
     {
       fieldName: 'airPlaneOpinion',
       imgSrc: 'global/assets/images/activity-per-week.jpeg',
+      name: '',
     },
-  ];
+  ]);
 
-  queryParamsEffect = effect(
+  protected queryParamsEffect = effect(
     () => {
       const currentFormState = JSON.parse(sessionStorage.getItem('formsState') || '{}');
 
+      this.rateAndReviewFormConfig.update((state) =>
+        state.map((element) => {
+          if (element.fieldName === 'departureAirportOpinion') {
+            return { ...element, name: currentFormState.flightDetailsForm.departureAirport.name };
+          } else if (element.fieldName === 'arrivalAirportOpinion') {
+            return { ...element, name: currentFormState.flightDetailsForm.arrivalAirport.name };
+          } else if (element.fieldName === 'airlinesOpinion') {
+            return { ...element, name: currentFormState.aircraftDetailsForm.airline.name };
+          } else {
+            return { ...element, name: currentFormState.aircraftDetailsForm.aircraftType.name };
+          }
+        })
+      );
+
       if (currentFormState.rateAndReviewForm) {
-        this.rateAndReviewForm.patchValue({
+        this.rateAndReviewForm().patchValue({
           ...currentFormState.rateAndReviewForm,
         });
       }
@@ -47,8 +65,8 @@ export class StepRateAndReviewComponent {
     { allowSignalWrites: true }
   );
 
-  public selectRate({ starIndex, fieldName }: any) {
-    const control = this.rateAndReviewForm.get(fieldName);
+  protected selectRate({ starIndex, fieldName }: any) {
+    const control = this.rateAndReviewForm().get(fieldName);
 
     if (!control) {
       return;

@@ -15,7 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
           <div class="card__image-container">
             <img class="card__image" [src]="item.imgSrc" alt="" />
             <div class="card__title">
-              <p>Louisville / Louisville</p>
+              <p>{{ item.name }}</p>
             </div>
           </div>
           <div class="card__opinion-container">
